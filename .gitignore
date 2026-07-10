@@ -1,0 +1,17 @@
+tmp/
+*.log
+*.tmp
+*.bak
+Thumbs.db
+.DS_Store
+
+# Capturas de validación generadas durante el desarrollo.
+outputs/hmi_visual_prototype/*_before_*.png
+outputs/hmi_visual_prototype/*_fixed_*.png
+outputs/hmi_visual_prototype/*_alignment.png
+outputs/hmi_visual_prototype/*_unified_*.png
+
+# Configuración propia de cada PC; se crea durante la instalación.
+machine-config/
+runtime-data/
+

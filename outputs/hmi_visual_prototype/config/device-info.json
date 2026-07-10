@@ -1,0 +1,889 @@
+{
+    "project":  {
+                    "name":  "TM2500 / LM2500 Xpress Fire \u0026 Gas Demo",
+                    "controller":  "EQP-001",
+                    "description":  "EQP test cell virtual device database for HMI simulation and future real-device mapping."
+                },
+    "updatedBy":  "update_device_info.bat",
+    "devices":  {
+                    "AE-3004A":  {
+                                     "manufacturer":  "TBD",
+                                     "manufacturerPartNumber":  "",
+                                     "gePartNumber":  "",
+                                     "wfePartNumber":  "",
+                                     "description":  "CGS Combustible Gas Detector",
+                                     "specifications":  "",
+                                     "notes":  "",
+                                     "eolResistor":  "",
+                                     "shopTestProcedure":  "",
+                                     "inspectionSticker":  "",
+                                     "manuals":  {
+
+                                                 },
+                                     "wiring":  {
+
+                                                },
+                                     "photos":  {
+
+                                                },
+                                     "procedures":  {
+
+                                                    },
+                                     "specs":  {
+
+                                               },
+                                     "videos":  {
+
+                                                }
+                                 },
+                    "AE-3004B":  {
+                                     "manufacturer":  "TBD",
+                                     "manufacturerPartNumber":  "",
+                                     "gePartNumber":  "",
+                                     "wfePartNumber":  "",
+                                     "description":  "CGS Combustible Gas Detector",
+                                     "specifications":  "",
+                                     "notes":  "",
+                                     "eolResistor":  "",
+                                     "shopTestProcedure":  "",
+                                     "inspectionSticker":  "",
+                                     "manuals":  {
+
+                                                 },
+                                     "wiring":  {
+
+                                                },
+                                     "photos":  {
+
+                                                },
+                                     "procedures":  {
+
+                                                    },
+                                     "specs":  {
+
+                                               },
+                                     "videos":  {
+
+                                                }
+                                 },
+                    "AE-3004C":  {
+                                     "manufacturer":  "TBD",
+                                     "manufacturerPartNumber":  "",
+                                     "gePartNumber":  "",
+                                     "wfePartNumber":  "",
+                                     "description":  "CGS Combustible Gas Detector",
+                                     "specifications":  "",
+                                     "notes":  "",
+                                     "eolResistor":  "",
+                                     "shopTestProcedure":  "",
+                                     "inspectionSticker":  "",
+                                     "manuals":  {
+
+                                                 },
+                                     "wiring":  {
+
+                                                },
+                                     "photos":  {
+
+                                                },
+                                     "procedures":  {
+
+                                                    },
+                                     "specs":  {
+
+                                               },
+                                     "videos":  {
+
+                                                }
+                                 },
+                    "AE-3029":  {
+                                    "manufacturer":  "TBD",
+                                    "manufacturerPartNumber":  "",
+                                    "gePartNumber":  "",
+                                    "wfePartNumber":  "",
+                                    "description":  "IR Gas Detector",
+                                    "specifications":  "",
+                                    "notes":  "",
+                                    "eolResistor":  "",
+                                    "shopTestProcedure":  "",
+                                    "inspectionSticker":  "",
+                                    "manuals":  {
+
+                                                },
+                                    "wiring":  {
+
+                                               },
+                                    "photos":  {
+
+                                               },
+                                    "procedures":  {
+
+                                                   },
+                                    "specs":  {
+
+                                              },
+                                    "videos":  {
+
+                                               }
+                                },
+                    "AE-3030":  {
+                                    "manufacturer":  "TBD",
+                                    "manufacturerPartNumber":  "",
+                                    "gePartNumber":  "",
+                                    "wfePartNumber":  "",
+                                    "description":  "IR Gas Detector",
+                                    "specifications":  "",
+                                    "notes":  "",
+                                    "eolResistor":  "",
+                                    "shopTestProcedure":  "",
+                                    "inspectionSticker":  "",
+                                    "manuals":  {
+
+                                                },
+                                    "wiring":  {
+
+                                               },
+                                    "photos":  {
+
+                                               },
+                                    "procedures":  {
+
+                                                   },
+                                    "specs":  {
+
+                                              },
+                                    "videos":  {
+
+                                               }
+                                },
+                    "EDIO-1":  {
+                                   "manufacturer":  "TBD",
+                                   "manufacturerPartNumber":  "",
+                                   "gePartNumber":  "",
+                                   "wfePartNumber":  "",
+                                   "description":  "EQP EDIO Module",
+                                   "specifications":  "",
+                                   "notes":  "",
+                                   "eolResistor":  "",
+                                   "shopTestProcedure":  "",
+                                   "inspectionSticker":  "",
+                                   "manuals":  {
+
+                                               },
+                                   "wiring":  {
+
+                                              },
+                                   "photos":  {
+
+                                              },
+                                   "procedures":  {
+
+                                                  },
+                                   "specs":  {
+
+                                             },
+                                   "videos":  {
+
+                                              }
+                               },
+                    "EDIO-2":  {
+                                   "manufacturer":  "TBD",
+                                   "manufacturerPartNumber":  "",
+                                   "gePartNumber":  "",
+                                   "wfePartNumber":  "",
+                                   "description":  "EQP EDIO Module",
+                                   "specifications":  "",
+                                   "notes":  "",
+                                   "eolResistor":  "",
+                                   "shopTestProcedure":  "",
+                                   "inspectionSticker":  "",
+                                   "manuals":  {
+
+                                               },
+                                   "wiring":  {
+
+                                              },
+                                   "photos":  {
+
+                                              },
+                                   "procedures":  {
+
+                                                  },
+                                   "specs":  {
+
+                                             },
+                                   "videos":  {
+
+                                              }
+                               },
+                    "TS-3003":  {
+                                    "manufacturer":  "TBD",
+                                    "manufacturerPartNumber":  "",
+                                    "gePartNumber":  "",
+                                    "wfePartNumber":  "",
+                                    "description":  "Thermal Detector",
+                                    "specifications":  "",
+                                    "notes":  "",
+                                    "eolResistor":  "",
+                                    "shopTestProcedure":  "",
+                                    "inspectionSticker":  "",
+                                    "manuals":  {
+
+                                                },
+                                    "wiring":  {
+
+                                               },
+                                    "photos":  {
+
+                                               },
+                                    "procedures":  {
+
+                                                   },
+                                    "specs":  {
+
+                                              },
+                                    "videos":  {
+
+                                               }
+                                },
+                    "TS-3014":  {
+                                    "manufacturer":  "TBD",
+                                    "manufacturerPartNumber":  "",
+                                    "gePartNumber":  "",
+                                    "wfePartNumber":  "",
+                                    "description":  "Thermal Detector",
+                                    "specifications":  "",
+                                    "notes":  "",
+                                    "eolResistor":  "",
+                                    "shopTestProcedure":  "",
+                                    "inspectionSticker":  "",
+                                    "manuals":  {
+
+                                                },
+                                    "wiring":  {
+
+                                               },
+                                    "photos":  {
+
+                                               },
+                                    "procedures":  {
+
+                                                   },
+                                    "specs":  {
+
+                                              },
+                                    "videos":  {
+
+                                               }
+                                },
+                    "HS-3081":  {
+                                    "manufacturer":  "TBD",
+                                    "manufacturerPartNumber":  "",
+                                    "gePartNumber":  "",
+                                    "wfePartNumber":  "",
+                                    "description":  "LOTO / Suppression Inhibit",
+                                    "specifications":  "",
+                                    "notes":  "",
+                                    "eolResistor":  "",
+                                    "shopTestProcedure":  "",
+                                    "inspectionSticker":  "",
+                                    "manuals":  {
+
+                                                },
+                                    "wiring":  {
+
+                                               },
+                                    "photos":  {
+
+                                               },
+                                    "procedures":  {
+
+                                                   },
+                                    "specs":  {
+
+                                              },
+                                    "videos":  {
+
+                                               }
+                                },
+                    "HS-3040":  {
+                                    "manufacturer":  "TBD",
+                                    "manufacturerPartNumber":  "",
+                                    "gePartNumber":  "",
+                                    "wfePartNumber":  "",
+                                    "description":  "Horn Acknowledge Switch",
+                                    "specifications":  "",
+                                    "notes":  "",
+                                    "eolResistor":  "",
+                                    "shopTestProcedure":  "",
+                                    "inspectionSticker":  "",
+                                    "manuals":  {
+
+                                                },
+                                    "wiring":  {
+
+                                               },
+                                    "photos":  {
+
+                                               },
+                                    "procedures":  {
+
+                                                   },
+                                    "specs":  {
+
+                                              },
+                                    "videos":  {
+
+                                               }
+                                },
+                    "HS-3091":  {
+                                    "manufacturer":  "TBD",
+                                    "manufacturerPartNumber":  "",
+                                    "gePartNumber":  "",
+                                    "wfePartNumber":  "",
+                                    "description":  "Manual Release Station",
+                                    "specifications":  "",
+                                    "notes":  "",
+                                    "eolResistor":  "",
+                                    "shopTestProcedure":  "",
+                                    "inspectionSticker":  "",
+                                    "manuals":  {
+
+                                                },
+                                    "wiring":  {
+
+                                               },
+                                    "photos":  {
+
+                                               },
+                                    "procedures":  {
+
+                                                   },
+                                    "specs":  {
+
+                                              },
+                                    "videos":  {
+
+                                               }
+                                },
+                    "HS-3093":  {
+                                    "manufacturer":  "TBD",
+                                    "manufacturerPartNumber":  "",
+                                    "gePartNumber":  "",
+                                    "wfePartNumber":  "",
+                                    "description":  "Manual Release Station",
+                                    "specifications":  "",
+                                    "notes":  "",
+                                    "eolResistor":  "",
+                                    "shopTestProcedure":  "",
+                                    "inspectionSticker":  "",
+                                    "manuals":  {
+
+                                                },
+                                    "wiring":  {
+
+                                               },
+                                    "photos":  {
+
+                                               },
+                                    "procedures":  {
+
+                                                   },
+                                    "specs":  {
+
+                                              },
+                                    "videos":  {
+
+                                               }
+                                },
+                    "HS-3092":  {
+                                    "manufacturer":  "TBD",
+                                    "manufacturerPartNumber":  "",
+                                    "gePartNumber":  "",
+                                    "wfePartNumber":  "",
+                                    "description":  "Manual Aerosol Release Station",
+                                    "specifications":  "",
+                                    "notes":  "",
+                                    "eolResistor":  "",
+                                    "shopTestProcedure":  "",
+                                    "inspectionSticker":  "",
+                                    "manuals":  {
+
+                                                },
+                                    "wiring":  {
+
+                                               },
+                                    "photos":  {
+
+                                               },
+                                    "procedures":  {
+
+                                                   },
+                                    "specs":  {
+
+                                              },
+                                    "videos":  {
+
+                                               }
+                                },
+                    "YSA-3006A":  {
+                                      "manufacturer":  "TBD",
+                                      "manufacturerPartNumber":  "",
+                                      "gePartNumber":  "",
+                                      "wfePartNumber":  "",
+                                      "description":  "Fire \u0026 Gas Horn",
+                                      "specifications":  "",
+                                      "notes":  "",
+                                      "eolResistor":  "",
+                                      "shopTestProcedure":  "",
+                                      "inspectionSticker":  "",
+                                      "manuals":  {
+
+                                                  },
+                                      "wiring":  {
+
+                                                 },
+                                      "photos":  {
+
+                                                 },
+                                      "procedures":  {
+
+                                                     },
+                                      "specs":  {
+
+                                                },
+                                      "videos":  {
+
+                                                 }
+                                  },
+                    "YSA-3006B":  {
+                                      "manufacturer":  "TBD",
+                                      "manufacturerPartNumber":  "",
+                                      "gePartNumber":  "",
+                                      "wfePartNumber":  "",
+                                      "description":  "Fire \u0026 Gas Horn",
+                                      "specifications":  "",
+                                      "notes":  "",
+                                      "eolResistor":  "",
+                                      "shopTestProcedure":  "",
+                                      "inspectionSticker":  "",
+                                      "manuals":  {
+
+                                                  },
+                                      "wiring":  {
+
+                                                 },
+                                      "photos":  {
+
+                                                 },
+                                      "procedures":  {
+
+                                                     },
+                                      "specs":  {
+
+                                                },
+                                      "videos":  {
+
+                                                 }
+                                  },
+                    "YSL-3042":  {
+                                     "manufacturer":  "TBD",
+                                     "manufacturerPartNumber":  "",
+                                     "gePartNumber":  "",
+                                     "wfePartNumber":  "",
+                                     "description":  "Strobe Light",
+                                     "specifications":  "",
+                                     "notes":  "",
+                                     "eolResistor":  "",
+                                     "shopTestProcedure":  "",
+                                     "inspectionSticker":  "",
+                                     "manuals":  {
+
+                                                 },
+                                     "wiring":  {
+
+                                                },
+                                     "photos":  {
+
+                                                },
+                                     "procedures":  {
+
+                                                    },
+                                     "specs":  {
+
+                                               },
+                                     "videos":  {
+
+                                                }
+                                 },
+                    "YSL-3036":  {
+                                     "manufacturer":  "TBD",
+                                     "manufacturerPartNumber":  "",
+                                     "gePartNumber":  "",
+                                     "wfePartNumber":  "",
+                                     "description":  "Strobe Light",
+                                     "specifications":  "",
+                                     "notes":  "",
+                                     "eolResistor":  "",
+                                     "shopTestProcedure":  "",
+                                     "inspectionSticker":  "",
+                                     "manuals":  {
+
+                                                 },
+                                     "wiring":  {
+
+                                                },
+                                     "photos":  {
+
+                                                },
+                                     "procedures":  {
+
+                                                    },
+                                     "specs":  {
+
+                                               },
+                                     "videos":  {
+
+                                                }
+                                 },
+                    "YSL-3041":  {
+                                     "manufacturer":  "TBD",
+                                     "manufacturerPartNumber":  "",
+                                     "gePartNumber":  "",
+                                     "wfePartNumber":  "",
+                                     "description":  "Beacon / Strobe",
+                                     "specifications":  "",
+                                     "notes":  "",
+                                     "eolResistor":  "",
+                                     "shopTestProcedure":  "",
+                                     "inspectionSticker":  "",
+                                     "manuals":  {
+
+                                                 },
+                                     "wiring":  {
+
+                                                },
+                                     "photos":  {
+
+                                                },
+                                     "procedures":  {
+
+                                                    },
+                                     "specs":  {
+
+                                               },
+                                     "videos":  {
+
+                                                }
+                                 },
+                    "YSZ-3171":  {
+                                     "manufacturer":  "TBD",
+                                     "manufacturerPartNumber":  "",
+                                     "gePartNumber":  "",
+                                     "wfePartNumber":  "",
+                                     "description":  "Virtual Stat-X Aerosol Output",
+                                     "specifications":  "",
+                                     "notes":  "",
+                                     "eolResistor":  "",
+                                     "shopTestProcedure":  "",
+                                     "inspectionSticker":  "",
+                                     "manuals":  {
+
+                                                 },
+                                     "wiring":  {
+
+                                                },
+                                     "photos":  {
+
+                                                },
+                                     "procedures":  {
+
+                                                    },
+                                     "specs":  {
+
+                                               },
+                                     "videos":  {
+
+                                                }
+                                 },
+                    "YSZ-3172":  {
+                                     "manufacturer":  "TBD",
+                                     "manufacturerPartNumber":  "",
+                                     "gePartNumber":  "",
+                                     "wfePartNumber":  "",
+                                     "description":  "Virtual Stat-X Aerosol Output",
+                                     "specifications":  "",
+                                     "notes":  "",
+                                     "eolResistor":  "",
+                                     "shopTestProcedure":  "",
+                                     "inspectionSticker":  "",
+                                     "manuals":  {
+
+                                                 },
+                                     "wiring":  {
+
+                                                },
+                                     "photos":  {
+
+                                                },
+                                     "procedures":  {
+
+                                                    },
+                                     "specs":  {
+
+                                               },
+                                     "videos":  {
+
+                                                }
+                                 },
+                    "EQP-001":  {
+                                    "manufacturer":  "TBD",
+                                    "manufacturerPartNumber":  "",
+                                    "gePartNumber":  "",
+                                    "wfePartNumber":  "",
+                                    "description":  "Eagle Quantum Premier Controller",
+                                    "specifications":  "",
+                                    "notes":  "",
+                                    "eolResistor":  "",
+                                    "shopTestProcedure":  "",
+                                    "inspectionSticker":  "",
+                                    "manuals":  [
+                                                    {
+                                                        "title":  "Eqp Manual 95 8533 22.2",
+                                                        "file":  "assets/device-info/EQP-001/manuals/EQP- MANUAL-95-8533-22.2.pdf",
+                                                        "description":  "EQP- MANUAL-95-8533-22.2.pdf"
+                                                    }
+                                                ],
+                                    "wiring":  [
+
+                                               ],
+                                    "photos":  [
+
+                                               ],
+                                    "procedures":  [
+
+                                                   ],
+                                    "specs":  [
+
+                                              ],
+                                    "videos":  [
+
+                                               ]
+                                },
+                    "ALARM LO GAS":  {
+                                         "manufacturer":  "Det-Tronics / S3 Logic",
+                                         "manufacturerPartNumber":  "",
+                                         "gePartNumber":  "",
+                                         "wfePartNumber":  "",
+                                         "description":  "S3 Logic Alarm Summary",
+                                         "specifications":  "",
+                                         "notes":  "Generated by S3 logic rules.",
+                                         "eolResistor":  "",
+                                         "shopTestProcedure":  "",
+                                         "inspectionSticker":  "",
+                                         "manuals":  {
+
+                                                     },
+                                         "wiring":  {
+
+                                                    },
+                                         "photos":  {
+
+                                                    },
+                                         "procedures":  {
+
+                                                        },
+                                         "specs":  {
+
+                                                   },
+                                         "videos":  {
+
+                                                    }
+                                     },
+                    "ALARM HI GAS SHTDN":  {
+                                               "manufacturer":  "Det-Tronics / S3 Logic",
+                                               "manufacturerPartNumber":  "",
+                                               "gePartNumber":  "",
+                                               "wfePartNumber":  "",
+                                               "description":  "S3 Logic Alarm Summary",
+                                               "specifications":  "",
+                                               "notes":  "Generated by S3 logic rules.",
+                                               "eolResistor":  "",
+                                               "shopTestProcedure":  "",
+                                               "inspectionSticker":  "",
+                                               "manuals":  {
+
+                                                           },
+                                               "wiring":  {
+
+                                                          },
+                                               "photos":  {
+
+                                                          },
+                                               "procedures":  {
+
+                                                              },
+                                               "specs":  {
+
+                                                         },
+                                               "videos":  {
+
+                                                          }
+                                           },
+                    "FIRE/GAS MON SHUTDWN":  {
+                                                 "manufacturer":  "Det-Tronics / S3 Logic",
+                                                 "manufacturerPartNumber":  "",
+                                                 "gePartNumber":  "",
+                                                 "wfePartNumber":  "",
+                                                 "description":  "S3 Logic Relay",
+                                                 "specifications":  "",
+                                                 "notes":  "Generated by S3 logic rules.",
+                                                 "eolResistor":  "",
+                                                 "shopTestProcedure":  "",
+                                                 "inspectionSticker":  "",
+                                                 "manuals":  {
+
+                                                             },
+                                                 "wiring":  {
+
+                                                            },
+                                                 "photos":  {
+
+                                                            },
+                                                 "procedures":  {
+
+                                                                },
+                                                 "specs":  {
+
+                                                           },
+                                                 "videos":  {
+
+                                                            }
+                                             },
+                    "GENERAL ALARM":  {
+                                          "manufacturer":  "Det-Tronics / S3 Logic",
+                                          "manufacturerPartNumber":  "",
+                                          "gePartNumber":  "",
+                                          "wfePartNumber":  "",
+                                          "description":  "S3 Logic Relay",
+                                          "specifications":  "",
+                                          "notes":  "Generated by S3 logic rules.",
+                                          "eolResistor":  "",
+                                          "shopTestProcedure":  "",
+                                          "inspectionSticker":  "",
+                                          "manuals":  {
+
+                                                      },
+                                          "wiring":  {
+
+                                                     },
+                                          "photos":  {
+
+                                                     },
+                                          "procedures":  {
+
+                                                         },
+                                          "specs":  {
+
+                                                    },
+                                          "videos":  {
+
+                                                     }
+                                      },
+                    "AGENT RELEASED":  {
+                                           "manufacturer":  "Det-Tronics / S3 Logic",
+                                           "manufacturerPartNumber":  "",
+                                           "gePartNumber":  "",
+                                           "wfePartNumber":  "",
+                                           "description":  "S3 Logic Relay",
+                                           "specifications":  "",
+                                           "notes":  "Generated by S3 logic rules.",
+                                           "eolResistor":  "",
+                                           "shopTestProcedure":  "",
+                                           "inspectionSticker":  "",
+                                           "manuals":  {
+
+                                                       },
+                                           "wiring":  {
+
+                                                      },
+                                           "photos":  {
+
+                                                      },
+                                           "procedures":  {
+
+                                                          },
+                                           "specs":  {
+
+                                                     },
+                                           "videos":  {
+
+                                                      }
+                                       },
+                    "AGENT RELEASE SUPPR":  {
+                                                "manufacturer":  "Det-Tronics / S3 Logic",
+                                                "manufacturerPartNumber":  "",
+                                                "gePartNumber":  "",
+                                                "wfePartNumber":  "",
+                                                "description":  "S3 Logic Relay",
+                                                "specifications":  "",
+                                                "notes":  "Generated by S3 logic rules.",
+                                                "eolResistor":  "",
+                                                "shopTestProcedure":  "",
+                                                "inspectionSticker":  "",
+                                                "manuals":  {
+
+                                                            },
+                                                "wiring":  {
+
+                                                           },
+                                                "photos":  {
+
+                                                           },
+                                                "procedures":  {
+
+                                                               },
+                                                "specs":  {
+
+                                                          },
+                                                "videos":  {
+
+                                                           }
+                                            },
+                    "BE-6300":  {
+                                    "manufacturer":  "TBD",
+                                    "manufacturerPartNumber":  "",
+                                    "gePartNumber":  "",
+                                    "wfePartNumber":  "",
+                                    "description":  "",
+                                    "specifications":  "",
+                                    "notes":  "",
+                                    "eolResistor":  "",
+                                    "shopTestProcedure":  "",
+                                    "inspectionSticker":  "",
+                                    "manuals":  [
+                                                    {
+                                                        "title":  "X3301 Flam Det 95 8527 21.1",
+                                                        "file":  "assets/device-info/BE-6300/manuals/X3301-FLAM DET-95-8527-21.1.pdf",
+                                                        "description":  "X3301-FLAM DET-95-8527-21.1.pdf"
+                                                    }
+                                                ],
+                                    "wiring":  [
+
+                                               ],
+                                    "photos":  [
+
+                                               ],
+                                    "procedures":  [
+
+                                                   ],
+                                    "specs":  [
+
+                                              ],
+                                    "videos":  [
+
+                                               ]
+                                }
+                },
+    "updatedAt":  "2026-07-08 23:37:44"
+}

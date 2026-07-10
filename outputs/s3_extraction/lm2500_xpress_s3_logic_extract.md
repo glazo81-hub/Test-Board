@@ -1,0 +1,229 @@
+# LM2500 Xpress S3 Logic Extraction
+
+Source: LM2500 Xpress.s3n
+
+## Database/tagnamelist.dat
+- FIRE/GAS MON SHUTDWN
+- ALARM LO GAS
+- ALARM HI GAS SHTDN
+- AGENT RELEASED
+- GENERAL ALARM
+- RELAY FAULT
+- AGENT RELEASE SUPPR
+- HS-3040
+- YSL-3036
+- YSL-3042
+- YSL-3041
+- TS-3003-3014
+- YSA-3006A
+- YSA-3006B
+- HS-3092,3093
+- EDIO 1
+- YSZ-3172
+- YSZ-3171
+- EDIO 2
+- AE-3004A
+- AE-3004B
+- AE-3004C
+- AE-3029
+- AE-3030
+
+## Database/channelranges.dat
+- AE-3004A
+- AE-3004B
+- AE-3004C
+- AE-3029
+- AE-3030
+
+## Database/channelranges.BLB
+- ELOW=0.00
+- EHIGH=100.00
+- EHALARM=25.00
+- ELALARM=15.00
+- ELOW=0
+- EHIGH=100
+- EHALARM=10.00
+- ELALARM=5.00
+
+## Port 1/P1.inp
+- Fire Alarm
+- Fire Alarm$
+- High Alarm
+- High Alarm$
+- Low Alarm
+- Low Alarm$
+- Memory Fault
+- Memory Fault$
+- RTC Fault
+- RTC Fault$
+- LON Ground Fault
+- LON Ground Fault$
+- LON A Interface Fault
+- LON A Interface Fault$
+- LON B Interface Fault
+- LON B Interface Fault$
+- Option Board Fault
+- Option Board Fault$
+- LON Fault
+- LON Fault$
+- Logic Engine Fault
+- Logic Engine Fault$
+- New Fire Alarm
+- New Supervisory Alarm
+- New Low Gas Alarm
+- New High Gas Alarm
+- Redundancy Fault
+- Redundancy Fault$
+- RS485 Ground Fault
+- RS485 Ground Fault$
+- Communication Option Board Fault
+- Communication Option Board Fault$
+- Lon Overload Fault
+- Lon Overload Fault$
+- Watchdog Timer Fault
+- Watchdog Timer Fault$
+- Controller Fault
+- Controller Fault$
+- Standby Controller Fault
+- Standby Controller Fault$
+- HSSL Communication Fault
+- HSSL Communication Fault$
+- OS Queue Overflow Fault
+- OS Queue Overflow Fault$
+- FIRE/GAS MON SHUTDWN
+- ALARM LO GAS
+- ALARM HI GAS SHTDN
+- AGENT RELEASED
+- GENERAL ALARM
+- RELAY FAULT
+- AGENT RELEASE SUPPR
+- FIRE/GAS MONITOR SHUTDOWN
+- ALARM LO GAS TURBINE ROOM
+- ALARM HI GAS SHTDN TURB RM
+- AGENT RELEASED AEROSOL CUSTOMER
+- GENERAL ALARM CUSTOMER
+- RELAY FAULT CUSTOMER
+- AnyFireActiveNoDely
+- AnyGasFlameHeatManL1
+- AnyGasFlameHeatManLE
+- AuxMainCO2Released
+- AuxReserveCO2Reled
+- AE-3004A
+- AE-3004B
+- AE-3004C
+- AE-3029
+- AE-3030
+- YSA-3006A
+- YSA-3006B
+- HS-3092,3093
+- TS-3003-3014
+- HS-3040
+- YSL-3036
+- YSL-3041
+- YSL-3042
+- YSZ-3171
+- YSZ-3172
+- Any Gas Flame Heat Manual Alarm
+- AnyGasFlameHeatManOS
+- Any Gas Flame HeatManualAlarmOS
+- MainCO2Released
+- Main CO2 Bank Released
+- ReserveCO2Released
+- Reserve CO2 Bank Released
+- Fire Active No Time Delay
+- Release Acknowledge
+- GenGasFlameHeatManL
+- Gen Gas Flame Heat Manual Alm
+- GenGasFlameHeatManOS
+- Gen Gas Flame Heat Manual AlmOS
+- GenReserveCO2Reled
+- Gen Reserve CO2 Bank Released
+- GenMainCO2Released
+- Gen Main CO2 Bank Released
+- GenAnyFireActiveNoDy
+- Gen Fire Active No Time Delay
+- AuxGasFlameHeatManL
+- Aux Gas Flame Heat Manual Alm
+- AuxGasFlameHeatManOS
+- Aux Gas Flame Heat Manual AlmOS
+- GenRelease Ack
+- AuxRelease Ack
+- Aux Main CO2 Bank Released
+- Aux Reserve CO2 Bank Released
+- AuxAnyFireActiveNoDy
+- Aux Fire Active No Time Delay
+- Any Gas Flame Heat Manual Alarm1
+- AnyGasFlameHeatManO1
+- EDIO 1
+- Control Message Fault
+- Fault
+- Com 1 Fault
+- Com 2 Fault
+- Supply Voltage Fault
+- Channel 1 Fault
+- Channel 2 Fault
+- Channel 3 Fault
+- Channel 4 Fault
+- Channel 5 Fault
+- Channel 6 Fault
+- Channel 7 Fault
+- Channel 8 Fault
+- AEROSOL RELEASE STATION
+- FIRE/GAS HORN OUTSIDE
+- FIRE/GAS HORN INSIDE
+- THERMAL SPOT DETECTOR
+- FIRE/GAS BEACON OUTSIDE
+- FIRE/GAS BEACON INSIDE
+- HORN ACKNOWLEDGE
+- EDIO 2
+- FIRE SUPPRESSANT RELEASE AEROSOL 1
+- FIRE SUPPRESSANT RELEASE AEROSOL
+- ANALYZER ELEM. COMB GAS DET
+- Sensor Fault
+- Calibration Fault
+- AE-3029 TURBINE OUTLET
+- Internal Comm Fault
+- LON CPU Memory Fault
+- AE-3030 TURBINE OUTLET
+
+## Port 1/P1PT1.lpd
+- Use this OR for Horns and Beacon
+- CommonAlarm
+- Any Fire, Gas Alarm
+- Gas and Flame Horns Strobe
+- AE-3004A
+- AE-3029
+- AE-3030
+- AE-3004B
+- AE-3004C
+- HS-3092,3093
+- TS-3003-3014
+- HS-3040
+- YSA-3006A
+- YSA-3006B
+- YSL-3036
+- YSL-3041
+- YSL-3042
+- AEROSOL RELEASE
+- CO2 Release Logic
+- AEROSOL SUPPRESSANTase
+- YSZ-3172
+- AGENT RELEASE SUPPR
+- AGENT RELEASED
+- YSZ-3171
+- Controller Relays Logic
+- ALARM LO GAS
+- FIRE/GAS MON SHUTDWN
+- ALARM HI GAS SHTDN
+- GENERAL ALARM
+- RELAY FAULT
+- EDIO 2
+
+## Port 1/P1PT1.006
+- _Sheet Name : AEROSOL SUPPRESSANT
+
+## Port 1/P1PT1.005
+- _Element AEROSOL RELEASE | directives.
+
+## Port 1/P1PT1.007
+- _Element AEROSOL RELEASE | directives.

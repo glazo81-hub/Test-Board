@@ -1,0 +1,296 @@
+Undefined
+-OR- 
+Use this OR for Horns and Beacon
+16 INPUT OR
+SW-1319
+JVELA
+JVELA
+3-10-163
+5-4-166
+TM 2500 GEN 8 REV B  
+LEVEL OUTPUT
+Arial
+LEV
+ONESHOT OUTPUT
+Arial
+Level Input from Previous Block
+Arial
+LEL
+OneShot Pulse Input from Previous Block
+Arial
+INPUT
+Arial
+INPUT
+Arial
+INPUT
+Arial
+INPUT
+Arial
+INPUT
+Arial
+INPUT
+Arial
+INPUT
+Arial
+INPUT
+Arial
+INPUT
+Arial
+INPUT
+Arial
+INPUT
+Arial
+INPUT
+Arial
+INPUT
+Arial
+INPUT
+Arial
+INPUT
+Arial
+INPUT
+Arial
+-OR-
+CommonAlarm
+Any Fire, Gas Alarm
+Gas and Flame Horns Strobe
+SW-1319
+JVELA 
+JVELA
+7-7-2020
+5-4-166
+LM2500 Xpress REV B 
+-OR- 
+Use this OR for Horns and Beacon
+16 INPUT OR
+SW-1319
+JVELA
+JVELA
+3-10-163
+5-4-166
+TM 2500 GEN 8 REV B  
+LEVEL OUTPUT
+Arial
+LEV
+ONESHOT OUTPUT
+Arial
+Level Input from Previous Block
+Arial
+LEL
+OneShot Pulse Input from Previous Block
+Arial
+INPUT
+Arial
+INPUT
+Arial
+INPUT
+Arial
+INPUT
+Arial
+INPUT
+Arial
+INPUT
+Arial
+INPUT
+Arial
+INPUT
+Arial
+INPUT
+Arial
+INPUT
+Arial
+INPUT
+Arial
+INPUT
+Arial
+INPUT
+Arial
+INPUT
+Arial
+INPUT
+Arial
+INPUT
+Arial
+-OR-
+Arial
+AE-3004A
+Arial
+AE-3029
+Arial
+AE-3030
+Arial
+AE-3004A
+Arial
+AE-3004B
+Arial
+AE-3004C
+Arial
+AE-3029
+Arial
+AE-3030
+Arial
+HS-3092,3093
+Arial
+AE-3004B
+Arial
+AE-3004C
+Arial
+TS-3003-3014
+Arial
+HS-3040
+Arial
+YSA-3006A
+Arial
+YSA-3006B 
+Arial
+FPP CONTRL
+-OR- 
+Use this OR for Horns and Beacon
+16 INPUT OR
+SW-1319
+JVELA
+JVELA
+3-10-163
+5-4-166
+TM 2500 GEN 8 REV B  
+LEVEL OUTPUT
+Arial
+LEV
+ONESHOT OUTPUT
+Arial
+Level Input from Previous Block
+Arial
+LEL
+OneShot Pulse Input from Previous Block
+Arial
+INPUT
+Arial
+INPUT
+Arial
+INPUT
+Arial
+INPUT
+Arial
+INPUT
+Arial
+INPUT
+Arial
+INPUT
+Arial
+INPUT
+Arial
+INPUT
+Arial
+INPUT
+Arial
+INPUT
+Arial
+INPUT
+Arial
+INPUT
+Arial
+INPUT
+Arial
+INPUT
+Arial
+INPUT
+Arial
+-OR-
+Arial
+FPP CONTRL
+Arial
+YSL-3036
+Arial
+YSL-3041
+Arial
+YSL-3042
+AEROSOL RELEASE
+CO2 Release Logic
+AEROSOL SUPPRESSANTase
+SW-1319
+JVELANCHACA
+JVELA
+7-7-2020
+5-4-166
+LM2500 Xpress REV B 
+300
+Arial
+HS-3092,3093
+Arial
+FPP CONTRL
+Arial
+YSZ-3172
+Arial
+TS-3003-3014
+Arial
+AGENT RELEASE SUPPR
+Arial
+AGENT RELEASED
+Arial
+YSZ-3171
+Controller Relays
+Controller Relays Logic
+Relays 1, 33e
+JVela
+JVW
+3-10-16
+3-20-16
+LM2500 Xpress 
+Arial
+ALARM LO GAS
+Arial
+FPP CONTRL
+Arial
+AE-3004A
+Arial
+AE-3004B
+Arial
+AE-3004C
+Arial
+AE-3029
+Arial
+AE-3030
+Arial
+FIRE/GAS MON SHUTDWN
+Arial
+HS-3092,3093
+Arial
+TS-3003-3014
+Arial
+AE-3004A
+Arial
+AE-3004B
+Arial
+AE-3004C
+Arial
+ALARM HI GAS SHTDN
+Arial
+AE-3029
+Arial
+AE-3030
+Arial
+FPP CONTRL
+Arial
+CRITICAL PATH
+Arial
+GENERAL ALARM
+Arial
+RELAY FAULT 
+Arial
+FPP CONTRL
+Arial
+FPP CONTRL
+Arial
+FPP CONTRL
+Arial
+YSZ-3171
+Arial
+YSZ-3172
+Arial
+EDIO 2
+Arial
+YSZ-3171
+Arial
+YSZ-3172
+Arial
+FPP CONTRL

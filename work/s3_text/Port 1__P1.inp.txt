@@ -1,0 +1,1586 @@
+FPP CONTRL
+EQP Controller
+Fire Alarm
+FPP CONTRL
+Fire Alarm$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_ADVISE_ID
+Trouble
+FPP CONTRL
+Trouble$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_ADVISE_ID
+First Scan
+FPP CONTRL
+First Scan
+High Alarm
+FPP CONTRL
+High Alarm$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_ADVISE_ID
+Low Alarm
+FPP CONTRL
+Low Alarm$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_ADVISE_ID
+Acknowledge (LED State)
+FPP CONTRL
+Acknowledge (LED State)
+Silence (LED State)
+FPP CONTRL
+Silence (LED State)
+Program Mode
+FPP CONTRL
+Program Mode
+Acknowledge Button
+FPP CONTRL
+Acknowledge Button
+Silence Button
+FPP CONTRL
+Silence Button
+Reset Button
+FPP CONTRL
+Reset Button
+Supervisory
+FPP CONTRL
+Supervisory
+Wrong Device Type
+FPP CONTRL
+Wrong Device Type$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_MAINT_ID
+Extra LON Device
+FPP CONTRL
+Extra LON Device$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_MAINT_ID
+Memory Fault
+FPP CONTRL
+Memory Fault$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_FAILED_ID
+RTC Fault
+FPP CONTRL
+RTC Fault$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_MAINT_ID
+LON Ground Fault
+FPP CONTRL
+LON Ground Fault$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_MAINT_ID
+LON A Interface Fault
+FPP CONTRL
+LON A Interface Fault$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_FAILED_ID
+LON B Interface Fault
+FPP CONTRL
+LON B Interface Fault$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_FAILED_ID
+Inhibit Status
+FPP CONTRL
+Inhibit Status$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_ADVISE_ID
+Option Board Fault
+FPP CONTRL
+Option Board Fault$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_MAINT_ID
+Invalid Configuration
+FPP CONTRL
+Invalid Configuration$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_MAINT_ID
+LON Fault
+FPP CONTRL
+LON Fault$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_MAINT_ID
+Power Fail 1
+FPP CONTRL
+Power Fail 1$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_MAINT_ID
+Power Fail 2
+FPP CONTRL
+Power Fail 2$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_MAINT_ID
+Output Inhibit
+FPP CONTRL
+Output Inhibit$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_ADVISE_ID
+User Defined Status 01
+FPP CONTRL
+User Defined Status 01
+User Defined Status 02
+FPP CONTRL
+User Defined Status 02
+User Defined Status 03
+FPP CONTRL
+User Defined Status 03
+User Defined Status 04
+FPP CONTRL
+User Defined Status 04
+User Defined Status 05
+FPP CONTRL
+User Defined Status 05
+User Defined Status 06
+FPP CONTRL
+User Defined Status 06
+User Defined Status 07
+FPP CONTRL
+User Defined Status 07
+User Defined Status 08
+FPP CONTRL
+User Defined Status 08
+User Defined Status 09
+FPP CONTRL
+User Defined Status 09
+User Defined Status 10
+FPP CONTRL
+User Defined Status 10
+User Defined Status 11
+FPP CONTRL
+User Defined Status 11
+User Defined Status 12
+FPP CONTRL
+User Defined Status 12
+Logic Engine Fault
+FPP CONTRL
+Logic Engine Fault$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_FAILED_ID
+New Fire Alarm
+FPP CONTRL
+New Fire Alarm
+New Supervisory Alarm
+FPP CONTRL
+New Supervisory Alarm
+New Trouble
+FPP CONTRL
+New Trouble
+New Low Gas Alarm
+FPP CONTRL
+New Low Gas Alarm
+New High Gas Alarm
+FPP CONTRL
+New High Gas Alarm
+Redundancy Fault
+FPP CONTRL
+Redundancy Fault$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_MAINT_ID
+Request Manual Switch
+FPP CONTRL
+Request Manual Switch
+RS485 Ground Fault
+FPP CONTRL
+RS485 Ground Fault$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_MAINT_ID
+Communication Option Board Fault
+FPP CONTRL 
+Communication Option Board Fault$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_MAINT_ID
+Lon Overload Fault
+FPP CONTRL
+Lon Overload Fault$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_MAINT_ID
+SIL Device
+FPP CONTRL
+SIL Device
+LON Pattern Test
+FPP CONTRL
+LON Pattern Test$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_MAINT_ID
+Watchdog Timer Fault
+FPP CONTRL
+Watchdog Timer Fault$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_FAILED_ID
+Controller Inhibit Mode
+FPP CONTRL
+Controller Inhibit Mode
+Controller Fault
+FPP CONTRL
+Controller Fault$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_FAILED_ID
+Standby Controller Fault
+FPP CONTRL
+Standby Controller Fault$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_MAINT_ID
+HSSL Communication Fault
+FPP CONTRL
+HSSL Communication Fault$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_MAINT_ID
+OS Queue Overflow Fault
+FPP CONTRL
+OS Queue Overflow Fault$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_MAINT_ID
+Channel Active
+FPP CONTRL
+Input 1 Channel Active$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_ADVISE_ID
+Inhibit Status
+FPP CONTRL
+Input 1 Inhibit Status$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_ADVISE_ID
+Channel Active
+FPP CONTRL
+Input 2 Channel Active$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_ADVISE_ID
+Inhibit Status
+FPP CONTRL
+Input 2 Inhibit Status$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_ADVISE_ID
+Channel Active
+FPP CONTRL
+Input 3 Channel Active$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_ADVISE_ID
+Inhibit Status
+FPP CONTRL
+Input 3 Inhibit Status$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_ADVISE_ID
+Channel Active
+FPP CONTRL
+Input 4 Channel Active$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_ADVISE_ID
+Inhibit Status
+FPP CONTRL
+Input 4 Inhibit Status$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_ADVISE_ID
+Channel Active
+FPP CONTRL
+Input 5 Channel Active$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_ADVISE_ID
+Inhibit Status
+FPP CONTRL
+Input 5 Inhibit Status$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_ADVISE_ID
+Channel Active
+FPP CONTRL
+Input 6 Channel Active$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_ADVISE_ID
+Inhibit Status
+FPP CONTRL
+Input 6 Inhibit Status$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_ADVISE_ID
+Channel Active
+FPP CONTRL
+Input 7 Channel Active$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_ADVISE_ID
+Inhibit Status
+FPP CONTRL
+Input 7 Inhibit Status$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_ADVISE_ID
+Channel Active
+FPP CONTRL
+Input 8 Channel Active$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_ADVISE_ID
+Inhibit Status
+FPP CONTRL
+Input 8 Inhibit Status$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_ADVISE_ID
+Channel Active
+FPP CONTRL
+Relay 1 Channel Active$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_ADVISE_ID
+Inhibit Status
+FPP CONTRL
+Relay 1 Inhibit Status$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_ADVISE_ID
+Channel Active
+FPP CONTRL
+Relay 2 Channel Active$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_ADVISE_ID
+Inhibit Status
+FPP CONTRL
+Relay 2 Inhibit Status$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_ADVISE_ID
+Channel Active
+FPP CONTRL
+Relay 3 Channel Active$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_ADVISE_ID
+Inhibit Status
+FPP CONTRL
+Relay 3 Inhibit Status$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_ADVISE_ID
+Channel Active
+FPP CONTRL
+Relay 4 Channel Active$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_ADVISE_ID
+Inhibit Status
+FPP CONTRL
+Relay 4 Inhibit Status$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_ADVISE_ID
+Channel Active
+FPP CONTRL
+Relay 5 Channel Active$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_ADVISE_ID
+Inhibit Status
+FPP CONTRL
+Relay 5 Inhibit Status$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_ADVISE_ID
+Channel Active
+FPP CONTRL
+Relay 6 Channel Active$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_ADVISE_ID
+Inhibit Status
+FPP CONTRL
+Relay 6 Inhibit Status$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_ADVISE_ID
+Channel Active
+FPP CONTRL
+Relay 7 Channel Active$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_ADVISE_ID
+Inhibit Status
+FPP CONTRL
+Relay 7 Inhibit Status$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_ADVISE_ID
+Channel Active
+FPP CONTRL
+Relay 8 Channel Active$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_ADVISE_ID
+Inhibit Status
+FPP CONTRL
+Relay 8 Inhibit Status$
+517ACBA0-D29A-451b-8959-B06BE93062C2$
+82A7A790-91C7-11d5-A5B6-006008AF8E7D
+ALERT_ADVISE_ID
+FIRE/GAS MON SHUTDWN
+CRITICAL PATH
+ALARM LO GAS
+ALARM HI GAS SHTDN
+AGENT RELEASED
+GENERAL ALARM
+RELAY FAULT 
+AGENT RELEASE SUPPR
+FIRE/GAS MONITOR SHUTDOWN
+CRITICAL PATH
+ALARM LO GAS TURBINE ROOM
+ALARM HI GAS SHTDN TURB RM
+AGENT RELEASED AEROSOL CUSTOMER
+GENERAL ALARM CUSTOMER
+RELAY FAULT CUSTOMER
+AGENT RELEASE SUPPR
+SPARE 1-1 INPUT
+SPARE 1-2 INPUT
+SPARE 1-3 INPUT
+SPARE 1-4 INPUT
+SPARE 1-5 INPUT
+SPARE 1-6 INPUT
+SPARE 1-7 INPUT
+SPARE 1-8 INPUT
+FPP CONTRL
+00001
+FPP CONTRL
+00002
+FPP CONTRL
+00003
+FPP CONTRL
+00004
+FPP CONTRL
+00005
+FPP CONTRL
+00006
+FPP CONTRL
+00007
+FPP CONTRL
+00009
+FPP CONTRL
+00010
+FPP CONTRL
+00011
+FPP CONTRL
+00012
+FPP CONTRL
+00013
+FPP CONTRL
+00014
+FPP CONTRL
+00015
+FPP CONTRL
+00016
+FPP CONTRL
+00017
+FPP CONTRL
+00018
+FPP CONTRL
+00019
+FPP CONTRL
+00020
+FPP CONTRL
+00021
+FPP CONTRL
+00022
+FPP CONTRL
+00023
+AnyFireActiveNoDely
+00027
+AnyGasFlameHeatManL1
+00028
+AnyGasFlameHeatManLE
+00029
+AuxMainCO2Released
+00030
+AuxReserveCO2Reled
+00031
+AGENT RELEASE SUPPR
+00032
+AGENT RELEASED
+00033
+ALARM HI GAS SHTDN
+00034
+ALARM LO GAS
+00035
+CRITICAL PATH
+00036
+FIRE/GAS MON SHUTDWN
+00037
+GENERAL ALARM
+00038
+RELAY FAULT 
+00039
+AE-3004A
+00040
+AE-3004A
+00041
+AE-3004A
+00042
+AE-3004A
+00043
+AE-3004A
+00044
+AE-3004A
+00045
+AE-3004A
+00046
+AE-3004A
+00047
+AE-3004A
+00048
+AE-3004A
+00049
+AE-3004A
+00050
+AE-3004A
+00051
+AE-3004A
+00052
+AE-3004B
+00060
+AE-3004B
+00061
+AE-3004B
+00062
+AE-3004B
+00063
+AE-3004B
+00064
+AE-3004B
+00065
+AE-3004B
+00066
+AE-3004B
+00067
+AE-3004B
+00068
+AE-3004B
+00069
+AE-3004B
+00070
+AE-3004B
+00071
+AE-3004B
+00072
+AE-3004C
+00080
+AE-3004C
+00081
+AE-3004C
+00082
+AE-3004C
+00083
+AE-3004C
+00084
+AE-3004C
+00085
+AE-3004C
+00086
+AE-3004C
+00087
+AE-3004C
+00088
+AE-3004C
+00089
+AE-3004C
+00090
+AE-3004C
+00091
+AE-3004C
+00092
+AE-3029
+00100
+AE-3029
+00101
+AE-3029
+00102
+AE-3029
+00103
+AE-3029
+00104
+AE-3029
+00105
+AE-3029
+00106
+AE-3029
+00107
+AE-3029
+00108
+AE-3029
+00109
+AE-3029
+00110
+AE-3029
+00111
+AE-3029
+00112
+AE-3029
+00113
+AE-3029
+00114
+AE-3030
+00122
+AE-3030
+00123
+AE-3030
+00124
+AE-3030
+00125
+AE-3030
+00126
+AE-3030
+00127
+AE-3030
+00128
+AE-3030
+00129
+AE-3030
+00130
+AE-3030
+00131
+AE-3030
+00132
+AE-3030
+00133
+AE-3030
+00134
+AE-3030
+00135
+AE-3030
+00136
+YSA-3006A
+00310
+YSA-3006A
+00311
+YSA-3006A
+00312
+YSA-3006A
+00313
+YSA-3006A
+00314
+YSA-3006B 
+00318
+YSA-3006B 
+00319
+YSA-3006B 
+00320
+YSA-3006B 
+00321
+YSA-3006B 
+00322
+HS-3092,3093
+00370
+HS-3092,3093
+00371
+HS-3092,3093
+00372
+HS-3092,3093
+00373
+HS-3092,3093
+00374
+TS-3003-3014
+00380
+TS-3003-3014
+00381
+TS-3003-3014
+00382
+TS-3003-3014
+00383
+TS-3003-3014
+00384
+HS-3040
+00385
+HS-3040
+00386
+HS-3040
+00387
+HS-3040
+00388
+HS-3040
+00389
+YSL-3036
+00390
+YSL-3036
+00391
+YSL-3036
+00392
+YSL-3036
+00393
+YSL-3036
+00394
+YSL-3041
+00395
+YSL-3041
+00396
+YSL-3041
+00397
+YSL-3041
+00398
+YSL-3041
+00399
+YSL-3042
+00400
+YSL-3042
+00401
+YSL-3042
+00402
+YSL-3042
+00403
+YSL-3042
+00404
+YSZ-3171
+00425
+YSZ-3171
+00426
+YSZ-3171
+00427
+YSZ-3171
+00428
+YSZ-3171
+00429
+YSZ-3172
+00431
+YSZ-3172
+00432
+YSZ-3172
+00433
+YSZ-3172
+00434
+YSZ-3172
+00435
+ALARM LO GAS
+00480
+ALARM LO GAS
+00481
+AGENT RELEASED
+00482
+AGENT RELEASED
+00483
+CRITICAL PATH
+00484
+CRITICAL PATH
+00485
+FIRE/GAS MON SHUTDWN
+00486
+FIRE/GAS MON SHUTDWN
+00487
+ALARM HI GAS SHTDN
+00490
+ALARM HI GAS SHTDN
+00491
+AE-3004A
+40001
+AE-3004A
+40003
+AE-3004A
+40005
+AE-3004B
+40007
+AE-3004B
+40009
+AE-3004B
+40011
+AE-3004C
+40013
+AE-3004C
+40015
+AE-3004C
+40017
+AE-3029
+40019
+AE-3029
+40021
+AE-3029
+40023
+AE-3030
+40025
+AE-3030
+40027
+AE-3030
+40029
+AnyGasFlameHeatManLE
+Any Gas Flame Heat Manual Alarm
+AnyGasFlameHeatManOS
+Any Gas Flame HeatManualAlarmOS
+MainCO2Released
+Main CO2 Bank Released
+ReserveCO2Released
+Reserve CO2 Bank Released
+AnyFireActiveNoDely
+Fire Active No Time Delay
+Release Acknowledge
+OK to Reset Panel
+AnyVotedFlameActive
+Any Voted Flame Detected
+GenGasFlameHeatManL
+Gen Gas Flame Heat Manual Alm
+GenGasFlameHeatManOS
+Gen Gas Flame Heat Manual AlmOS
+GenReserveCO2Reled
+Gen Reserve CO2 Bank Released
+GenMainCO2Released
+Gen Main CO2 Bank Released
+GenAnyFireActiveNoDy
+Gen Fire Active No Time Delay
+GenAnyVotedFlameAct
+Gen Any Voted Flame Detected
+AuxGasFlameHeatManL
+Aux Gas Flame Heat Manual Alm
+AuxGasFlameHeatManOS
+Aux Gas Flame Heat Manual AlmOS
+GenRelease Ack
+OK to Reset Panel
+AuxRelease Ack
+OK to Reset Panel
+AuxMainCO2Released
+Aux Main CO2 Bank Released
+AuxReserveCO2Reled
+Aux Reserve CO2 Bank Released
+AuxAnyFireActiveNoDy
+Aux Fire Active No Time Delay
+AuxAnyVotedFlameAct
+Aux Any Voted Flame Detected
+AnyGasFlameHeatManL1 
+Any Gas Flame Heat Manual Alarm1
+AnyGasFlameHeatManO1 
+Any Gas Flame Heat Manual Alarm1
+192.168.127.251
+192.168.127.253
+255.255.255.000
+255.255.255.255
+4001
+5001
+192.168.127.252
+192.168.127.254
+255.255.255.000
+255.255.255.255
+4001
+5001
+192.168.127.251
+4001
+255.255.255.000
+255.255.255.255
+192.168.127.253
+4001
+255.255.255.000
+255.255.255.255
+EDIO 1
+TCP
+Device Removed
+EDIO 1
+Device Removed
+Control Message Fault
+EDIO 1
+Control Message Fault
+Wrong Device Type
+EDIO 1
+Wrong Device Type
+Memory Fault
+EDIO 1
+Memory Fault
+Invalid Configuration
+EDIO 1
+Invalid Configuration
+Fault
+EDIO 1
+Fault
+Unable to Configure
+EDIO 1
+Unable to Configure
+LON A Device Offline
+EDIO 1
+LON A Device Offline
+LON B Device Offline
+EDIO 1
+LON B Device Offline
+Device Offline
+EDIO 1
+Device Offline
+Com 1 Fault
+EDIO 1
+Com 1 Fault
+Com 2 Fault
+EDIO 1
+Com 2 Fault
+Supply Voltage Fault
+EDIO 1
+Supply Voltage Fault
+LON Rogue device
+EDIO 1
+LON Rogue device
+Channel Active
+EDIO 1
+Channel 1 Channel Active
+Channel Shorted
+EDIO 1
+Channel 1 Channel Shorted
+Channel Open
+EDIO 1
+Channel 1 Channel Open
+Inhibit Status
+EDIO 1
+Channel 1 Inhibit Status
+Fault
+EDIO 1
+Channel 1 Fault
+Channel Active
+EDIO 1
+Channel 2 Channel Active
+Channel Shorted
+EDIO 1
+Channel 2 Channel Shorted
+Channel Open
+EDIO 1
+Channel 2 Channel Open
+Inhibit Status
+EDIO 1
+Channel 2 Inhibit Status
+Fault
+EDIO 1
+Channel 2 Fault
+Channel Active
+EDIO 1
+Channel 3 Channel Active
+Channel Shorted
+EDIO 1
+Channel 3 Channel Shorted
+Channel Open
+EDIO 1
+Channel 3 Channel Open
+Inhibit Status
+EDIO 1
+Channel 3 Inhibit Status
+Fault
+EDIO 1
+Channel 3 Fault
+Channel Active
+EDIO 1
+Channel 4 Channel Active
+Channel Shorted
+EDIO 1
+Channel 4 Channel Shorted
+Channel Open
+EDIO 1
+Channel 4 Channel Open
+Inhibit Status
+EDIO 1
+Channel 4 Inhibit Status
+Fault
+EDIO 1
+Channel 4 Fault
+Channel Active
+EDIO 1
+Channel 5 Channel Active
+Channel Shorted
+EDIO 1
+Channel 5 Channel Shorted
+Channel Open
+EDIO 1
+Channel 5 Channel Open
+Inhibit Status
+EDIO 1
+Channel 5 Inhibit Status
+Fault
+EDIO 1
+Channel 5 Fault
+Channel Active
+EDIO 1
+Channel 6 Channel Active
+Channel Shorted
+EDIO 1
+Channel 6 Channel Shorted
+Channel Open
+EDIO 1
+Channel 6 Channel Open
+Inhibit Status
+EDIO 1
+Channel 6 Inhibit Status
+Fault
+EDIO 1
+Channel 6 Fault
+Channel Active
+EDIO 1
+Channel 7 Channel Active
+Channel Shorted
+EDIO 1
+Channel 7 Channel Shorted
+Channel Open
+EDIO 1
+Channel 7 Channel Open
+Inhibit Status
+EDIO 1
+Channel 7 Inhibit Status
+Fault
+EDIO 1
+Channel 7 Fault
+Channel Active
+EDIO 1
+Channel 8 Channel Active
+Channel Shorted
+EDIO 1
+Channel 8 Channel Shorted
+Channel Open
+EDIO 1
+Channel 8 Channel Open
+Inhibit Status
+EDIO 1
+Channel 8 Inhibit Status
+Fault
+EDIO 1
+Channel 8 Fault
+HS-3092,3093
+YSA-3006B 
+YSA-3006A
+TS-3003-3014
+YSL-3041
+YSL-3042
+YSL-3036
+HS-3040
+AEROSOL RELEASE STATION 
+FIRE/GAS HORN OUTSIDE 
+FIRE/GAS HORN INSIDE 
+THERMAL SPOT DETECTOR
+FIRE/GAS BEACON OUTSIDE 
+FIRE/GAS BEACON OUTSIDE 
+FIRE/GAS BEACON INSIDE 
+HORN ACKNOWLEDGE
+EDIO 2
+TCP
+Device Removed
+EDIO 2
+Device Removed
+Control Message Fault
+EDIO 2
+Control Message Fault
+Wrong Device Type
+EDIO 2
+Wrong Device Type
+Memory Fault
+EDIO 2
+Memory Fault
+Invalid Configuration
+EDIO 2
+Invalid Configuration
+Fault
+EDIO 2
+Fault
+Unable to Configure
+EDIO 2
+Unable to Configure
+LON A Device Offline
+EDIO 2
+LON A Device Offline
+LON B Device Offline
+EDIO 2
+LON B Device Offline
+Device Offline
+EDIO 2
+Device Offline
+Com 1 Fault
+EDIO 2
+Com 1 Fault
+Com 2 Fault
+EDIO 2
+Com 2 Fault
+Supply Voltage Fault
+EDIO 2
+Supply Voltage Fault
+LON Rogue device
+EDIO 2
+LON Rogue device
+Channel Active
+EDIO 2
+Channel 1 Channel Active
+Channel Shorted
+EDIO 2
+Channel 1 Channel Shorted
+Channel Open
+EDIO 2
+Channel 1 Channel Open
+Inhibit Status
+EDIO 2
+Channel 1 Inhibit Status
+Fault
+EDIO 2
+Channel 1 Fault
+Channel Active
+EDIO 2
+Channel 2 Channel Active
+Channel Shorted
+EDIO 2
+Channel 2 Channel Shorted
+Channel Open
+EDIO 2
+Channel 2 Channel Open
+Inhibit Status
+EDIO 2
+Channel 2 Inhibit Status
+Fault
+EDIO 2
+Channel 2 Fault
+Channel Active
+EDIO 2
+Channel 3 Channel Active
+Channel Shorted
+EDIO 2
+Channel 3 Channel Shorted
+Channel Open
+EDIO 2
+Channel 3 Channel Open
+Inhibit Status
+EDIO 2
+Channel 3 Inhibit Status
+Fault
+EDIO 2
+Channel 3 Fault
+Channel Active
+EDIO 2
+Channel 4 Channel Active
+Channel Shorted
+EDIO 2
+Channel 4 Channel Shorted
+Channel Open
+EDIO 2
+Channel 4 Channel Open
+Inhibit Status
+EDIO 2
+Channel 4 Inhibit Status
+Fault
+EDIO 2
+Channel 4 Fault
+Channel Active
+EDIO 2
+Channel 5 Channel Active
+Channel Shorted
+EDIO 2
+Channel 5 Channel Shorted
+Channel Open
+EDIO 2
+Channel 5 Channel Open
+Inhibit Status
+EDIO 2
+Channel 5 Inhibit Status
+Fault
+EDIO 2
+Channel 5 Fault
+Channel Active
+EDIO 2
+Channel 6 Channel Active
+Channel Shorted
+EDIO 2
+Channel 6 Channel Shorted
+Channel Open
+EDIO 2
+Channel 6 Channel Open
+Inhibit Status
+EDIO 2
+Channel 6 Inhibit Status
+Fault
+EDIO 2
+Channel 6 Fault
+Channel Active
+EDIO 2
+Channel 7 Channel Active
+Channel Shorted
+EDIO 2
+Channel 7 Channel Shorted
+Channel Open
+EDIO 2
+Channel 7 Channel Open
+Inhibit Status
+EDIO 2
+Channel 7 Inhibit Status
+Fault
+EDIO 2
+Channel 7 Fault
+Channel Active
+EDIO 2
+Channel 8 Channel Active
+Channel Shorted
+EDIO 2
+Channel 8 Channel Shorted
+Channel Open
+EDIO 2
+Channel 8 Channel Open
+Inhibit Status
+EDIO 2
+Channel 8 Inhibit Status
+Fault
+EDIO 2
+Channel 8 Fault
+YSZ-3171
+YSZ-3172
+FIRE SUPPRESSANT RELEASE AEROSOL 1 
+FIRE SUPPRESSANT RELEASE AEROSOL
+AE-3004A
+ANALYZER ELEM. COMB GAS DET
+%LFL
+Device Removed
+AE-3004A
+Device Removed
+High Alarm
+AE-3004A
+High Alarm
+Low Alarm
+AE-3004A
+Low Alarm
+Wrong Device Type
+AE-3004A
+Wrong Device Type
+Inhibit Status
+AE-3004A
+Inhibit Status
+Invalid Configuration
+AE-3004A
+Invalid Configuration
+Fault
+AE-3004A
+Fault
+Unable to Configure
+AE-3004A
+Unable to Configure
+LON A Device Offline
+AE-3004A
+LON A Device Offline
+LON B Device Offline
+AE-3004A
+LON B Device Offline
+Device Offline
+AE-3004A
+Device Offline
+Com 1 Fault
+AE-3004A
+Com 1 Fault
+Com 2 Fault
+AE-3004A
+Com 2 Fault
+Sensor Fault
+AE-3004A
+Sensor Fault
+Calibration Active
+AE-3004A
+Calibration Active
+Power-up
+AE-3004A
+Power-up
+Calibration Fault
+AE-3004A
+Calibration Fault
+Supply Voltage Fault
+AE-3004A
+Supply Voltage Fault
+Rogue device
+AE-3004A
+Rogue device
+AE-3004B
+ANALYZER ELEM. COMB GAS DET
+%LFL
+Device Removed
+AE-3004B
+Device Removed
+High Alarm
+AE-3004B
+High Alarm
+Low Alarm
+AE-3004B
+Low Alarm
+Wrong Device Type
+AE-3004B
+Wrong Device Type
+Inhibit Status
+AE-3004B
+Inhibit Status
+Invalid Configuration
+AE-3004B
+Invalid Configuration
+Fault
+AE-3004B
+Fault
+Unable to Configure
+AE-3004B
+Unable to Configure
+LON A Device Offline
+AE-3004B
+LON A Device Offline
+LON B Device Offline
+AE-3004B
+LON B Device Offline
+Device Offline
+AE-3004B
+Device Offline
+Com 1 Fault
+AE-3004B
+Com 1 Fault
+Com 2 Fault
+AE-3004B
+Com 2 Fault
+Sensor Fault
+AE-3004B
+Sensor Fault
+Calibration Active
+AE-3004B
+Calibration Active
+Power-up
+AE-3004B
+Power-up
+Calibration Fault
+AE-3004B
+Calibration Fault
+Supply Voltage Fault
+AE-3004B
+Supply Voltage Fault
+Rogue device
+AE-3004B
+Rogue device
+AE-3004C
+ANALYZER ELEM. COMB GAS DET
+%LFL
+Device Removed
+AE-3004C
+Device Removed
+High Alarm
+AE-3004C
+High Alarm
+Low Alarm
+AE-3004C
+Low Alarm
+Wrong Device Type
+AE-3004C
+Wrong Device Type
+Inhibit Status
+AE-3004C
+Inhibit Status
+Invalid Configuration
+AE-3004C
+Invalid Configuration
+Fault
+AE-3004C
+Fault
+Unable to Configure
+AE-3004C
+Unable to Configure
+LON A Device Offline
+AE-3004C
+LON A Device Offline
+LON B Device Offline
+AE-3004C
+LON B Device Offline
+Device Offline
+AE-3004C
+Device Offline
+Com 1 Fault
+AE-3004C
+Com 1 Fault
+Com 2 Fault
+AE-3004C
+Com 2 Fault
+Sensor Fault
+AE-3004C
+Sensor Fault
+Calibration Active
+AE-3004C
+Calibration Active
+Power-up
+AE-3004C
+Power-up
+Calibration Fault
+AE-3004C
+Calibration Fault
+Supply Voltage Fault
+AE-3004C
+Supply Voltage Fault
+Rogue device
+AE-3004C
+Rogue device
+AE-3029
+AE-3029 TURBINE OUTLET
+%LEL
+Device Removed
+AE-3029
+Device Removed
+High Alarm
+AE-3029
+High Alarm
+Low Alarm
+AE-3029
+Low Alarm
+Wrong Device Type
+AE-3029
+Wrong Device Type
+Memory Fault
+AE-3029
+Memory Fault
+Inhibit Status
+AE-3029
+Inhibit Status
+Zero Drift
+AE-3029
+Zero Drift
+Invalid Configuration
+AE-3029
+Invalid Configuration
+Fault
+AE-3029
+Fault
+Unable to Configure
+AE-3029
+Unable to Configure
+LON A Device Offline
+AE-3029
+LON A Device Offline
+LON B Device Offline
+AE-3029
+LON B Device Offline
+Device Offline
+AE-3029
+Device Offline
+Com 1 Fault
+AE-3029
+Com 1 Fault
+Com 2 Fault
+AE-3029
+Com 2 Fault
+Sensor Fault
+AE-3029
+Sensor Fault
+Calibration Active
+AE-3029
+Calibration Active
+Calibration Fault
+AE-3029
+Calibration Fault
+Supply Voltage Fault
+AE-3029
+Supply Voltage Fault
+Dirty Optics
+AE-3029
+Dirty Optics
+Internal Comm Fault
+AE-3029
+Internal Comm Fault
+Warm-up
+AE-3029
+Warm-up
+Open Lamp
+AE-3029
+Open Lamp
+LON CPU Memory Fault
+AE-3029
+LON CPU Memory Fault
+Rogue device
+AE-3029
+Rogue device
+O?[
+AE-3030
+AE-3030 TURBINE OUTLET
+%LEL
+Device Removed
+AE-3030
+Device Removed
+High Alarm
+AE-3030
+High Alarm
+Low Alarm
+AE-3030
+Low Alarm
+Wrong Device Type
+AE-3030
+Wrong Device Type
+Memory Fault
+AE-3030
+Memory Fault
+Inhibit Status
+AE-3030
+Inhibit Status
+Zero Drift
+AE-3030
+Zero Drift
+Invalid Configuration
+AE-3030
+Invalid Configuration
+Fault
+AE-3030
+Fault
+Unable to Configure
+AE-3030
+Unable to Configure
+LON A Device Offline
+AE-3030
+LON A Device Offline
+LON B Device Offline
+AE-3030
+LON B Device Offline
+Device Offline
+AE-3030
+Device Offline
+Com 1 Fault
+AE-3030
+Com 1 Fault
+Com 2 Fault
+AE-3030
+Com 2 Fault
+Sensor Fault
+AE-3030
+Sensor Fault
+Calibration Active
+AE-3030
+Calibration Active
+Calibration Fault
+AE-3030
+Calibration Fault
+Supply Voltage Fault
+AE-3030
+Supply Voltage Fault
+Dirty Optics
+AE-3030
+Dirty Optics
+Internal Comm Fault
+AE-3030
+Internal Comm Fault
+Warm-up
+AE-3030
+Warm-up
+Open Lamp
+AE-3030
+Open Lamp
+LON CPU Memory Fault
+AE-3030
+LON CPU Memory Fault
+Rogue device
+AE-3030
+Rogue device
+O?[
