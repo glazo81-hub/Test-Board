@@ -363,8 +363,9 @@ const projectNamespaces = {
 const projectScopedTags = {
   "LM6000 ALLESTEC": new Set([
     "ALL-800",
-    "YSL-6345", "HS-6308", "HS-6309", "TS-6310", "YSA-6347", "BE-6311", "LM6-AE-3029", "LM6-AE-3030", "AE-6313", "TS-6307", "YSA-6306", "HS-6312",
-    "TS-6303", "YSL-6336", "AE-6304A", "AE-6304B", "AE-6304C", "AE-6304D", "AE-6304E", "BE-6300", "BE-6302", "BE-6335", "YSL-6344", "YSL-6306", "TS-6314", "YSA-6346",
+    "AE-6304A", "AE-6304B", "AE-6304C", "AE-6304D", "AE-6304E", "LM6-AE-3029", "LM6-AE-3030",
+    "BE-6300", "BE-6302", "BE-6335", "TS-6303", "TS-6314", "YSL-6306", "YSL-6336", "YSA-6306", "YSA-6346",
+    "AE-6313", "BE-6311", "TS-6307", "TS-6310", "HS-6308", "HS-6309", "HS-6312", "YSA-6347", "YSL-6344", "YSL-6345",
     "HS-6305", "HS-6363", "SOV-6359", "SOV-6360", "SOV-6361", "SOV-6362", "ZS-6364", "PSH-6348A", "PSHH-6348B", "CO2-BLOCK", "CO2-PSH",
     "OUT-HIGH-GAS-TURBINE", "OUT-LOW-GAS-TURBINE", "OUT-HIGH-GAS-GENERATOR", "OUT-LOW-GAS-GENERATOR",
   ]),
@@ -598,18 +599,6 @@ let trainingTimers = [];
 let trainingWatchdogId = null;
 let trainingTimelineOffsetSeconds = Number(localStorage.getItem("eqp-training-offset-seconds") || "0");
 let fullscreenAttempted = false;
-const allestecDesignSize = { width: 1580, height: 782 };
-
-function fitAllestecBoard() {
-  const viewport = document.querySelector(".allestec-fixed-viewport");
-  const board = document.querySelector(".allestec-fixed-viewport > .allestec-board");
-  if (!viewport || !board) return;
-  const scale = Math.min(
-    viewport.clientWidth / allestecDesignSize.width,
-    viewport.clientHeight / allestecDesignSize.height
-  );
-  board.style.transform = `translate(-50%, -50%) scale(${Math.max(0.1, scale)})`;
-}
 
 async function requestPlatformFullscreen() {
   if (document.fullscreenElement || fullscreenAttempted) return;
@@ -768,7 +757,7 @@ function updateAccessState() {
   document.querySelectorAll("#device-editor input:not(#editor-tag), #device-editor select").forEach((field) => {
     field.disabled = !admin;
   });
-  document.querySelectorAll("#device-save, #device-revert, #device-save-json, .admin-only").forEach((button) => {
+  document.querySelectorAll("#device-save, #device-revert, #device-save-json, #layout-smaller, #layout-larger, #layout-reset, #edit-layout-toggle, .admin-only").forEach((button) => {
     button.disabled = !admin;
   });
   document.querySelectorAll(".action-button").forEach((button) => {
@@ -2768,6 +2757,10 @@ function renderAll() {
   renderAllestecCo2VisualState();
   renderAllestecCo2CountdownDisplay();
   updateHornSound();
+  if (!allestecDragState && !allestecGraphicDragState) {
+    applyAllestecSavedLayout();
+    applyAllestecGraphicLayoutState();
+  }
 }
 
 function renderStartMenu() {
@@ -3610,19 +3603,19 @@ function handleStartMenuAction(action) {
     openProject("LM6000 Allestec");
     setAllestecMoveMode(true);
   }
+  if (action === "save-layout-lm6000-allestec") {
+    openProject("LM6000 Allestec");
+    saveAndCloseAllestecDeviceEditMode();
+  }
   if (action === "edit-devices-tm2500") {
     openProject("TM2500 XPRESS");
-    const editor = document.querySelector("#package-view .layout-editor");
-    if (editor) editor.hidden = false;
     setLayoutEditMode(true);
   }
   if (action === "edit-devices-lm6000-eqp") {
     openProject("LM6000 EQP");
-    setAccessMessage("LM6000 EQP layout opened. Add device tags to this clean base plan before positioning them.");
   }
   if (action === "edit-devices-lms100") {
     openProject("LMS100 PA");
-    setAccessMessage("LMS100 layout opened. This turbine does not have configured graphic devices yet.");
   }
   if (["alarm-report", "event-report", "fat-report", "export-pdf"].includes(action)) openViewFromMenu("reports");
   if (action === "import-drawings") openViewFromMenu("drawing");
@@ -3705,7 +3698,10 @@ function showView(viewName, trackHistory = true) {
     window.requestAnimationFrame(resizeLm6000SketchCanvas);
   }
   if (targetViewName === "lm6000-allestec") {
-    window.requestAnimationFrame(fitAllestecBoard);
+    window.requestAnimationFrame(() => {
+      applyAllestecSavedLayout();
+      applyAllestecGraphicLayoutState();
+    });
   }
   if (targetViewName === "project-placeholder") {
     renderProjectPlaceholder();
@@ -3887,6 +3883,7 @@ function selectEditElement(element) {
 }
 
 function setLayoutEditMode(enabled) {
+  if (enabled && !requireAdmin("edit layout")) return;
   layoutEditMode = enabled;
   document.getElementById("package-view").classList.toggle("layout-edit-mode", enabled);
   document.querySelector(".layout-editor").classList.toggle("editing", enabled);
@@ -3899,6 +3896,7 @@ function setLayoutEditMode(enabled) {
 }
 
 function scaleSelected(multiplier) {
+  if (!requireAdmin("edit layout")) return;
   if (!selectedEditElement) return;
   const state = getEditState(selectedEditElement);
   state.scale = Math.max(0.35, Math.min(2.5, Number((state.scale * multiplier).toFixed(2))));
@@ -3907,6 +3905,7 @@ function scaleSelected(multiplier) {
 }
 
 function resetLayout() {
+  if (!requireAdmin("reset layout")) return;
   localStorage.removeItem(layoutStorageKey);
   window.location.reload();
 }
@@ -3958,20 +3957,10 @@ function setAllestecDeviceTransform(element, state) {
 
 function applyAllestecSavedLayout() {
   const saved = getAllestecLayoutState();
-  let migratedLegacyHtmlPosition = false;
   document.querySelectorAll("#lm6000-allestec-view .device-badge[data-device], #lm6000-allestec-view .allestec-html-device[data-device]").forEach((element) => {
     const state = saved[element.dataset.device];
-    // AE-3029/3030 used to be HTML overlays stored in percentages. They are
-    // SVG gas badges now, so retain the engineered SVG coordinates instead of
-    // applying incompatible legacy percentage values.
-    if (element instanceof SVGElement && state?.unit === "%") {
-      delete saved[element.dataset.device];
-      migratedLegacyHtmlPosition = true;
-      return;
-    }
     if (state) setAllestecDeviceTransform(element, state);
   });
-  if (migratedLegacyHtmlPosition) saveAllestecLayoutState(saved);
 }
 
 function setAllestecMoveStatus(text) {
@@ -3985,7 +3974,7 @@ function setAllestecMoveMode(enabled) {
   document.getElementById("lm6000-allestec-view")?.classList.toggle("allestec-edit-mode", enabled);
   document.getElementById("allestec-move-toggle")?.classList.toggle("active", enabled);
   const saveButton = document.getElementById("allestec-save-layout");
-  if (saveButton) saveButton.hidden = !enabled;
+  if (saveButton) saveButton.hidden = true;
   const toggle = document.getElementById("allestec-move-toggle");
   if (toggle) toggle.textContent = enabled ? "MOVING ON" : "MOVE DEVICES";
   setAllestecMoveStatus(enabled ? "Drag any tag to move it" : "");
@@ -4800,6 +4789,63 @@ function getElementDeviceIds(element) {
     .filter((tag) => devices[tag]);
 }
 
+function findAllestecDeviceBadge(event) {
+  const selector = ".allestec-html-device[data-device], .allestec-device-layer .device-badge[data-device], .co2-device-layer .device-badge[data-device]";
+  const pathMatch = event.composedPath?.().find((item) => item instanceof Element && item.matches?.(selector));
+  const directMatch = pathMatch || event.target.closest?.(selector);
+  if (directMatch) return directMatch;
+
+  const layer = event.target.closest?.(".allestec-device-layer, .co2-device-layer");
+  if (!layer) return null;
+  const point = { x: event.clientX, y: event.clientY };
+  const candidates = Array.from(layer.querySelectorAll(".device-badge[data-device]"));
+  return candidates.find((badge) => {
+    const rect = badge.getBoundingClientRect();
+    const pad = 26;
+    return point.x >= rect.left - pad && point.x <= rect.right + pad && point.y >= rect.top - pad && point.y <= rect.bottom + pad;
+  }) || null;
+}
+
+function beginAllestecDeviceDrag(event, badge) {
+  if (!allestecMoveMode || !badge) return;
+  event.preventDefault();
+  event.stopPropagation();
+
+  document.querySelectorAll(".allestec-selected-edit").forEach((item) => item.classList.remove("allestec-selected-edit"));
+  badge.classList.add("allestec-selected-edit");
+  setAllestecMoveStatus(`Moving: ${badge.dataset.device}`);
+
+  if (badge.classList.contains("allestec-html-device")) {
+    const parent = badge.offsetParent || badge.parentElement;
+    const rect = parent.getBoundingClientRect();
+    const original = getAllestecDeviceTransform(badge);
+    allestecDragState = {
+      element: badge,
+      mode: "html-device",
+      startClientX: event.clientX,
+      startClientY: event.clientY,
+      parentWidth: rect.width,
+      parentHeight: rect.height,
+      originalX: original.x,
+      originalY: original.y,
+      scale: original.scale,
+    };
+    return;
+  }
+
+  const svg = badge.ownerSVGElement;
+  const startPoint = getSvgPoint(event, svg);
+  const original = getAllestecDeviceTransform(badge);
+  allestecDragState = {
+    element: badge,
+    startX: startPoint.x,
+    startY: startPoint.y,
+    originalX: original.x,
+    originalY: original.y,
+    scale: original.scale,
+  };
+}
+
 document.querySelectorAll(".field-device, .eqp-controller, .device-badge, .topology-node, .controller-node, .wired-point").forEach((button) => {
   button.addEventListener("click", () => {
     if (button.closest(".co2-device-layer")) return;
@@ -4886,44 +4932,7 @@ document.getElementById("lm6000-allestec-view")?.addEventListener("dblclick", (e
 
 document.getElementById("lm6000-allestec-view")?.addEventListener("mousedown", (event) => {
   if (!allestecMoveMode) return;
-  const badge = event.target.closest?.(".allestec-html-device[data-device], .allestec-device-layer .device-badge[data-device], .co2-device-layer .device-badge[data-device]");
-  if (!badge) return;
-  event.preventDefault();
-  event.stopPropagation();
-
-  document.querySelectorAll(".allestec-selected-edit").forEach((item) => item.classList.remove("allestec-selected-edit"));
-  badge.classList.add("allestec-selected-edit");
-  setAllestecMoveStatus(`Moving: ${badge.dataset.device}`);
-
-  if (badge.classList.contains("allestec-html-device")) {
-    const parent = badge.offsetParent || badge.parentElement;
-    const rect = parent.getBoundingClientRect();
-    const original = getAllestecDeviceTransform(badge);
-    allestecDragState = {
-      element: badge,
-      mode: "html-device",
-      startClientX: event.clientX,
-      startClientY: event.clientY,
-      parentWidth: rect.width,
-      parentHeight: rect.height,
-      originalX: original.x,
-      originalY: original.y,
-      scale: original.scale,
-    };
-    return;
-  }
-
-  const svg = badge.ownerSVGElement;
-  const startPoint = getSvgPoint(event, svg);
-  const original = getAllestecDeviceTransform(badge);
-  allestecDragState = {
-    element: badge,
-    startX: startPoint.x,
-    startY: startPoint.y,
-    originalX: original.x,
-    originalY: original.y,
-    scale: original.scale,
-  };
+  beginAllestecDeviceDrag(event, findAllestecDeviceBadge(event));
 });
 
 document.querySelectorAll(".co2-hitbox[data-device]").forEach((hitbox) => {
@@ -5143,13 +5152,6 @@ applyAllestecSavedLayout();
 applyAllestecGraphicLayoutState();
 applyAllestecCommsMap();
 selectCommsModule("relay1");
-fitAllestecBoard();
-if (window.ResizeObserver) {
-  const allestecViewport = document.querySelector(".allestec-fixed-viewport");
-  if (allestecViewport) new ResizeObserver(fitAllestecBoard).observe(allestecViewport);
-} else {
-  window.addEventListener("resize", fitAllestecBoard);
-}
 
 document.querySelectorAll("#lm6000-allestec-view [data-allestec-layout-id]").forEach((element) => {
   element.addEventListener("mousedown", (event) => {
@@ -5187,25 +5189,7 @@ document.querySelectorAll("#lm6000-allestec-view [data-allestec-layout-id]").for
 
 document.querySelectorAll("#lm6000-allestec-view .device-badge[data-device]").forEach((element) => {
   element.addEventListener("mousedown", (event) => {
-    if (!allestecMoveMode) return;
-    event.preventDefault();
-    event.stopPropagation();
-
-    document.querySelectorAll(".allestec-selected-edit").forEach((item) => item.classList.remove("allestec-selected-edit"));
-    element.classList.add("allestec-selected-edit");
-    setAllestecMoveStatus(`Moving: ${element.dataset.device}`);
-
-    const svg = element.ownerSVGElement;
-    const startPoint = getSvgPoint(event, svg);
-    const original = getAllestecDeviceTransform(element);
-    allestecDragState = {
-      element,
-      startX: startPoint.x,
-      startY: startPoint.y,
-      originalX: original.x,
-      originalY: original.y,
-      scale: original.scale,
-    };
+    beginAllestecDeviceDrag(event, element);
   });
 });
 
@@ -5309,6 +5293,14 @@ document.querySelectorAll(".app-menu-button").forEach((button) => {
   });
 });
 
+document.querySelectorAll("[data-menu-action]").forEach((button) => {
+  button.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    handleStartMenuAction(button.dataset.menuAction);
+  });
+});
+
 document.addEventListener("click", (event) => {
   requestPlatformFullscreen();
   if (!event.target.closest(".app-menu")) {
@@ -5324,9 +5316,11 @@ document.addEventListener("keydown", (event) => {
   requestPlatformFullscreen();
 });
 
-document.querySelector(".app-menu-bar").addEventListener("click", (event) => {
+document.addEventListener("click", (event) => {
   const button = event.target.closest("[data-menu-action]");
   if (!button) return;
+  event.preventDefault();
+  event.stopPropagation();
   handleStartMenuAction(button.dataset.menuAction);
 });
 

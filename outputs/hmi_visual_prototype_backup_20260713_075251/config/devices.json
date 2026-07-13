@@ -1,0 +1,243 @@
+{
+  "project": {
+    "name": "TM2500 / LM2500 Xpress Fire & Gas Demo",
+    "controller": "EQP-001",
+    "description": "EQP test cell virtual device database for HMI simulation and future real-device mapping."
+  },
+  "devices": {
+    "AE-3004A": {
+      "type": "CGS Combustible Gas Detector",
+      "status": "Normal",
+      "value": "0% LEL",
+      "address": "Loop 1 / Node 03",
+      "area": "Turbine Enclosure",
+      "mode": "Virtual",
+      "highAlarm": "15% LEL",
+      "highHighAlarm": "25% LEL"
+    },
+    "AE-3004B": {
+      "type": "CGS Combustible Gas Detector",
+      "status": "Normal",
+      "value": "0% LEL",
+      "address": "Loop 1 / Node 04",
+      "area": "Turbine Enclosure",
+      "mode": "Virtual",
+      "highAlarm": "15% LEL",
+      "highHighAlarm": "25% LEL"
+    },
+    "AE-3004C": {
+      "type": "CGS Combustible Gas Detector",
+      "status": "Normal",
+      "value": "0% LEL",
+      "address": "Loop 1 / Node 05",
+      "area": "Turbine Enclosure",
+      "mode": "Virtual",
+      "highAlarm": "15% LEL",
+      "highHighAlarm": "25% LEL"
+    },
+    "AE-3029": {
+      "type": "IR Gas Detector",
+      "status": "Normal",
+      "value": "0% LEL",
+      "address": "Loop 1 / Node 29",
+      "area": "Exhaust Stack",
+      "mode": "Virtual",
+      "highAlarm": "5% LEL",
+      "highHighAlarm": "10% LEL"
+    },
+    "AE-3030": {
+      "type": "IR Gas Detector",
+      "status": "Normal",
+      "value": "0% LEL",
+      "address": "Loop 1 / Node 30",
+      "area": "Exhaust Stack",
+      "mode": "Virtual",
+      "highAlarm": "5% LEL",
+      "highHighAlarm": "10% LEL"
+    },
+    "EDIO-1": {
+      "type": "EQP EDIO Module",
+      "status": "Normal",
+      "value": "Inputs Ready",
+      "address": "Loop 1 / Node EDIO-1",
+      "area": "Turbine Enclosure I/O",
+      "mode": "Virtual"
+    },
+    "EDIO-2": {
+      "type": "EQP EDIO Module",
+      "status": "Normal",
+      "value": "Outputs Ready",
+      "address": "Loop 1 / Node EDIO-2",
+      "area": "Turbine Enclosure I/O",
+      "mode": "Virtual"
+    },
+    "TS-3003": {
+      "type": "Thermal Detector",
+      "status": "Normal",
+      "value": "Ready",
+      "address": "EDIO-1 / CH4 with TS-3014",
+      "area": "Turbine Enclosure",
+      "mode": "Virtual"
+    },
+    "TS-3014": {
+      "type": "Thermal Detector",
+      "status": "Normal",
+      "value": "Ready",
+      "address": "EDIO-1 / CH4 with TS-3003",
+      "area": "Turbine Enclosure",
+      "mode": "Virtual"
+    },
+    "HS-3081": {
+      "type": "LOTO / Suppression Inhibit",
+      "status": "Normal",
+      "value": "Ready",
+      "address": "Hardwired / Not on EDIO topology",
+      "area": "Front Door",
+      "mode": "Virtual"
+    },
+    "HS-3040": {
+      "type": "Horn Acknowledge Switch",
+      "status": "Normal",
+      "value": "Ready",
+      "address": "EDIO-1 / CH8",
+      "area": "Front Door",
+      "mode": "Virtual"
+    },
+    "HS-3091": {
+      "type": "Spare / Drawing Reference",
+      "status": "Normal",
+      "value": "Ready",
+      "address": "Not used for TM2500 manual release",
+      "area": "Reference",
+      "mode": "Virtual"
+    },
+    "HS-3093": {
+      "type": "Manual Aerosol Release Station",
+      "status": "Normal",
+      "value": "Ready",
+      "address": "EDIO-1 / CH1 with HS-3092",
+      "area": "Upper Door",
+      "mode": "Virtual"
+    },
+    "HS-3092": {
+      "type": "Manual Aerosol Release Station",
+      "status": "Normal",
+      "value": "Ready",
+      "address": "EDIO-1 / CH1 with HS-3093",
+      "area": "Lower Door",
+      "mode": "Virtual"
+    },
+    "YSA-3006A": {
+      "type": "Fire & Gas Horn",
+      "status": "Normal",
+      "value": "Ready",
+      "address": "EDIO-1 / CH3",
+      "area": "Top Enclosure",
+      "mode": "Virtual"
+    },
+    "YSA-3006B": {
+      "type": "Fire & Gas Horn",
+      "status": "Normal",
+      "value": "Ready",
+      "address": "EDIO-1 / CH2",
+      "area": "Front Lower",
+      "mode": "Virtual"
+    },
+    "YSL-3042": {
+      "type": "Strobe Light",
+      "status": "Normal",
+      "value": "Ready",
+      "address": "EDIO-1 / CH7",
+      "area": "Turbine Enclosure / Left of AE-3004A",
+      "mode": "Virtual"
+    },
+    "YSL-3036": {
+      "type": "Strobe Light",
+      "status": "Normal",
+      "value": "Ready",
+      "address": "EDIO-1 / CH6",
+      "area": "Lower Stack Side",
+      "mode": "Virtual"
+    },
+    "YSL-3041": {
+      "type": "Beacon / Strobe",
+      "status": "Normal",
+      "value": "Ready",
+      "address": "EDIO-1 / CH5",
+      "area": "Upper Stack Side",
+      "mode": "Virtual"
+    },
+    "YSZ-3171": {
+      "type": "Virtual Stat-X Aerosol Output",
+      "status": "Normal",
+      "value": "Ready",
+      "address": "EDIO-2 / CH5",
+      "area": "Upper Enclosure Corner",
+      "mode": "Virtual"
+    },
+    "YSZ-3172": {
+      "type": "Virtual Stat-X Aerosol Output",
+      "status": "Normal",
+      "value": "Ready",
+      "address": "EDIO-2 / CH6",
+      "area": "Lower Enclosure Corner",
+      "mode": "Virtual"
+    },
+    "EQP-001": {
+      "type": "Eagle Quantum Premier Controller",
+      "status": "Normal",
+      "value": "Online",
+      "address": "Controller / Node 01",
+      "area": "Fire Panel",
+      "mode": "Real / Virtual Lab"
+    },
+    "ALARM LO GAS": {
+      "type": "S3 Logic Alarm Summary",
+      "status": "Normal",
+      "value": "Ready",
+      "address": "S3 Logic",
+      "area": "Controller Logic",
+      "mode": "Virtual"
+    },
+    "ALARM HI GAS SHTDN": {
+      "type": "S3 Logic Alarm Summary",
+      "status": "Normal",
+      "value": "Ready",
+      "address": "S3 Logic",
+      "area": "Controller Logic",
+      "mode": "Virtual"
+    },
+    "FIRE/GAS MON SHUTDWN": {
+      "type": "S3 Logic Relay",
+      "status": "Normal",
+      "value": "Ready",
+      "address": "S3 Logic",
+      "area": "Controller Logic",
+      "mode": "Virtual"
+    },
+    "GENERAL ALARM": {
+      "type": "S3 Logic Relay",
+      "status": "Normal",
+      "value": "Ready",
+      "address": "S3 Logic",
+      "area": "Controller Logic",
+      "mode": "Virtual"
+    },
+    "AGENT RELEASED": {
+      "type": "S3 Logic Relay",
+      "status": "Normal",
+      "value": "Ready",
+      "address": "S3 Logic",
+      "area": "Controller Logic",
+      "mode": "Virtual"
+    },
+    "AGENT RELEASE SUPPR": {
+      "type": "S3 Logic Relay",
+      "status": "Normal",
+      "value": "Ready",
+      "address": "S3 Logic",
+      "area": "Controller Logic",
+      "mode": "Virtual"
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "project": "LM2500 Xpress",
+  "source": "LM2500 Xpress.s3n",
+  "notes": "Extracted S3 logic mapping for virtual HMI behavior. Suppression outputs remain virtual only.",
+  "gasSetpoints": {
+    "AE-3004A": { "low": "15% LEL", "high": "25% LEL" },
+    "AE-3004B": { "low": "15% LEL", "high": "25% LEL" },
+    "AE-3004C": { "low": "15% LEL", "high": "25% LEL" },
+    "AE-3029": { "low": "5% LEL", "high": "10% LEL" },
+    "AE-3030": { "low": "5% LEL", "high": "10% LEL" }
+  },
+  "aliases": {
+    "TS-3003": "TS-3003-3014",
+    "TS-3014": "TS-3003-3014",
+    "HS-3092": "HS-3092,3093",
+    "HS-3093": "HS-3092,3093"
+  },
+  "rules": [
+    {
+      "id": "CommonAlarm",
+      "description": "Any fire, gas alarm drives horns and strobes.",
+      "whenAny": [
+        "AE-3004A",
+        "AE-3004B",
+        "AE-3004C",
+        "AE-3029",
+        "AE-3030",
+        "HS-3092,3093",
+        "TS-3003-3014"
+      ],
+      "statuses": ["Low Gas", "High Gas", "Fire Alarm", "Alarm Active"],
+      "outputs": ["YSA-3006A", "YSA-3006B", "YSL-3036", "YSL-3041", "YSL-3042"]
+    },
+    {
+      "id": "ALARM LO GAS",
+      "description": "Low gas alarm summary.",
+      "whenAny": ["AE-3004A", "AE-3004B", "AE-3004C", "AE-3029", "AE-3030"],
+      "statuses": ["Low Gas"],
+      "outputs": ["ALARM LO GAS"]
+    },
+    {
+      "id": "ALARM HI GAS SHTDN",
+      "description": "High gas shutdown alarm summary.",
+      "whenAny": ["AE-3004A", "AE-3004B", "AE-3004C", "AE-3029", "AE-3030"],
+      "statuses": ["High Gas"],
+      "outputs": ["ALARM HI GAS SHTDN", "FIRE/GAS MON SHUTDWN", "GENERAL ALARM"]
+    },
+    {
+      "id": "AEROSOL RELEASE",
+      "description": "Virtual aerosol release logic from S3. No physical suppression is connected.",
+      "whenAny": ["HS-3092,3093", "TS-3003-3014"],
+      "statuses": ["Fire Alarm", "Alarm Active"],
+      "outputs": ["YSZ-3171", "YSZ-3172", "AGENT RELEASED", "AGENT RELEASE SUPPR"]
+    }
+  ]
+}

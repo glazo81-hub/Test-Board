@@ -1,0 +1,190 @@
+{
+  "intervalMs": 5000,
+  "slides": [
+    {
+      "src": "assets/slideshow/1-3-1500x1125.jpg",
+      "title": "1 3 1500X1125",
+      "caption": "Project reference image"
+    },
+    {
+      "src": "assets/slideshow/1.jpg",
+      "title": "1",
+      "caption": "Project reference image"
+    },
+    {
+      "src": "assets/slideshow/20200129_152105.jpg",
+      "title": "20200129 152105",
+      "caption": "Project reference image"
+    },
+    {
+      "src": "assets/slideshow/20221128_135424.jpg",
+      "title": "20221128 135424",
+      "caption": "Project reference image"
+    },
+    {
+      "src": "assets/slideshow/26.png",
+      "title": "26",
+      "caption": "Project reference image"
+    },
+    {
+      "src": "assets/slideshow/3.jpg",
+      "title": "3",
+      "caption": "Project reference image"
+    },
+    {
+      "src": "assets/slideshow/baterias.jpg",
+      "title": "Baterias",
+      "caption": "Project reference image"
+    },
+    {
+      "src": "assets/slideshow/BESS.jpg",
+      "title": "Bess",
+      "caption": "Project reference image"
+    },
+    {
+      "src": "assets/slideshow/BLESS BATERIAS.jpg",
+      "title": "Bless Baterias",
+      "caption": "Project reference image"
+    },
+    {
+      "src": "assets/slideshow/co2.jpg",
+      "title": "Co2",
+      "caption": "Project reference image"
+    },
+    {
+      "src": "assets/slideshow/CONTROL ROOM.jpg",
+      "title": "Control Room",
+      "caption": "Project reference image"
+    },
+    {
+      "src": "assets/slideshow/CONTROL.jpg",
+      "title": "Control",
+      "caption": "Project reference image"
+    },
+    {
+      "src": "assets/slideshow/GAS TURBINE.jpg",
+      "title": "Gas Turbine",
+      "caption": "Project reference image"
+    },
+    {
+      "src": "assets/slideshow/GE TURBINE.jpg",
+      "title": "Ge Turbine",
+      "caption": "Project reference image"
+    },
+    {
+      "src": "assets/slideshow/ge_lm2500_xpress.jpg",
+      "title": "Ge Lm2500 Xpress",
+      "caption": "Project reference image"
+    },
+    {
+      "src": "assets/slideshow/ge_splash.avif",
+      "title": "Ge Splash",
+      "caption": "Project reference image"
+    },
+    {
+      "src": "assets/slideshow/GE20LM2500XPRESS.jpg",
+      "title": "Ge20lm2500xpress",
+      "caption": "Project reference image"
+    },
+    {
+      "src": "assets/slideshow/hidroelectrica.jpg",
+      "title": "Hidroelectrica",
+      "caption": "Project reference image"
+    },
+    {
+      "src": "assets/slideshow/IMG_3989-1024x768.jpg",
+      "title": "Img 3989 1024X768",
+      "caption": "Project reference image"
+    },
+    {
+      "src": "assets/slideshow/LM.jpg",
+      "title": "Lm",
+      "caption": "Project reference image"
+    },
+    {
+      "src": "assets/slideshow/LM6000.jpg",
+      "title": "Lm6000",
+      "caption": "Project reference image"
+    },
+    {
+      "src": "assets/slideshow/lm9000_lateral.jpg",
+      "title": "Lm9000 Lateral",
+      "caption": "Project reference image"
+    },
+    {
+      "src": "assets/slideshow/LMS100.jpg",
+      "title": "Lms100",
+      "caption": "Project reference image"
+    },
+    {
+      "src": "assets/slideshow/mariposa_power_plant.png",
+      "title": "Mariposa Power Plant",
+      "caption": "Project reference image"
+    },
+    {
+      "src": "assets/slideshow/POWER PLANT 2.jpg",
+      "title": "Power Plant 2",
+      "caption": "Project reference image"
+    },
+    {
+      "src": "assets/slideshow/POWER PLANT1.jpg",
+      "title": "Power Plant1",
+      "caption": "Project reference image"
+    },
+    {
+      "src": "assets/slideshow/PWR_050115_DG_GE_Splash.avif",
+      "title": "Pwr 050115 Dg Ge Splash",
+      "caption": "Project reference image"
+    },
+    {
+      "src": "assets/slideshow/SAM_3869.JPG",
+      "title": "Sam 3869",
+      "caption": "Project reference image"
+    },
+    {
+      "src": "assets/slideshow/Screenshot 2026-06-15 080630.png",
+      "title": "Screenshot 2026 06 15 080630",
+      "caption": "Project reference image"
+    },
+    {
+      "src": "assets/slideshow/sharm_el_sheikh_ge.avif",
+      "title": "Sharm El Sheikh Ge",
+      "caption": "Project reference image"
+    },
+    {
+      "src": "assets/slideshow/sharm-el-sheikh-power-plant-.avif",
+      "title": "Sharm El Sheikh Power Plant ",
+      "caption": "Project reference image"
+    },
+    {
+      "src": "assets/slideshow/TM2500 GEN.jpg",
+      "title": "Tm2500 Gen",
+      "caption": "Project reference image"
+    },
+    {
+      "src": "assets/slideshow/tm2500_xpress_power_plant.avif",
+      "title": "Tm2500 Xpress Power Plant",
+      "caption": "Project reference image"
+    },
+    {
+      "src": "assets/slideshow/tm2500.jpg",
+      "title": "Tm2500",
+      "caption": "Project reference image"
+    },
+    {
+      "src": "assets/slideshow/TM2500XPRESS POWER PLANT.avif",
+      "title": "Tm2500xpress Power Plant",
+      "caption": "Project reference image"
+    },
+    {
+      "src": "assets/slideshow/TM8.jpg",
+      "title": "Tm8",
+      "caption": "Project reference image"
+    },
+    {
+      "src": "assets/slideshow/XPRESS.jpg",
+      "title": "Xpress",
+      "caption": "Project reference image"
+    }
+  ]
+}
