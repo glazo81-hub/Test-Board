@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>EQP Fire & Gas HMI Prototype</title>
-    <link rel="stylesheet" href="styles.css?v=hmi-gas-outputs-20260710a" />
+    <link rel="stylesheet" href="styles.css?v=hmi-gas-outputs-20260713j" />
   </head>
   <body>
     <section class="start-window" id="start-window">
@@ -48,10 +48,10 @@
             <button type="button" data-menu-action="change-admin-password">Change Admin Password</button>
             <button type="button" data-menu-action="info-library">Info Library</button>
             <span class="menu-separator"></span>
-            <button type="button" data-menu-action="edit-devices-tm2500">Edit Devices - TM2500</button>
-            <button type="button" data-menu-action="edit-devices-lm6000-allestec">Edit Devices - LM6000 Allestec</button>
-            <button type="button" data-menu-action="edit-devices-lm6000-eqp">Edit Devices - LM6000 EQP</button>
-            <button type="button" data-menu-action="edit-devices-lms100">Edit Devices - LMS100</button>
+            <button type="button" data-menu-action="edit-devices-tm2500">Tools - Layout - TM2500 XPRESS</button>
+            <button type="button" data-menu-action="edit-devices-lm6000-allestec">Tools - Layout - LM6000 Allestec</button>
+            <button type="button" data-menu-action="edit-devices-lm6000-eqp">Tools - Layout - LM6000 EQP</button>
+            <button type="button" data-menu-action="edit-devices-lms100">Tools - Layout - LMS100</button>
             <button type="button" data-menu-action="reset-simulation">Reset Simulation</button>
           </div>
         </div>
@@ -115,6 +115,20 @@
           <h1 id="hmi-project-heading">TM2500 / LM2500 XPRESS FIRE & GAS OVERVIEW</h1>
         </div>
         <div class="top-status">
+          <div class="app-menu tools-menu hmi-tools-menu">
+            <button class="app-menu-button" type="button">Tools</button>
+            <div class="app-menu-panel">
+              <button type="button" data-menu-action="login">Login</button>
+              <button type="button" data-menu-action="logout">Logout</button>
+              <button type="button" data-menu-action="change-admin-password">Change Admin Password</button>
+              <span class="menu-separator"></span>
+              <button type="button" data-menu-action="edit-devices-tm2500">Tools - Layout - TM2500 XPRESS</button>
+              <button type="button" data-menu-action="edit-devices-lm6000-allestec">Tools - Layout - LM6000 Allestec</button>
+              <button type="button" data-menu-action="save-layout-lm6000-allestec">Tools - Save Layout - LM6000 Allestec</button>
+              <button type="button" data-menu-action="edit-devices-lm6000-eqp">Tools - Layout - LM6000 EQP</button>
+              <button type="button" data-menu-action="edit-devices-lms100">Tools - Layout - LMS100</button>
+            </div>
+          </div>
           <button class="status-pill training top-action" id="training-autotest" type="button">TRAINING</button>
           <button class="status-pill top-action" id="operator-test-mode" type="button">OPERATOR TEST MODE</button>
           <div class="status-pill" id="hmi-operator-status">OPERATOR: GUEST / TEST MODE</div>
@@ -662,19 +676,22 @@
                     <rect class="co2-line-hitbox co2-hitbox" data-device="SOV-6360" x="-4" y="-15" width="74" height="24"></rect>
                     <text x="0" y="4">SOV-6360</text>
                   </g>
+                  <g>
+                    <path class="co2-pipe co2-supply-pipe" d="M284 52 H1128"></path>
+                    <path class="co2-pipe-flow co2-supply-flow" d="M284 52 H1128"></path>
+                  </g>
                   <g class="co2-pressure-switch co2-ps-before device-badge switch-badge normal-badge" data-device="PSH-6348A">
                     <rect class="co2-ps-hitbox co2-hitbox" data-device="PSH-6348A" x="194" y="14" width="72" height="50"></rect>
                     <circle cx="222" cy="52" r="8"></circle>
                     <line x1="222" y1="52" x2="222" y2="34"></line>
                     <text x="222" y="20" class="co2-ps-tag">PSH-6348A</text>
-                    <text x="222" y="34" class="co2-ps-short">PSH</text>
                   </g>
                   <g class="co2-block-valve-symbol device-badge switch-badge normal-badge" data-device="ZS-6364">
                     <rect class="co2-valve-hitbox co2-hitbox" data-device="ZS-6364" x="238" y="8" width="58" height="58"></rect>
-                    <path d="M248 43 L266 52 L248 61 Z"></path>
-                    <path d="M284 43 L266 52 L284 61 Z"></path>
-                    <line x1="265" y1="40" x2="265" y2="24"></line>
-                    <rect x="254" y="15" width="22" height="10" rx="2"></rect>
+                    <path d="M254 46 L266 52 L254 58 Z"></path>
+                    <path d="M278 46 L266 52 L278 58 Z"></path>
+                    <line x1="266" y1="44" x2="266" y2="29"></line>
+                    <rect x="257" y="21" width="18" height="8" rx="2"></rect>
                     <text class="co2-valve-tag" x="266" y="76">ZS-6364</text>
                   </g>
                   <g class="co2-pressure-switch co2-ps-after device-badge switch-badge normal-badge" data-device="PSHH-6348B">
@@ -682,7 +699,6 @@
                     <circle cx="304" cy="52" r="8"></circle>
                     <line x1="304" y1="52" x2="304" y2="34"></line>
                     <text x="324" y="20" class="co2-ps-tag">PSHH-6348B</text>
-                    <text x="304" y="34" class="co2-ps-short">PSHH</text>
                   </g>
                   <g class="co2-line-tag device-badge switch-badge normal-badge" data-device="HS-6363" transform="translate(216 92)">
                     <rect class="co2-line-hitbox co2-hitbox" data-device="HS-6363" x="-8" y="-20" width="112" height="36"></rect>
@@ -699,10 +715,6 @@
                   <g class="co2-line-tag device-badge solenoid-badge normal-badge" data-device="SOV-6362" transform="translate(42 274)">
                     <rect class="co2-line-hitbox co2-hitbox" data-device="SOV-6362" x="-4" y="-15" width="74" height="24"></rect>
                     <text x="0" y="4">SOV-6362</text>
-                  </g>
-                  <g>
-                    <path class="co2-pipe co2-supply-pipe" d="M284 52 H1128"></path>
-                    <path class="co2-pipe-flow co2-supply-flow" d="M284 52 H1128"></path>
                   </g>
                   <g>
                     <path class="co2-pipe co2-branch-pipe turbine-branch" d="M380 52 L380 128"></path>
@@ -761,13 +773,13 @@
                       <g class="device-badge flame-badge normal-badge" data-device="BE-6311" transform="translate(105 425)">
                         <text x="0" y="4">BE-6311</text><use href="#icon-flame" transform="translate(74 0)"></use>
                       </g>
-                      <g class="device-badge gas-badge normal-badge svg-retired-badge" data-device="LM6-AE-3029" transform="translate(318 88)">
+                      <g class="device-badge gas-badge normal-badge" data-device="LM6-AE-3029" transform="translate(318 88)">
                         <rect class="badge-hitbox" x="-8" y="-22" width="124" height="48"></rect>
-                        <text x="0" y="-2">AE-3029</text><text x="0" y="11" class="badge-value">0.00% LEL</text><use href="#icon-gas" transform="translate(80 1)"></use>
+                        <text x="0" y="-2">AE-3029</text><text x="0" y="11" class="badge-value">0.00% LEL</text><use href="#icon-gas" transform="translate(88 1)"></use>
                       </g>
-                      <g class="device-badge gas-badge normal-badge svg-retired-badge" data-device="LM6-AE-3030" transform="translate(318 438)">
+                      <g class="device-badge gas-badge normal-badge" data-device="LM6-AE-3030" transform="translate(318 438)">
                         <rect class="badge-hitbox" x="-8" y="-22" width="124" height="48"></rect>
-                        <text x="0" y="-2">AE-3030</text><text x="0" y="11" class="badge-value">0.00% LEL</text><use href="#icon-gas" transform="translate(80 1)"></use>
+                        <text x="0" y="-2">AE-3030</text><text x="0" y="11" class="badge-value">0.00% LEL</text><use href="#icon-gas" transform="translate(88 1)"></use>
                       </g>
                       <g class="device-badge gas-badge normal-badge" data-device="AE-6313" transform="translate(462 360)">
                         <text x="0" y="-2">AE-6313</text><text x="0" y="11" class="badge-value">0.00% LEL</text><use href="#icon-gas" transform="translate(80 1)"></use>
@@ -782,12 +794,6 @@
                         <text x="0" y="4">HS-6312</text><use href="#icon-pull" transform="translate(66 0)"></use>
                       </g>
                     </svg>
-                    <button class="allestec-html-device gas-badge normal-badge" type="button" data-device="LM6-AE-3029" style="left: 31.8%; top: 16.9%;">
-                      <span class="html-device-text"><b>AE-3029</b><small class="badge-value">0.00% LEL</small></span><span class="html-device-icon">G</span>
-                    </button>
-                    <button class="allestec-html-device gas-badge normal-badge" type="button" data-device="LM6-AE-3030" style="left: 31.8%; top: 84.2%;">
-                      <span class="html-device-text"><b>AE-3030</b><small class="badge-value">0.00% LEL</small></span><span class="html-device-icon">G</span>
-                    </button>
                   </div>
 
                   <div class="allestec-enclosure turbine-zone">
@@ -915,39 +921,39 @@
             <div class="topology-card controller-node" data-device="ALL-800">ALLESTEC 800<br /><span>Conventional Controller</span></div>
             <div class="allestec-topology-groups">
               <section>
-                <h3>GENERATOR ENCLOSURE CIRCUITS</h3>
-                <button class="topology-node normal" data-device="YSL-6345">YSL-6345</button>
-                <button class="topology-node normal" data-device="HS-6308">HS-6308</button>
-                <button class="topology-node normal" data-device="HS-6309">HS-6309</button>
-                <button class="topology-node normal" data-device="TS-6310">TS-6310</button>
-                <button class="topology-node normal" data-device="YSA-6347">YSA-6347</button>
-                <button class="topology-node normal" data-device="BE-6311">BE-6311</button>
-                <button class="topology-node normal" data-device="LM6-AE-3029">AE-3029</button>
-                <button class="topology-node normal" data-device="LM6-AE-3030">AE-3030</button>
-                <button class="topology-node normal" data-device="AE-6313">AE-6313</button>
-                <button class="topology-node normal" data-device="TS-6307">TS-6307</button>
-                <button class="topology-node normal" data-device="YSA-6306">YSA-6306</button>
-                <button class="topology-node normal" data-device="HS-6312">HS-6312</button>
-              </section>
-              <section>
-                <h3>TURBINE ENCLOSURE CIRCUITS</h3>
-                <button class="topology-node normal" data-device="TS-6303">TS-6303</button>
-                <button class="topology-node normal" data-device="YSL-6336">YSL-6336</button>
+                <h3>TURBINE</h3>
                 <button class="topology-node normal" data-device="AE-6304A">AE-6304A</button>
                 <button class="topology-node normal" data-device="AE-6304B">AE-6304B</button>
                 <button class="topology-node normal" data-device="AE-6304C">AE-6304C</button>
                 <button class="topology-node normal" data-device="AE-6304D">AE-6304D</button>
                 <button class="topology-node normal" data-device="AE-6304E">AE-6304E</button>
+                <button class="topology-node normal" data-device="LM6-AE-3029">AE-3029</button>
+                <button class="topology-node normal" data-device="LM6-AE-3030">AE-3030</button>
                 <button class="topology-node normal" data-device="BE-6300">BE-6300</button>
                 <button class="topology-node normal" data-device="BE-6302">BE-6302</button>
                 <button class="topology-node normal" data-device="BE-6335">BE-6335</button>
-                <button class="topology-node normal" data-device="YSL-6344">YSL-6344</button>
-                <button class="topology-node normal" data-device="YSL-6306">YSL-6306</button>
+                <button class="topology-node normal" data-device="TS-6303">TS-6303</button>
                 <button class="topology-node normal" data-device="TS-6314">TS-6314</button>
+                <button class="topology-node normal" data-device="YSL-6306">YSL-6306</button>
+                <button class="topology-node normal" data-device="YSL-6336">YSL-6336</button>
+                <button class="topology-node normal" data-device="YSA-6306">YSA-6306</button>
                 <button class="topology-node normal" data-device="YSA-6346">YSA-6346</button>
               </section>
               <section>
-                <h3>CO2 SKID CIRCUITS</h3>
+                <h3>GENERATOR</h3>
+                <button class="topology-node normal" data-device="AE-6313">AE-6313</button>
+                <button class="topology-node normal" data-device="BE-6311">BE-6311</button>
+                <button class="topology-node normal" data-device="TS-6307">TS-6307</button>
+                <button class="topology-node normal" data-device="TS-6310">TS-6310</button>
+                <button class="topology-node normal" data-device="HS-6308">HS-6308</button>
+                <button class="topology-node normal" data-device="HS-6309">HS-6309</button>
+                <button class="topology-node normal" data-device="HS-6312">HS-6312</button>
+                <button class="topology-node normal" data-device="YSA-6347">YSA-6347</button>
+                <button class="topology-node normal" data-device="YSL-6344">YSL-6344</button>
+                <button class="topology-node normal" data-device="YSL-6345">YSL-6345</button>
+              </section>
+              <section>
+                <h3>CO2 SKID</h3>
                 <button class="topology-node normal" data-device="HS-6305">HS-6305</button>
                 <button class="topology-node normal" data-device="HS-6363">HS-6363</button>
                 <button class="topology-node normal" data-device="SOV-6359">SOV-6359</button>
@@ -1337,7 +1343,7 @@
         <button class="nav-button" data-nav="admin">ADMIN</button>
       </nav>
     </main>
-    <script src="app.js?v=hmi-gas-outputs-20260710a"></script>
+    <script src="app.js?v=hmi-gas-outputs-20260713j"></script>
   </body>
 </html>
 

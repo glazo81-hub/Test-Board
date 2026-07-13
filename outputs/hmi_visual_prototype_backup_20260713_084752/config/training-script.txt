@@ -1,0 +1,82 @@
+Welcome to the TM2500 XPRESS Automatic Fire and Gas Functional Test.
+The Fire and Gas Protection System is operating normally.
+The Fire Panel indicates Normal.
+All field devices are online.
+No alarms, troubles, or supervisory conditions are present.
+Initiating Automatic Functional Test.
+Testing Manual Aerosol Suppression Release Stations HS-3092 and HS-3093.
+Activating HS-3092.
+The Fire Panel enters Fire Alarm.
+All notification devices activate.
+Fire and Gas Monitor Shutdown is initiated.
+Critical Path is initiated.
+The Stat-X release countdown begins.
+Horn Acknowledge Switch HS-3040 is activated.
+Audible notification is silenced.
+Visual notification remains active.
+Countdown in progress.
+Shutdown outputs remain active.
+Suppression system remains armed.
+Aerosol release command generated.
+Suppression sequence complete.
+Resetting the system.
+The Fire Panel returns to Normal.
+Testing Heat Detectors TS-3003 and TS-3014.
+Activating TS-3003.
+The Fire Panel enters Fire Alarm.
+Notification devices activate.
+Shutdown sequence begins.
+Countdown in progress.
+Countdown in progress.
+Shutdown outputs remain active.
+Aerosol release command generated.
+Suppression sequence complete.
+Resetting system
+The Fire Panel returns to Normal.
+Testing Catalytic Gas Detectors AE-3004A through AE-3004D.
+Increasing simulated gas concentration.
+Gas concentration reaches fifteen percent LEL.
+Low Gas Alarm activates.
+General Alarm activates.
+Low Gas output energizes.
+No shutdown is initiated at this level.
+The suppression system remains inactive.
+Gas concentration continues to increase.
+Gas concentration reaches twenty-five percent LEL.
+High Gas Alarm activates.
+Fire and Gas Monitor Shutdown is initiated.
+Critical Path is initiated.
+High Gas Shutdown output energizes.
+The suppression system remains inactive.
+Resetting system.
+Catalytic gas detector testing complete.
+Testing Infrared Gas Detectors AE-3029 and AE-3030.
+Increasing simulated gas concentration.
+Gas concentration reaches 5% LEL alarm level.
+First gas alarm activates.
+The suppression system remains inactive.
+Gas concentration continues to increase.
+Gas concentration reaches 10% LEL alarm level.
+Shutdown outputs energize.
+Critical Path is initiated.
+The suppression system remains inactive.
+Resetting system.
+Infrared gas detector testing complete.
+Testing Suppression Inhibit.
+Activating LOTO Switch HS-3181.
+The suppression system enters the inhibited state.
+Activating HS-3092.
+The Fire Panel enters Fire Alarm.
+Notification devices activate.
+Shutdown outputs energize.
+Release command blocked by inhibit.
+Suppression outputs remain de-energized.
+Resetting system.
+Returning HS-3181 to the normal position.
+Suppression Inhibit testing complete.
+The Fire Panel returns to Normal.
+All field devices remain online.
+All outputs are in their normal state.
+Automatic Functional Test complete.
+All programmed functions responded as designed.
+The TM2500 XPRESS Fire and Gas Protection System is ready for operation.

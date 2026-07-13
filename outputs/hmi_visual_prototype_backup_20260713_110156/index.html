@@ -1,0 +1,1339 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EQP Fire & Gas HMI Prototype</title>
+    <link rel="stylesheet" href="styles.css?v=hmi-gas-outputs-20260713e" />
+  </head>
+  <body>
+    <section class="start-window" id="start-window">
+      <div class="app-menu-bar">
+        <div class="app-menu">
+          <button class="app-menu-button" type="button">File</button>
+          <div class="app-menu-panel">
+            <button type="button" data-menu-action="new-session">New Session</button>
+            <button type="button" data-menu-action="open-project">Open Project...</button>
+            <button type="button" data-menu-action="save-project">Save Project</button>
+            <button type="button" data-menu-action="close-project">Close Project</button>
+            <span class="menu-separator"></span>
+            <button type="button" data-menu-action="exit-app">Exit</button>
+          </div>
+        </div>
+        <div class="app-menu">
+          <button class="app-menu-button" type="button">Project</button>
+          <div class="app-menu-panel">
+            <button type="button" data-menu-action="project-browser">Project Browser</button>
+            <button type="button" data-menu-action="import-drawings">Import Drawings...</button>
+            <button type="button" data-menu-action="device-library">Device Library</button>
+            <button type="button" data-menu-action="project-settings">Project Settings</button>
+          </div>
+        </div>
+        <div class="app-menu">
+          <button class="app-menu-button" type="button">Communications</button>
+          <div class="app-menu-panel">
+            <button type="button" data-menu-action="modbus-setup">Modbus Setup</button>
+            <button type="button" data-menu-action="connect-controller">Connect EQP Controller</button>
+            <button type="button" data-menu-action="disconnect-controller">Disconnect</button>
+            <button type="button" data-menu-action="scan-devices">Scan Devices</button>
+            <button type="button" data-menu-action="comms-diagnostics">Diagnostics</button>
+          </div>
+        </div>
+        <div class="app-menu tools-menu">
+          <button class="app-menu-button" type="button">Tools</button>
+          <div class="app-menu-panel">
+            <button type="button" data-menu-action="search">Search...</button>
+            <button type="button" data-menu-action="login">Login</button>
+            <button type="button" data-menu-action="logout">Logout</button>
+            <button type="button" data-menu-action="change-admin-password">Change Admin Password</button>
+            <button type="button" data-menu-action="info-library">Info Library</button>
+            <span class="menu-separator"></span>
+            <button type="button" data-menu-action="edit-devices-tm2500">Tools - Layout - TM2500 XPRESS</button>
+            <button type="button" data-menu-action="edit-devices-lm6000-allestec">Tools - Layout - LM6000 Allestec</button>
+            <button type="button" data-menu-action="edit-devices-lm6000-eqp">Tools - Layout - LM6000 EQP</button>
+            <button type="button" data-menu-action="edit-devices-lms100">Tools - Layout - LMS100</button>
+            <button type="button" data-menu-action="reset-simulation">Reset Simulation</button>
+          </div>
+        </div>
+        <div class="app-menu">
+          <button class="app-menu-button" type="button">Reports</button>
+          <div class="app-menu-panel">
+            <button type="button" data-menu-action="alarm-report">Alarm Report</button>
+            <button type="button" data-menu-action="event-report">Event History</button>
+            <button type="button" data-menu-action="fat-report">FAT Report</button>
+            <button type="button" data-menu-action="export-pdf">Export PDF...</button>
+          </div>
+        </div>
+        <div class="app-menu">
+          <button class="app-menu-button" type="button">Help</button>
+          <div class="app-menu-panel">
+            <button type="button" data-menu-action="help-topics">Help Topics</button>
+            <button type="button" data-menu-action="eqp-manuals">EQP Manuals</button>
+            <button type="button" data-menu-action="keyboard-shortcuts">Keyboard Shortcuts</button>
+            <button type="button" data-menu-action="about">About</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="start-header">
+        <div class="start-brand">
+          <img class="company-logo" src="assets/wfe_logo_transparent.png" alt="Wilson Fire Equipment logo" />
+          <h1>Fire & Gas Simulation Workstation</h1>
+        </div>
+      </div>
+
+      <div class="start-content">
+        <section class="project-browser">
+          <div class="project-title">
+            <span>Turbine Package Library</span>
+            <span>Selected: <b id="selected-project-label">Select turbine family</b></span>
+          </div>
+          <div class="start-slideshow">
+            <img id="start-slide-image" src="assets/slideshow/tm2500_xpress_power_plant.avif" alt="Project reference slide" />
+            <div class="slide-caption">
+              <b id="start-slide-title">TM2500 XPRESS</b>
+              <span id="start-slide-caption">Fire & Gas demo package</span>
+            </div>
+          </div>
+          <div class="family-tabs" id="family-tabs">
+            <button class="family-tab active" type="button" data-family="tm2500">TM2500</button>
+            <button class="family-tab" type="button" data-family="lm6000">LM6000</button>
+            <button class="family-tab" type="button" data-family="lms100">LMS100</button>
+          </div>
+          <div class="start-status-bar">
+            <span id="start-menu-status">Ready</span>
+            <span id="start-operator-status">Operator: Guest / Test Mode</span>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <main class="hmi-shell hmi-hidden" id="hmi-shell">
+      <header class="top-bar">
+        <div class="brand-block">
+          <div class="system-id">EQP TEST CELL</div>
+          <h1 id="hmi-project-heading">TM2500 / LM2500 XPRESS FIRE & GAS OVERVIEW</h1>
+        </div>
+        <div class="top-status">
+          <button class="status-pill training top-action" id="training-autotest" type="button">TRAINING</button>
+          <button class="status-pill top-action" id="operator-test-mode" type="button">OPERATOR TEST MODE</button>
+          <div class="status-pill" id="hmi-operator-status">OPERATOR: GUEST / TEST MODE</div>
+          <div class="clock" id="clock">--:--:--</div>
+        </div>
+      </header>
+
+      <section class="alarm-banner">
+        <div class="alarm-ticker" id="alarm-ticker">
+          <span class="alarm-item red">FIRE: TS-3003-3014 THERMAL DETECTOR GROUP</span>
+          <span class="alarm-item orange">LOW GAS: AE-3004B 15% LEL</span>
+          <span class="alarm-item yellow">TROUBLE: HS-3081 SUPPRESSION INHIBIT</span>
+        </div>
+        <div class="alarm-counts" id="alarm-counts">
+          <span class="count red">1 FIRE</span>
+          <span class="count orange">1 GAS</span>
+          <span class="count yellow">1 TRBL</span>
+        </div>
+      </section>
+
+      <section class="training-transport" id="training-transport">
+        <button class="transport-button" id="training-step-back" type="button">REV</button>
+        <button class="transport-button primary" id="training-play-pause" type="button">PLAY</button>
+        <button class="transport-button" id="training-step-forward" type="button">FWD</button>
+        <input id="training-progress" class="training-progress" type="range" min="0" max="0" value="0" step="1" />
+        <div class="training-progress-meta">
+          <b id="training-progress-label">STEP 0 / 0</b>
+          <span id="training-step-title">Automatic test ready</span>
+        </div>
+      </section>
+
+      <section class="workspace">
+        <aside class="left-panel">
+          <div class="panel-title">SYSTEM STATUS</div>
+          <div class="metric-row"><span>Panel</span><b class="ok" id="panel-status">NORMAL</b></div>
+          <div class="metric-row"><span>Loop 1</span><b class="ok" id="loop-status">ONLINE</b></div>
+          <div class="metric-row"><span>Modbus RTU</span><b class="standby" id="modbus-status">STANDBY</b></div>
+          <div class="metric-row"><span>Inhibit</span><b class="ok" id="inhibit-status">CLEAR</b></div>
+          <div class="metric-row"><span>Release</span><b class="ok" id="release-command-status">READY</b></div>
+          <div class="metric-row"><span>LED Tester</span><b class="ok" id="led-tester-status">DE-ENERGIZED</b></div>
+
+          <div class="panel-title compact">OUTPUT RELAYS</div>
+          <div class="relay-grid" id="relay-status-grid"></div>
+
+          <div class="panel-title compact">SELECTED DEVICE</div>
+          <div class="device-card compact-device-card">
+            <div class="device-head">
+              <span class="status-dot orange" id="detail-status-dot"></span>
+              <div>
+                <h2 id="detail-tag">AE-3004B</h2>
+                <p id="detail-type">CGS Combustible Gas Detector</p>
+              </div>
+            </div>
+            <div class="detail-grid">
+              <span>Mode</span><b id="detail-mode">Virtual</b>
+              <span>Address</span><b id="detail-address">Loop 1 / Node 04</b>
+              <span>Status</span><b class="orange-text" id="detail-status">Low Gas</b>
+              <span>Value</span><b id="detail-value">15% LEL</b>
+              <span>Area</span><b id="detail-area">Turbine Enclosure</b>
+              <span>Last Event</span><b id="detail-last-event">20:51:08</b>
+            </div>
+            <div class="function-title">Functions</div>
+            <div class="function-list" id="detail-functions"></div>
+            <div class="gas-slider-card" id="gas-slider-card" hidden>
+              <div class="gas-slider-head">
+                <span>GAS LEVEL</span>
+                <b id="gas-slider-readout">0% LEL</b>
+              </div>
+              <div class="gas-slider-control">
+                <button class="gas-step-button" id="gas-level-down" type="button" aria-label="Decrease gas level">‹</button>
+                <input id="gas-level-slider" type="range" min="0" max="100" value="0" step="1" />
+                <button class="gas-step-button" id="gas-level-up" type="button" aria-label="Increase gas level">›</button>
+              </div>
+              <div class="gas-slider-scale">
+                <span>0%</span>
+                <span id="gas-low-setpoint">LOW 15%</span>
+                <span id="gas-high-setpoint">HIGH 25%</span>
+                <span>100%</span>
+              </div>
+              <div class="gas-output-row">
+                <span id="gas-output-status">Select PANEL 1 or PANEL 2 to connect RS485. 0% = 4 mA / 100% = 12 mA</span>
+              </div>
+            </div>
+            <div class="function-title">Control</div>
+            <div class="device-actions" id="device-actions"></div>
+            <div class="mode-actions">
+              <button type="button" id="set-virtual-mode">VIRTUAL</button>
+              <button type="button" id="set-real-mode">REAL</button>
+            </div>
+            <div class="real-test-card" id="real-test-card">
+              <div class="real-test-head">
+                <span>REAL TEST PROFILE</span>
+                <b id="real-test-state">VIRTUAL</b>
+              </div>
+              <div class="real-test-grid">
+                <span>S3 Profile</span><b id="real-test-profile">Not required</b>
+                <span>Test Type</span><b id="real-test-type">Virtual simulation</b>
+                <span>Expected</span><b id="real-test-address">--</b>
+                <span>EQP</span><b id="real-test-eqp">Standby</b>
+              </div>
+              <div class="real-test-actions">
+                <button type="button" id="open-s3-profile">OPEN S3 PROFILE</button>
+                <button type="button" id="confirm-real-ready">CONFIRM EQP READY</button>
+              </div>
+              <small id="real-test-note">Switch to REAL to prepare the matching S3 profile for this device.</small>
+            </div>
+          </div>
+        </aside>
+
+        <section class="main-view">
+          <div class="view-stage view-active" id="package-view">
+            <div class="layout-editor" hidden>
+              <button id="edit-layout-toggle" type="button">EDIT LAYOUT</button>
+              <span id="selected-layout-item">Selected: none</span>
+              <button id="layout-smaller" type="button">-</button>
+              <button id="layout-larger" type="button">+</button>
+              <button id="layout-reset" type="button">RESET</button>
+            </div>
+            <div class="loop-line"></div>
+            <div class="eqp-controller device normal hidden-controller" data-device="EQP-001">
+              <div class="controller-led"></div>
+              <span>EQP-001</span>
+              <small>Controller</small>
+            </div>
+
+            <div class="turbine-schematic" aria-label="LM2500 Xpress Fire and Gas turbine schematic">
+              <svg class="turbine-svg" viewBox="0 0 920 500" role="img">
+                <defs>
+                  <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 0 L 10 5 L 0 10 z" fill="#dce7ec"></path>
+                  </marker>
+                  <clipPath id="enclosure-smoke-clip">
+                    <rect x="155" y="112" width="540" height="300"></rect>
+                  </clipPath>
+                  <filter id="smoke-soften" x="-20%" y="-20%" width="140%" height="140%">
+                    <feGaussianBlur stdDeviation="12"></feGaussianBlur>
+                  </filter>
+                  <g id="icon-gas">
+                    <circle cx="0" cy="0" r="8"></circle>
+                    <text x="0" y="3" class="icon-text">G</text>
+                  </g>
+                  <g id="icon-flame">
+                    <path d="M-9 5 L-3 -7 C-1 -3 2 -1 4 -8 C8 -3 10 1 7 6 C4 11 -5 11 -9 5 Z"></path>
+                    <circle cx="0" cy="3" r="2.5"></circle>
+                  </g>
+                  <g id="icon-thermal">
+                    <rect x="-7" y="-7" width="14" height="14" rx="2"></rect>
+                    <circle cx="0" cy="0" r="3"></circle>
+                  </g>
+                  <g id="icon-horn">
+                    <path d="M-8 -5 L-2 -5 L7 -10 L7 10 L-2 5 L-8 5 Z"></path>
+                    <path d="M9 -5 C13 -2 13 2 9 5"></path>
+                  </g>
+                  <g id="icon-strobe">
+                    <circle cx="0" cy="0" r="7"></circle>
+                    <path d="M0 -12 L0 -8 M0 8 L0 12 M-12 0 L-8 0 M8 0 L12 0 M-8 -8 L-6 -6 M8 -8 L6 -6 M-8 8 L-6 6 M8 8 L6 6"></path>
+                  </g>
+                  <g id="icon-switch">
+                    <rect x="-7" y="-6" width="14" height="12" rx="2"></rect>
+                    <path d="M-4 2 L4 -3"></path>
+                  </g>
+                  <g id="icon-key">
+                    <rect x="-9" y="-9" width="18" height="18" rx="2"></rect>
+                    <circle cx="0" cy="0" r="5.5"></circle>
+                    <path d="M-3 3 L5 -5"></path>
+                    <path d="M-7 -11 H7 M-7 11 H7"></path>
+                  </g>
+                  <g id="icon-pull">
+                    <rect x="-7" y="-8" width="14" height="16" rx="2"></rect>
+                    <path d="M-4 -2 L4 -2 M-3 3 L3 3"></path>
+                  </g>
+                  <g id="icon-statx">
+                    <ellipse cx="0" cy="-8" rx="8" ry="3"></ellipse>
+                    <rect x="-8" y="-8" width="16" height="18" rx="2"></rect>
+                    <ellipse cx="0" cy="10" rx="8" ry="3"></ellipse>
+                    <path d="M-5 -2 L5 -2 M-5 3 L5 3"></path>
+                  </g>
+                  <g id="icon-controller">
+                    <rect x="-8" y="-9" width="16" height="18" rx="2"></rect>
+                    <path d="M-4 -4 L4 -4 M-4 0 L4 0 M-4 4 L1 4"></path>
+                    <circle cx="5" cy="5" r="1.5"></circle>
+                  </g>
+                </defs>
+                <g class="schematic-lines plan-view adjustable" data-edit-id="enclosure-layout" transform="translate(0 0)">
+                  <rect x="155" y="112" width="540" height="300" class="enclosure-wall" />
+
+                  <g class="package-silhouette">
+                    <svg x="178" y="188" width="520" height="194" viewBox="0 200 890 285" preserveAspectRatio="xMidYMid meet" class="engine-crop">
+                      <image href="./assets/lm2500_section_clean_v4.png" x="0" y="0" width="890" height="492" preserveAspectRatio="xMidYMid meet" class="engine-reference-image" />
+                    </svg>
+                  </g>
+
+                  <g class="aerosol-smoke-svg" clip-path="url(#enclosure-smoke-clip)" filter="url(#smoke-soften)">
+                    <rect class="smoke-fill-panel" x="155" y="112" width="540" height="300"></rect>
+                    <path class="smoke-plume smoke-plume-top" d="M695 132 C636 96 600 122 550 136 C486 154 466 124 402 150 C334 178 300 148 236 184 C198 206 174 230 155 260 L155 332 C206 302 246 310 302 288 C374 260 420 294 492 258 C552 228 594 234 648 194 C674 176 688 160 695 150 Z"></path>
+                    <path class="smoke-plume smoke-plume-bottom" d="M695 392 C632 432 592 396 536 380 C476 364 438 404 372 370 C314 340 270 362 214 330 C186 314 166 292 155 270 L155 188 C202 220 250 212 306 236 C378 266 420 230 492 264 C556 294 604 282 654 330 C678 352 690 374 695 392 Z"></path>
+                    <path class="smoke-core smoke-core-top" d="M694 135 C628 148 548 170 466 196 C366 228 255 248 155 270"></path>
+                    <path class="smoke-core smoke-core-bottom" d="M694 396 C628 374 548 340 466 312 C366 278 255 262 155 252"></path>
+                  </g>
+
+                  <rect x="690" y="146" width="54" height="182" class="stack-box" />
+                  <text x="717" y="136" class="svg-label center">STACK</text>
+                  <path d="M706 300 C730 278 750 266 770 256" class="flow-arrow" />
+                  <path d="M706 284 C730 262 750 250 770 240" class="flow-arrow" />
+
+                  <rect x="758" y="196" width="120" height="168" class="module-box" />
+                  <text x="818" y="186" class="svg-label center">I/O MODULES</text>
+
+                  <line x1="744" y1="220" x2="758" y2="220" class="thin-line" />
+                  <line x1="744" y1="306" x2="758" y2="306" class="thin-line" />
+                </g>
+
+                <g class="device-symbols device-tags adjustable" data-edit-id="device-tags" transform="translate(0 0)">
+                  <g class="device-badge controller-badge normal-badge" data-device="EQP-001" transform="translate(104 50)">
+                    <text x="0" y="4">EQP-001</text><use href="#icon-controller" transform="translate(62 0)"></use>
+                  </g>
+                  <g class="device-badge module-badge normal-badge" data-device="EDIO-1" transform="translate(786 236)">
+                    <text x="0" y="4">EDIO-1</text><use href="#icon-controller" transform="translate(52 0) scale(0.82)"></use>
+                  </g>
+                  <g class="device-badge module-badge normal-badge" data-device="EDIO-2" transform="translate(786 300)">
+                    <text x="0" y="4">EDIO-2</text><use href="#icon-controller" transform="translate(52 0) scale(0.82)"></use>
+                  </g>
+                  <g class="device-badge horn-badge normal-badge" data-device="YSA-3006A" transform="translate(322 132)">
+                    <text x="0" y="4">YSA-3006A</text><use href="#icon-horn" transform="translate(76 0)"></use>
+                  </g>
+                  <g class="device-badge horn-badge normal-badge" data-device="YSA-3006B" transform="translate(104 420)">
+                    <text x="0" y="4">YSA-3006B</text><use href="#icon-horn" transform="translate(76 0)"></use>
+                  </g>
+                  <g class="device-badge strobe-badge normal-badge" data-device="YSL-3036" transform="translate(745 420)">
+                    <text x="0" y="4">YSL-3036</text><use href="#icon-strobe" transform="translate(68 0)"></use>
+                  </g>
+                  <g class="device-badge strobe-badge normal-badge" data-device="YSL-3041" transform="translate(745 102)">
+                    <text x="0" y="4">YSL-3041</text><use href="#icon-strobe" transform="translate(68 0)"></use>
+                  </g>
+                  <g class="device-badge strobe-badge normal-badge" data-device="YSL-3042" transform="translate(340 394)">
+                    <text x="0" y="4">YSL-3042</text><use href="#icon-strobe" transform="translate(76 0)"></use>
+                  </g>
+
+                  <g class="device-badge gas-badge normal-badge" data-device="AE-3004A" transform="translate(445 394)">
+                    <text x="0" y="-2">AE-3004A</text><text x="0" y="11" class="badge-value">0.00% LEL</text><use href="#icon-gas" transform="translate(78 4)"></use>
+                  </g>
+                  <g class="device-badge gas-badge lowgas-badge" data-device="AE-3004B" transform="translate(430 126)">
+                    <text x="0" y="-2">AE-3004B</text><text x="0" y="11" class="badge-value">15.0% LEL</text><use href="#icon-gas" transform="translate(78 4)"></use>
+                  </g>
+                  <g class="device-badge gas-badge normal-badge" data-device="AE-3004C" transform="translate(405 258)">
+                    <text x="0" y="-2">AE-3004C</text><text x="0" y="11" class="badge-value">0.00% LEL</text><use href="#icon-gas" transform="translate(78 4)"></use>
+                  </g>
+                  <g class="device-badge gas-badge normal-badge" data-device="AE-3029" transform="translate(818 146)">
+                    <text x="0" y="-2">AE-3029</text><text x="0" y="11" class="badge-value">0.02% LEL</text><use href="#icon-gas" transform="translate(66 4)"></use>
+                  </g>
+                  <g class="device-badge gas-badge normal-badge" data-device="AE-3030" transform="translate(818 382)">
+                    <text x="0" y="-2">AE-3030</text><text x="0" y="11" class="badge-value">0.03% LEL</text><use href="#icon-gas" transform="translate(66 4)"></use>
+                  </g>
+
+                  <g class="device-badge thermal-badge alarm-badge" data-device="TS-3003" transform="translate(535 126)">
+                    <text x="0" y="4">TS-3003</text><use href="#icon-thermal" transform="translate(64 0)"></use>
+                  </g>
+                  <g class="device-badge thermal-badge alarm-badge" data-device="TS-3014" transform="translate(550 394)">
+                    <text x="0" y="4">TS-3014</text><use href="#icon-thermal" transform="translate(64 0)"></use>
+                  </g>
+
+                  <g class="device-badge switch-badge normal-badge" data-device="HS-3040" transform="translate(240 434)">
+                    <text x="0" y="4">HS-3040</text><use href="#icon-switch" transform="translate(64 0)"></use>
+                  </g>
+                  <g class="device-badge switch-badge trouble-badge" data-device="HS-3081" transform="translate(325 434)">
+                    <text x="0" y="4">HS-3081</text><use href="#icon-switch" transform="translate(64 0)"></use>
+                  </g>
+                  <g class="device-badge pull-badge normal-badge" data-device="HS-3091" transform="translate(415 434)">
+                    <text x="0" y="4">HS-3091</text><use href="#icon-pull" transform="translate(64 0)"></use>
+                  </g>
+                  <g class="device-badge pull-badge normal-badge" data-device="HS-3093" transform="translate(415 76)">
+                    <text x="0" y="4">HS-3093</text><use href="#icon-pull" transform="translate(64 0)"></use>
+                  </g>
+
+                  <g class="device-badge statx-badge alarm-badge" data-device="YSZ-3171" transform="translate(646 121)">
+                    <text x="0" y="4">YSZ-3171</text><use href="#icon-statx" transform="translate(68 0) rotate(32.5)"></use>
+                  </g>
+                  <g class="device-badge statx-badge alarm-badge" data-device="YSZ-3172" transform="translate(646 399)">
+                    <text x="0" y="4">YSZ-3172</text><use href="#icon-statx" transform="translate(68 0) rotate(147.5)"></use>
+                  </g>
+                </g>
+
+              </svg>
+            </div>
+
+            <div class="area-label turbine">TURBINE ENCLOSURE</div>
+            <div class="area-label exhaust">EXHAUST STACK / IR GAS</div>
+            <div class="area-label aux">FIELD DEVICES / I/O REFERENCES</div>
+
+            <button class="field-device gas normal marker-compact overlay-hidden" style="left: 19%; top: 70%" data-device="AE-3004A">
+              <span class="device-icon">CGS</span><b>AE-3004A</b><small>Virtual</small>
+            </button>
+            <button class="field-device gas lowgas selected marker-compact overlay-hidden" style="left: 37%; top: 70%" data-device="AE-3004B">
+              <span class="device-icon">CGS</span><b>AE-3004B</b><small>Virtual</small>
+            </button>
+            <button class="field-device gas normal marker-compact overlay-hidden" style="left: 55%; top: 70%" data-device="AE-3004C">
+              <span class="device-icon">CGS</span><b>AE-3004C</b><small>Virtual</small>
+            </button>
+            <button class="field-device ir normal marker-compact overlay-hidden" style="left: 78%; top: 39%" data-device="AE-3029">
+              <span class="device-icon">IR</span><b>AE-3029</b><small>Virtual</small>
+            </button>
+            <button class="field-device ir normal marker-compact overlay-hidden" style="left: 78%; top: 54%" data-device="AE-3030">
+              <span class="device-icon">IR</span><b>AE-3030</b><small>Virtual</small>
+            </button>
+            <button class="field-device fire alarm marker-compact overlay-hidden" style="left: 37%; top: 15%" data-device="TS-3003-3014">
+              <span class="device-icon">TS</span><b>TS-3003</b><small>Fire</small>
+            </button>
+            <button class="field-device input trouble marker-compact overlay-hidden" style="left: 22%; top: 16%" data-device="HS-3081">
+              <span class="device-icon">INH</span><b>HS-3081</b><small>Inhibit</small>
+            </button>
+            <button class="field-device input normal marker-compact overlay-hidden" style="left: 12%; top: 16%" data-device="HS-3092">
+              <span class="device-icon">MAN</span><b>HS-3092</b><small>Release</small>
+            </button>
+            <button class="field-device output active marker-compact overlay-hidden" style="left: 59%; top: 18%" data-device="YSA-3006A">
+              <span class="device-icon">HORN</span><b>YSA-3006A</b><small>Active</small>
+            </button>
+            <button class="field-device output alarm marker-compact overlay-hidden" style="left: 63%; top: 30%" data-device="YSL-3041">
+              <span class="device-icon">STRB</span><b>YSL-3041</b><small>Active</small>
+            </button>
+            <button class="field-device output normal marker-compact overlay-hidden" style="left: 33%; top: 74%" data-device="YSL-3042">
+              <span class="device-icon">STRB</span><b>YSL-3042</b><small>Virtual</small>
+            </button>
+
+            <div class="countdown-box" id="aerosol-countdown-box">
+              <span>VIRTUAL AEROSOL</span>
+              <b id="aerosol-countdown">READY</b>
+              <small id="aerosol-countdown-label">YSZ-3171 / YSZ-3172</small>
+            </div>
+            <div class="panel-command-actions">
+              <button type="button" id="ack-all-alarms">ACK</button>
+              <button type="button" id="silence-all-alarms">SILENCE</button>
+              <button type="button" id="reset-all-devices">PANEL RESET</button>
+            </div>
+          </div>
+
+          <div class="view-stage lm6000-stage" id="lm6000-view">
+            <div class="lm6000-board lm6000-pro-board">
+              <div class="lm6000-hmi-header">
+                <div class="lm6000-clock-panel">
+                  <b>13:22:42</b>
+                  <span>LM6000 EQP</span>
+                </div>
+                <div class="lm6000-softkeys">
+                  <button type="button">PRV</button>
+                  <button type="button">ALM</button>
+                  <button type="button">BOP</button>
+                </div>
+                <div class="lm6000-ack-panel">
+                  <span>ALARMS ACKNOWLEDGED</span>
+                  <b>SHUTDOWNS ACKNOWLEDGED</b>
+                </div>
+                <div class="lm6000-ready-panel">READY TO START</div>
+                <div class="lm6000-mini-values">
+                  <span>XN25 <b>0</b></span>
+                  <span>XNSD <b>0</b></span>
+                  <span>T3 <b>89</b></span>
+                  <span>T48 <b>88</b></span>
+                  <span>MW <b>0.00</b></span>
+                </div>
+              </div>
+
+              <div class="lm6000-drawing-toolbar">
+                <button type="button" id="lm6000-pencil-toggle">PENCIL</button>
+                <button type="button" id="lm6000-eraser-toggle">ERASE</button>
+                <button type="button" id="lm6000-clear-sketch">CLEAR</button>
+                <span>Draw device locations here. We will convert your marks into Fire & Gas icons later.</span>
+              </div>
+
+              <div class="lm6000-process-area" id="lm6000-sketch-area">
+                <svg class="lm6000-process-svg" viewBox="0 0 1180 620" role="img" aria-label="LM6000 EQP clean package layout">
+                  <defs>
+                    <marker id="lm-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                      <path d="M 0 0 L 10 5 L 0 10 z" fill="#222"></path>
+                    </marker>
+                    <marker id="lm-red-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                      <path d="M 0 0 L 10 5 L 0 10 z" fill="#7e2222"></path>
+                    </marker>
+                    <linearGradient id="lmMetal" x1="0" x2="1">
+                      <stop offset="0" stop-color="#707070"></stop>
+                      <stop offset="0.22" stop-color="#e8e8e8"></stop>
+                      <stop offset="0.5" stop-color="#8f8f8f"></stop>
+                      <stop offset="0.82" stop-color="#ededed"></stop>
+                      <stop offset="1" stop-color="#5b5b5b"></stop>
+                    </linearGradient>
+                  </defs>
+
+                  <rect x="24" y="78" width="724" height="494" class="lm6000-enclosure turbine"></rect>
+                  <rect x="748" y="78" width="408" height="494" class="lm6000-enclosure generator"></rect>
+                  <line x1="748" y1="78" x2="748" y2="572" class="lm-zone-line"></line>
+
+                  <image href="./assets/lm6000_vent_fans_reference.png" x="70" y="50" width="274" height="158" preserveAspectRatio="xMidYMid meet" class="lm-fan-reference-image"></image>
+
+                  <image href="./assets/lm6000_turbine_reference.png" x="44" y="186" width="672" height="348" preserveAspectRatio="xMidYMid meet" class="lm6000-turbine-reference-image"></image>
+
+                  <image href="./assets/lm6000_generator_reference.png" x="796" y="296" width="314" height="92" preserveAspectRatio="xMidYMid meet" class="lm6000-generator-reference-image"></image>
+
+                  <text x="1000" y="48" class="lm6000-section-label">LM6000 EQP PACKAGE</text>
+                </svg>
+                <canvas class="lm6000-sketch-canvas" id="lm6000-sketch-canvas"></canvas>
+              </div>
+              <div class="lm6000-note">Clean LM6000 EQP base plan. Use PENCIL to mark Fire & Gas device locations for the next icon/tag pass.</div>
+            </div>
+          </div>
+
+          <div class="view-stage allestec-stage" id="lm6000-allestec-view">
+            <div class="allestec-board">
+              <div class="allestec-header">
+                <div>
+                  <b>LM6000 ALLESTEC</b>
+                  <span id="allestec-panel-mode-title">Virtual Panel</span>
+                </div>
+                <div class="allestec-move-tools">
+                  <div class="allestec-system-mode-card" id="allestec-system-mode-card" hidden>
+                    <div class="allestec-system-mode-buttons">
+                      <button type="button" data-allestec-mode="panel">PANEL 1</button>
+                      <button type="button" data-allestec-mode="test-board">PANEL 2</button>
+                      <button type="button" data-allestec-mode="virtual">PANEL 3</button>
+                    </div>
+                    <small id="allestec-system-mode-note">Mode applies to the current LM6000 system only.</small>
+                  </div>
+                  <button id="allestec-move-toggle" type="button" hidden>MOVE DEVICES</button>
+                  <button id="allestec-save-layout" type="button" hidden>SAVE LAYOUT</button>
+                  <button id="allestec-reset-layout" type="button" hidden>RESET POSITIONS</button>
+                  <span id="allestec-move-status" hidden></span>
+                </div>
+              </div>
+
+              <div class="allestec-layout">
+                <section class="allestec-co2-skid allestec-layout-box" data-allestec-layout-id="co2-skid">
+                  <div class="co2-title">HIGH PRESSURE CO2 SKID</div>
+                  <svg class="co2-skid-drawing co2-skid-drawing-legacy" viewBox="0 0 220 328" aria-label="High pressure CO2 skid piping">
+                    <defs>
+                      <linearGradient id="co2BottleShell" x1="0" x2="1" y1="0" y2="0">
+                        <stop offset="0" stop-color="#4d5960"></stop>
+                        <stop offset="0.42" stop-color="#eef4f6"></stop>
+                        <stop offset="0.66" stop-color="#89949a"></stop>
+                        <stop offset="1" stop-color="#424b52"></stop>
+                      </linearGradient>
+                      <linearGradient id="co2FillGlass" x1="0" x2="0" y1="0" y2="1">
+                        <stop offset="0" stop-color="rgba(236, 252, 255, 0.95)"></stop>
+                        <stop offset="1" stop-color="rgba(168, 225, 242, 0.55)"></stop>
+                      </linearGradient>
+                    </defs>
+                    <text class="co2-bank-label" x="6" y="30">MAIN</text>
+                    <text class="co2-bank-label" x="6" y="174">RESERVE</text>
+                    <g class="co2-skid-piping">
+                      <path d="M20 52 H202"></path>
+                      <path d="M20 196 H202"></path>
+                      <path d="M202 196 V52 H216"></path>
+                      <path d="M216 52 H220"></path>
+                      <path d="M27 52 V72 M53 52 V72 M79 52 V72 M105 52 V72 M131 52 V72 M157 52 V72 M183 52 V72"></path>
+                      <path d="M27 196 V216 M53 196 V216 M79 196 V216 M105 196 V216 M131 196 V216 M157 196 V216 M183 196 V216"></path>
+                    </g>
+                    <g class="co2-bottle-bank co2-main-bottles-svg" transform="translate(16 72)">
+                      <g transform="translate(0 0)"><rect class="co2-bottle-body" x="0" y="14" width="22" height="78" rx="7"></rect><rect class="co2-bottle-neck" x="7" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="14" height="56" rx="4"></rect></g>
+                      <g transform="translate(26 0)"><rect class="co2-bottle-body" x="0" y="14" width="22" height="78" rx="7"></rect><rect class="co2-bottle-neck" x="7" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="14" height="56" rx="4"></rect></g>
+                      <g transform="translate(52 0)"><rect class="co2-bottle-body" x="0" y="14" width="22" height="78" rx="7"></rect><rect class="co2-bottle-neck" x="7" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="14" height="56" rx="4"></rect></g>
+                      <g transform="translate(78 0)"><rect class="co2-bottle-body" x="0" y="14" width="22" height="78" rx="7"></rect><rect class="co2-bottle-neck" x="7" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="14" height="56" rx="4"></rect></g>
+                      <g transform="translate(104 0)"><rect class="co2-bottle-body" x="0" y="14" width="22" height="78" rx="7"></rect><rect class="co2-bottle-neck" x="7" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="14" height="56" rx="4"></rect></g>
+                      <g transform="translate(130 0)"><rect class="co2-bottle-body" x="0" y="14" width="22" height="78" rx="7"></rect><rect class="co2-bottle-neck" x="7" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="14" height="56" rx="4"></rect></g>
+                      <g transform="translate(156 0)"><rect class="co2-bottle-body" x="0" y="14" width="22" height="78" rx="7"></rect><rect class="co2-bottle-neck" x="7" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="14" height="56" rx="4"></rect></g>
+                    </g>
+                    <g class="co2-bottle-bank co2-reserve-bottles-svg" transform="translate(16 216)">
+                      <g transform="translate(0 0)"><rect class="co2-bottle-body" x="0" y="14" width="22" height="78" rx="7"></rect><rect class="co2-bottle-neck" x="7" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="14" height="56" rx="4"></rect></g>
+                      <g transform="translate(26 0)"><rect class="co2-bottle-body" x="0" y="14" width="22" height="78" rx="7"></rect><rect class="co2-bottle-neck" x="7" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="14" height="56" rx="4"></rect></g>
+                      <g transform="translate(52 0)"><rect class="co2-bottle-body" x="0" y="14" width="22" height="78" rx="7"></rect><rect class="co2-bottle-neck" x="7" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="14" height="56" rx="4"></rect></g>
+                      <g transform="translate(78 0)"><rect class="co2-bottle-body" x="0" y="14" width="22" height="78" rx="7"></rect><rect class="co2-bottle-neck" x="7" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="14" height="56" rx="4"></rect></g>
+                      <g transform="translate(104 0)"><rect class="co2-bottle-body" x="0" y="14" width="22" height="78" rx="7"></rect><rect class="co2-bottle-neck" x="7" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="14" height="56" rx="4"></rect></g>
+                      <g transform="translate(130 0)"><rect class="co2-bottle-body" x="0" y="14" width="22" height="78" rx="7"></rect><rect class="co2-bottle-neck" x="7" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="14" height="56" rx="4"></rect></g>
+                      <g transform="translate(156 0)"><rect class="co2-bottle-body" x="0" y="14" width="22" height="78" rx="7"></rect><rect class="co2-bottle-neck" x="7" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="14" height="56" rx="4"></rect></g>
+                    </g>
+                  </svg>
+                </section>
+
+                <svg class="allestec-co2-piping" viewBox="0 0 1200 620" preserveAspectRatio="none" aria-label="CO2 discharge piping">
+                  <defs>
+                    <marker id="co2-flow-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                      <path d="M0 0 L10 5 L0 10 Z"></path>
+                    </marker>
+                    <linearGradient id="co2SystemBottleShell" x1="0" x2="1" y1="0" y2="0">
+                      <stop offset="0" stop-color="#4d5960"></stop>
+                      <stop offset="0.42" stop-color="#eef4f6"></stop>
+                      <stop offset="0.66" stop-color="#89949a"></stop>
+                      <stop offset="1" stop-color="#424b52"></stop>
+                    </linearGradient>
+                    <linearGradient id="co2SystemFillGlass" x1="0" x2="0" y1="0" y2="1">
+                      <stop offset="0" stop-color="rgba(236, 252, 255, 0.95)"></stop>
+                      <stop offset="1" stop-color="rgba(168, 225, 242, 0.55)"></stop>
+                    </linearGradient>
+                    <linearGradient id="co2FlowMainGradient" gradientUnits="userSpaceOnUse" x1="-360" y1="52" x2="40" y2="52">
+                      <stop offset="0" stop-color="rgba(235, 252, 255, 0)"></stop>
+                      <stop offset="0.45" stop-color="rgba(235, 252, 255, 0.05)"></stop>
+                      <stop offset="0.52" stop-color="rgba(235, 252, 255, 0.95)"></stop>
+                      <stop offset="0.6" stop-color="rgba(235, 252, 255, 0.08)"></stop>
+                      <stop offset="1" stop-color="rgba(235, 252, 255, 0)"></stop>
+                      <animate attributeName="x1" from="-360" to="980" dur="2.1s" repeatCount="indefinite"></animate>
+                      <animate attributeName="x2" from="40" to="1380" dur="2.1s" repeatCount="indefinite"></animate>
+                    </linearGradient>
+                    <linearGradient id="co2FlowBranchGradient" gradientUnits="userSpaceOnUse" x1="0" y1="28" x2="0" y2="114">
+                      <stop offset="0" stop-color="rgba(235, 252, 255, 0)"></stop>
+                      <stop offset="0.42" stop-color="rgba(235, 252, 255, 0.08)"></stop>
+                      <stop offset="0.55" stop-color="rgba(235, 252, 255, 0.92)"></stop>
+                      <stop offset="0.72" stop-color="rgba(235, 252, 255, 0.1)"></stop>
+                      <stop offset="1" stop-color="rgba(235, 252, 255, 0)"></stop>
+                      <animate attributeName="y1" from="20" to="88" dur="1.15s" repeatCount="indefinite"></animate>
+                      <animate attributeName="y2" from="70" to="138" dur="1.15s" repeatCount="indefinite"></animate>
+                    </linearGradient>
+                  </defs>
+                  <g class="co2-unified-skid">
+                    <text class="co2-bank-label" x="32" y="86">MAIN</text>
+                    <text class="co2-bank-label" x="32" y="250">RESERVE</text>
+                    <g class="co2-skid-piping">
+                      <path class="co2-pipe co2-supply-pipe" d="M38 112 H198 V52 H248"></path>
+                      <path class="co2-pipe co2-supply-pipe" d="M38 274 H198 V112"></path>
+                      <circle class="co2-pipe-junction" cx="198" cy="52" r="5"></circle>
+                      <circle class="co2-pipe-junction" cx="198" cy="112" r="5"></circle>
+                      <circle class="co2-pipe-junction" cx="198" cy="274" r="5"></circle>
+                      <path d="M45 112 V132 M67 112 V132 M89 112 V132 M111 112 V132 M133 112 V132 M155 112 V132 M177 112 V132"></path>
+                      <path d="M45 274 V294 M67 274 V294 M89 274 V294 M111 274 V294 M133 274 V294 M155 274 V294 M177 274 V294"></path>
+                    </g>
+                    <g class="co2-main-bottles-svg" transform="translate(34 132)">
+                      <g transform="translate(0 0)"><rect class="co2-bottle-body" x="0" y="14" width="20" height="72" rx="6"></rect><rect class="co2-bottle-neck" x="6" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="12" height="50" rx="4"></rect></g>
+                      <g transform="translate(22 0)"><rect class="co2-bottle-body" x="0" y="14" width="20" height="72" rx="6"></rect><rect class="co2-bottle-neck" x="6" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="12" height="50" rx="4"></rect></g>
+                      <g transform="translate(44 0)"><rect class="co2-bottle-body" x="0" y="14" width="20" height="72" rx="6"></rect><rect class="co2-bottle-neck" x="6" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="12" height="50" rx="4"></rect></g>
+                      <g transform="translate(66 0)"><rect class="co2-bottle-body" x="0" y="14" width="20" height="72" rx="6"></rect><rect class="co2-bottle-neck" x="6" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="12" height="50" rx="4"></rect></g>
+                      <g transform="translate(88 0)"><rect class="co2-bottle-body" x="0" y="14" width="20" height="72" rx="6"></rect><rect class="co2-bottle-neck" x="6" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="12" height="50" rx="4"></rect></g>
+                      <g transform="translate(110 0)"><rect class="co2-bottle-body" x="0" y="14" width="20" height="72" rx="6"></rect><rect class="co2-bottle-neck" x="6" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="12" height="50" rx="4"></rect></g>
+                      <g transform="translate(132 0)"><rect class="co2-bottle-body" x="0" y="14" width="20" height="72" rx="6"></rect><rect class="co2-bottle-neck" x="6" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="12" height="50" rx="4"></rect></g>
+                    </g>
+                    <g class="co2-reserve-bottles-svg" transform="translate(34 294)">
+                      <g transform="translate(0 0)"><rect class="co2-bottle-body" x="0" y="14" width="20" height="72" rx="6"></rect><rect class="co2-bottle-neck" x="6" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="12" height="50" rx="4"></rect></g>
+                      <g transform="translate(22 0)"><rect class="co2-bottle-body" x="0" y="14" width="20" height="72" rx="6"></rect><rect class="co2-bottle-neck" x="6" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="12" height="50" rx="4"></rect></g>
+                      <g transform="translate(44 0)"><rect class="co2-bottle-body" x="0" y="14" width="20" height="72" rx="6"></rect><rect class="co2-bottle-neck" x="6" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="12" height="50" rx="4"></rect></g>
+                      <g transform="translate(66 0)"><rect class="co2-bottle-body" x="0" y="14" width="20" height="72" rx="6"></rect><rect class="co2-bottle-neck" x="6" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="12" height="50" rx="4"></rect></g>
+                      <g transform="translate(88 0)"><rect class="co2-bottle-body" x="0" y="14" width="20" height="72" rx="6"></rect><rect class="co2-bottle-neck" x="6" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="12" height="50" rx="4"></rect></g>
+                      <g transform="translate(110 0)"><rect class="co2-bottle-body" x="0" y="14" width="20" height="72" rx="6"></rect><rect class="co2-bottle-neck" x="6" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="12" height="50" rx="4"></rect></g>
+                      <g transform="translate(132 0)"><rect class="co2-bottle-body" x="0" y="14" width="20" height="72" rx="6"></rect><rect class="co2-bottle-neck" x="6" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="12" height="50" rx="4"></rect></g>
+                    </g>
+                  </g>
+                  <g class="co2-line-tag device-badge solenoid-badge normal-badge" data-device="SOV-6359" transform="translate(42 96)">
+                    <rect class="co2-line-hitbox co2-hitbox" data-device="SOV-6359" x="-4" y="-15" width="74" height="24"></rect>
+                    <text x="0" y="4">SOV-6359</text>
+                  </g>
+                  <g class="co2-line-tag device-badge solenoid-badge normal-badge" data-device="SOV-6360" transform="translate(42 112)">
+                    <rect class="co2-line-hitbox co2-hitbox" data-device="SOV-6360" x="-4" y="-15" width="74" height="24"></rect>
+                    <text x="0" y="4">SOV-6360</text>
+                  </g>
+                  <g>
+                    <path class="co2-pipe co2-supply-pipe" d="M284 52 H1128"></path>
+                    <path class="co2-pipe-flow co2-supply-flow" d="M284 52 H1128"></path>
+                  </g>
+                  <g class="co2-pressure-switch co2-ps-before device-badge switch-badge normal-badge" data-device="PSH-6348A">
+                    <rect class="co2-ps-hitbox co2-hitbox" data-device="PSH-6348A" x="194" y="14" width="72" height="50"></rect>
+                    <circle cx="222" cy="52" r="8"></circle>
+                    <line x1="222" y1="52" x2="222" y2="34"></line>
+                    <text x="222" y="20" class="co2-ps-tag">PSH-6348A</text>
+                  </g>
+                  <g class="co2-block-valve-symbol device-badge switch-badge normal-badge" data-device="ZS-6364">
+                    <rect class="co2-valve-hitbox co2-hitbox" data-device="ZS-6364" x="238" y="8" width="58" height="58"></rect>
+                    <path d="M254 46 L266 52 L254 58 Z"></path>
+                    <path d="M278 46 L266 52 L278 58 Z"></path>
+                    <line x1="266" y1="44" x2="266" y2="29"></line>
+                    <rect x="257" y="21" width="18" height="8" rx="2"></rect>
+                    <text class="co2-valve-tag" x="266" y="76">ZS-6364</text>
+                  </g>
+                  <g class="co2-pressure-switch co2-ps-after device-badge switch-badge normal-badge" data-device="PSHH-6348B">
+                    <rect class="co2-ps-hitbox co2-hitbox" data-device="PSHH-6348B" x="282" y="14" width="82" height="50"></rect>
+                    <circle cx="304" cy="52" r="8"></circle>
+                    <line x1="304" y1="52" x2="304" y2="34"></line>
+                    <text x="324" y="20" class="co2-ps-tag">PSHH-6348B</text>
+                  </g>
+                  <g class="co2-line-tag device-badge switch-badge normal-badge" data-device="HS-6363" transform="translate(216 92)">
+                    <rect class="co2-line-hitbox co2-hitbox" data-device="HS-6363" x="-8" y="-20" width="112" height="36"></rect>
+                    <text x="0" y="4">HS-6363</text><use href="#icon-key" transform="translate(76 0)"></use>
+                  </g>
+                  <g class="co2-line-tag device-badge switch-badge normal-badge" data-device="HS-6305" transform="translate(216 118)">
+                    <rect class="co2-line-hitbox co2-hitbox" data-device="HS-6305" x="-8" y="-20" width="112" height="36"></rect>
+                    <text x="0" y="4">HS-6305</text><use href="#icon-key" transform="translate(76 0)"></use>
+                  </g>
+                  <g class="co2-line-tag device-badge solenoid-badge normal-badge" data-device="SOV-6361" transform="translate(42 258)">
+                    <rect class="co2-line-hitbox co2-hitbox" data-device="SOV-6361" x="-4" y="-15" width="74" height="24"></rect>
+                    <text x="0" y="4">SOV-6361</text>
+                  </g>
+                  <g class="co2-line-tag device-badge solenoid-badge normal-badge" data-device="SOV-6362" transform="translate(42 274)">
+                    <rect class="co2-line-hitbox co2-hitbox" data-device="SOV-6362" x="-4" y="-15" width="74" height="24"></rect>
+                    <text x="0" y="4">SOV-6362</text>
+                  </g>
+                  <g>
+                    <path class="co2-pipe co2-branch-pipe turbine-branch" d="M380 52 L380 128"></path>
+                    <path class="co2-pipe-flow co2-branch-flow turbine-branch" d="M380 52 L380 128"></path>
+                    <g class="co2-nozzle nozzle-turbine upper" transform="translate(380 128)">
+                    <path d="M-9 0 L9 0 L5 22 L-5 22 Z"></path>
+                    <path class="co2-jet" d="M-18 22 C-34 84 -16 132 -48 186 C-12 164 18 146 28 92 C34 58 20 36 18 22 Z"></path>
+                    </g>
+                  </g>
+                  <g>
+                    <path class="co2-pipe co2-branch-pipe turbine-branch" d="M540 52 L540 128"></path>
+                    <path class="co2-pipe-flow co2-branch-flow turbine-branch" d="M540 52 L540 128"></path>
+                    <g class="co2-nozzle nozzle-turbine lower" transform="translate(540 128)">
+                    <path d="M-9 0 L9 0 L5 22 L-5 22 Z"></path>
+                    <path class="co2-jet" d="M-18 22 C-34 84 -16 132 -48 186 C-12 164 18 146 28 92 C34 58 20 36 18 22 Z"></path>
+                    </g>
+                  </g>
+                  <g>
+                    <path class="co2-pipe co2-branch-pipe generator-branch" d="M760 52 L760 128"></path>
+                    <path class="co2-pipe-flow co2-branch-flow generator-branch" d="M760 52 L760 128"></path>
+                    <g class="co2-nozzle nozzle-generator upper" transform="translate(760 128)">
+                    <path d="M-9 0 L9 0 L5 22 L-5 22 Z"></path>
+                    <path class="co2-jet" d="M-18 22 C-34 84 -16 132 -48 186 C-12 164 18 146 28 92 C34 58 20 36 18 22 Z"></path>
+                    </g>
+                  </g>
+                  <g>
+                    <path class="co2-pipe co2-branch-pipe generator-branch" d="M1128 52 L1128 128"></path>
+                    <path class="co2-pipe-flow co2-branch-flow generator-branch" d="M1128 52 L1128 128"></path>
+                    <g class="co2-nozzle nozzle-generator lower" transform="translate(1128 128)">
+                    <path d="M-9 0 L9 0 L5 22 L-5 22 Z"></path>
+                    <path class="co2-jet" d="M-18 22 C-34 84 -16 132 -48 186 C-12 164 18 146 28 92 C34 58 20 36 18 22 Z"></path>
+                    </g>
+                  </g>
+                </svg>
+
+                <section class="allestec-package">
+                  <div class="allestec-enclosure generator-zone">
+                    <div class="co2-room-fill"></div>
+                    <img class="allestec-generator-img" src="assets/lm6000_generator_reference.png" alt="LM6000 generator reference" />
+                    <svg class="allestec-device-layer" viewBox="0 0 1000 520" aria-label="Generator enclosure devices">
+                      <g class="device-badge strobe-badge normal-badge" data-device="YSL-6345" transform="translate(86 58)">
+                        <text x="0" y="4">YSL-6345</text><use href="#icon-strobe" transform="translate(74 0)"></use>
+                      </g>
+                      <g class="device-badge pull-badge normal-badge" data-device="HS-6308" transform="translate(70 126)">
+                        <text x="0" y="4">HS-6308</text><use href="#icon-pull" transform="translate(66 0)"></use>
+                      </g>
+                      <g class="device-badge pull-badge normal-badge" data-device="HS-6309" transform="translate(198 126)">
+                        <text x="0" y="4">HS-6309</text><use href="#icon-pull" transform="translate(66 0)"></use>
+                      </g>
+                      <g class="device-badge thermal-badge normal-badge" data-device="TS-6310" transform="translate(58 226)">
+                        <text x="0" y="4">TS-6310</text><use href="#icon-thermal" transform="translate(66 0)"></use>
+                      </g>
+                      <g class="device-badge horn-badge normal-badge" data-device="YSA-6347" transform="translate(58 318)">
+                        <text x="0" y="4">YSA-6347</text><use href="#icon-horn" transform="translate(74 0)"></use>
+                      </g>
+                      <g class="device-badge flame-badge normal-badge" data-device="BE-6311" transform="translate(105 425)">
+                        <text x="0" y="4">BE-6311</text><use href="#icon-flame" transform="translate(74 0)"></use>
+                      </g>
+                      <g class="device-badge gas-badge normal-badge" data-device="LM6-AE-3029" transform="translate(318 88)">
+                        <rect class="badge-hitbox" x="-8" y="-22" width="124" height="48"></rect>
+                        <text x="0" y="-2">AE-3029</text><text x="0" y="11" class="badge-value">0.00% LEL</text><use href="#icon-gas" transform="translate(88 1)"></use>
+                      </g>
+                      <g class="device-badge gas-badge normal-badge" data-device="LM6-AE-3030" transform="translate(318 438)">
+                        <rect class="badge-hitbox" x="-8" y="-22" width="124" height="48"></rect>
+                        <text x="0" y="-2">AE-3030</text><text x="0" y="11" class="badge-value">0.00% LEL</text><use href="#icon-gas" transform="translate(88 1)"></use>
+                      </g>
+                      <g class="device-badge gas-badge normal-badge" data-device="AE-6313" transform="translate(462 360)">
+                        <text x="0" y="-2">AE-6313</text><text x="0" y="11" class="badge-value">0.00% LEL</text><use href="#icon-gas" transform="translate(80 1)"></use>
+                      </g>
+                      <g class="device-badge thermal-badge normal-badge" data-device="TS-6307" transform="translate(515 62)">
+                        <text x="0" y="4">TS-6307</text><use href="#icon-thermal" transform="translate(66 0)"></use>
+                      </g>
+                      <g class="device-badge horn-badge normal-badge" data-device="YSA-6306" transform="translate(785 118)">
+                        <text x="0" y="4">YSA-6306</text><use href="#icon-horn" transform="translate(74 0)"></use>
+                      </g>
+                      <g class="device-badge pull-badge normal-badge" data-device="HS-6312" transform="translate(742 430)">
+                        <text x="0" y="4">HS-6312</text><use href="#icon-pull" transform="translate(66 0)"></use>
+                      </g>
+                    </svg>
+                  </div>
+
+                  <div class="allestec-enclosure turbine-zone">
+                    <div class="co2-room-fill"></div>
+                    <img class="allestec-turbine-img" src="assets/lm6000_turbine_reference.png" alt="LM6000 turbine reference" />
+                    <svg class="allestec-device-layer" viewBox="0 0 1000 520" aria-label="Turbine enclosure devices">
+                      <g class="device-badge thermal-badge normal-badge" data-device="TS-6303" transform="translate(265 85)">
+                        <text x="0" y="4">TS-6303</text><use href="#icon-thermal" transform="translate(66 0)"></use>
+                      </g>
+                      <g class="device-badge strobe-badge normal-badge" data-device="YSL-6336" transform="translate(535 68)">
+                        <text x="0" y="4">YSL-6336</text><use href="#icon-strobe" transform="translate(74 0)"></use>
+                      </g>
+                      <g class="device-badge gas-badge normal-badge" data-device="AE-6304A" transform="translate(454 132)">
+                        <text x="0" y="-2">AE-6304A</text><text x="0" y="11" class="badge-value">0.00% LEL</text><use href="#icon-gas" transform="translate(88 1)"></use>
+                      </g>
+                      <g class="device-badge gas-badge normal-badge" data-device="AE-6304B" transform="translate(454 190)">
+                        <text x="0" y="-2">AE-6304B</text><text x="0" y="11" class="badge-value">0.00% LEL</text><use href="#icon-gas" transform="translate(88 1)"></use>
+                      </g>
+                      <g class="device-badge gas-badge normal-badge" data-device="AE-6304C" transform="translate(454 318)">
+                        <text x="0" y="-2">AE-6304C</text><text x="0" y="11" class="badge-value">0.00% LEL</text><use href="#icon-gas" transform="translate(88 1)"></use>
+                      </g>
+                      <g class="device-badge gas-badge normal-badge" data-device="AE-6304D" transform="translate(210 178)">
+                        <text x="0" y="-2">AE-6304D</text><text x="0" y="11" class="badge-value">0.00% LEL</text><use href="#icon-gas" transform="translate(88 1)"></use>
+                      </g>
+                      <g class="device-badge gas-badge normal-badge" data-device="AE-6304E" transform="translate(640 238)">
+                        <text x="0" y="-2">AE-6304E</text><text x="0" y="11" class="badge-value">0.00% LEL</text><use href="#icon-gas" transform="translate(88 1)"></use>
+                      </g>
+                      <g class="device-badge flame-badge normal-badge" data-device="BE-6300" transform="translate(178 392)">
+                        <text x="0" y="4">BE-6300</text><use href="#icon-flame" transform="translate(74 0)"></use>
+                      </g>
+                      <g class="device-badge flame-badge normal-badge" data-device="BE-6302" transform="translate(82 240)">
+                        <text x="0" y="4">BE-6302</text><use href="#icon-flame" transform="translate(74 0)"></use>
+                      </g>
+                      <g class="device-badge flame-badge normal-badge" data-device="BE-6335" transform="translate(308 395)">
+                        <text x="0" y="4">BE-6335</text><use href="#icon-flame" transform="translate(74 0)"></use>
+                      </g>
+                      <g class="device-badge strobe-badge normal-badge" data-device="YSL-6344" transform="translate(605 410)">
+                        <text x="0" y="4">YSL-6344</text><use href="#icon-strobe" transform="translate(74 0)"></use>
+                      </g>
+                      <g class="device-badge strobe-badge normal-badge" data-device="YSL-6306" transform="translate(668 366)">
+                        <text x="0" y="4">YSL-6306</text><use href="#icon-strobe" transform="translate(74 0)"></use>
+                      </g>
+                      <g class="device-badge thermal-badge normal-badge" data-device="TS-6314" transform="translate(805 385)">
+                        <text x="0" y="4">TS-6314</text><use href="#icon-thermal" transform="translate(66 0)"></use>
+                      </g>
+                      <g class="device-badge horn-badge normal-badge" data-device="YSA-6346" transform="translate(810 150)">
+                        <text x="0" y="4">YSA-6346</text><use href="#icon-horn" transform="translate(74 0)"></use>
+                      </g>
+                    </svg>
+                  </div>
+                </section>
+              </div>
+
+              <div class="panel-command-actions allestec-command-actions">
+                <button type="button" id="allestec-ack">ACK</button>
+                <button type="button" id="allestec-silence">SILENCE</button>
+                <button type="button" id="allestec-reset">RESET</button>
+              </div>
+              <div class="countdown-box allestec-countdown-box" id="allestec-co2-countdown-box">
+                <span>VIRTUAL CO2</span>
+                <b id="allestec-co2-countdown">READY</b>
+                <small id="allestec-co2-countdown-label">MAIN / RESERVE</small>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="view-stage" id="drawing-view">
+            <div class="pdf-toolbar">
+              <span>SW-MC_RB_B Redline - Fire & Gas Drawing</span>
+              <button class="admin-only" id="replace-drawing-file" type="button">REPLACE DRAWING</button>
+              <a href="assets/sw_mc_rb_b_redline.pdf" target="_blank" rel="noreferrer">OPEN PDF</a>
+            </div>
+            <iframe class="drawing-pdf" src="assets/sw_mc_rb_b_redline.pdf" title="SW-MC_RB_B redline fire and gas drawing PDF"></iframe>
+          </div>
+
+          <div class="view-stage" id="allestec-drawing-view">
+            <div class="pdf-toolbar">
+              <span>LM6000 ALLESTEC Drawing - LM-6000-EGIPTO</span>
+              <button class="admin-only" id="replace-allestec-drawing-file" type="button">REPLACE DRAWING</button>
+              <a href="assets/lm6000_egipto.pdf" target="_blank" rel="noreferrer">OPEN PDF</a>
+            </div>
+            <iframe class="drawing-pdf" src="assets/lm6000_egipto.pdf" title="LM6000 Allestec drawing PDF"></iframe>
+          </div>
+
+          <div class="view-stage topology-stage" id="topology-view">
+            <div class="topology-card controller-node" data-device="EQP-001">EQP-001<br /><span>Controller</span></div>
+            <div class="topology-bus"></div>
+            <div class="topology-node normal" data-device="AE-3004A">AE-3004A</div>
+            <div class="topology-node normal" data-device="AE-3004B">AE-3004B</div>
+            <div class="topology-node normal" data-device="AE-3004C">AE-3004C</div>
+            <div class="topology-node normal" data-device="AE-3029">AE-3029</div>
+            <div class="topology-node normal" data-device="AE-3030">AE-3030</div>
+            <div class="edio-topology-row">
+              <div class="edio-block">
+                <div class="topology-node normal" data-device="EDIO-1">EDIO-1</div>
+                <div class="wired-points">
+                  <button class="wired-point normal" type="button" data-device="HS-3092" data-devices="HS-3092,HS-3093"><b>CH1</b><span>HS-3092 / HS-3093</span></button>
+                  <button class="wired-point normal" type="button" data-device="YSA-3006B"><b>CH2</b><span>YSA-3006B</span></button>
+                  <button class="wired-point normal" type="button" data-device="YSA-3006A"><b>CH3</b><span>YSA-3006A</span></button>
+                  <button class="wired-point normal" type="button" data-device="TS-3003" data-devices="TS-3003,TS-3014"><b>CH4</b><span>TS-3003 / TS-3014</span></button>
+                  <button class="wired-point normal" type="button" data-device="YSL-3041"><b>CH5</b><span>YSL-3041</span></button>
+                  <button class="wired-point normal" type="button" data-device="YSL-3036"><b>CH6</b><span>YSL-3036</span></button>
+                  <button class="wired-point normal" type="button" data-device="YSL-3042"><b>CH7</b><span>YSL-3042</span></button>
+                  <button class="wired-point normal" type="button" data-device="HS-3040"><b>CH8</b><span>HS-3040</span></button>
+                </div>
+              </div>
+              <div class="edio-block">
+                <div class="topology-node normal" data-device="EDIO-2">EDIO-2</div>
+                <div class="wired-points">
+                  <button class="wired-point spare" type="button" disabled><b>CH1</b><span>SPARE</span></button>
+                  <button class="wired-point spare" type="button" disabled><b>CH2</b><span>SPARE</span></button>
+                  <button class="wired-point spare" type="button" disabled><b>CH3</b><span>SPARE</span></button>
+                  <button class="wired-point spare" type="button" disabled><b>CH4</b><span>SPARE</span></button>
+                  <button class="wired-point normal" type="button" data-device="YSZ-3171"><b>CH5</b><span>YSZ-3171</span></button>
+                  <button class="wired-point normal" type="button" data-device="YSZ-3172"><b>CH6</b><span>YSZ-3172</span></button>
+                  <button class="wired-point spare" type="button" disabled><b>CH7</b><span>SPARE</span></button>
+                  <button class="wired-point spare" type="button" disabled><b>CH8</b><span>SPARE</span></button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="view-stage topology-stage allestec-topology-stage" id="allestec-topology-view">
+            <div class="topology-card controller-node" data-device="ALL-800">ALLESTEC 800<br /><span>Conventional Controller</span></div>
+            <div class="allestec-topology-groups">
+              <section>
+                <h3>TURBINE</h3>
+                <button class="topology-node normal" data-device="AE-6304A">AE-6304A</button>
+                <button class="topology-node normal" data-device="AE-6304B">AE-6304B</button>
+                <button class="topology-node normal" data-device="AE-6304C">AE-6304C</button>
+                <button class="topology-node normal" data-device="AE-6304D">AE-6304D</button>
+                <button class="topology-node normal" data-device="AE-6304E">AE-6304E</button>
+                <button class="topology-node normal" data-device="LM6-AE-3029">AE-3029</button>
+                <button class="topology-node normal" data-device="LM6-AE-3030">AE-3030</button>
+                <button class="topology-node normal" data-device="BE-6300">BE-6300</button>
+                <button class="topology-node normal" data-device="BE-6302">BE-6302</button>
+                <button class="topology-node normal" data-device="BE-6335">BE-6335</button>
+                <button class="topology-node normal" data-device="TS-6303">TS-6303</button>
+                <button class="topology-node normal" data-device="TS-6314">TS-6314</button>
+                <button class="topology-node normal" data-device="YSL-6306">YSL-6306</button>
+                <button class="topology-node normal" data-device="YSL-6336">YSL-6336</button>
+                <button class="topology-node normal" data-device="YSA-6306">YSA-6306</button>
+                <button class="topology-node normal" data-device="YSA-6346">YSA-6346</button>
+              </section>
+              <section>
+                <h3>GENERATOR</h3>
+                <button class="topology-node normal" data-device="AE-6313">AE-6313</button>
+                <button class="topology-node normal" data-device="BE-6311">BE-6311</button>
+                <button class="topology-node normal" data-device="TS-6307">TS-6307</button>
+                <button class="topology-node normal" data-device="TS-6310">TS-6310</button>
+                <button class="topology-node normal" data-device="HS-6308">HS-6308</button>
+                <button class="topology-node normal" data-device="HS-6309">HS-6309</button>
+                <button class="topology-node normal" data-device="HS-6312">HS-6312</button>
+                <button class="topology-node normal" data-device="YSA-6347">YSA-6347</button>
+                <button class="topology-node normal" data-device="YSL-6344">YSL-6344</button>
+                <button class="topology-node normal" data-device="YSL-6345">YSL-6345</button>
+              </section>
+              <section>
+                <h3>CO2 SKID</h3>
+                <button class="topology-node normal" data-device="HS-6305">HS-6305</button>
+                <button class="topology-node normal" data-device="HS-6363">HS-6363</button>
+                <button class="topology-node normal" data-device="SOV-6359">SOV-6359</button>
+                <button class="topology-node normal" data-device="SOV-6360">SOV-6360</button>
+                <button class="topology-node normal" data-device="SOV-6361">SOV-6361</button>
+                <button class="topology-node normal" data-device="SOV-6362">SOV-6362</button>
+                <button class="topology-node normal" data-device="ZS-6364">ZS-6364</button>
+                <button class="topology-node normal" data-device="PSH-6348A">PSH-6348A</button>
+                <button class="topology-node normal" data-device="PSHH-6348B">PSHH-6348B</button>
+              </section>
+            </div>
+          </div>
+
+          <div class="view-stage screen-panel project-placeholder-view" id="project-placeholder-view">
+            <div class="screen-title" id="placeholder-project-title">PROJECT NOT CONFIGURED</div>
+            <div class="project-placeholder-card">
+              <b>Blank project workspace</b>
+              <p id="placeholder-project-note">This project has not been configured yet.</p>
+              <span>Menu and navigation are available, but HMI graphics, devices, topology, drawings, communications, reports, and logic are intentionally empty until this turbine package is built.</span>
+            </div>
+          </div>
+
+          <div class="view-stage screen-panel" id="alarms-view">
+            <div class="screen-title">ALARM SUMMARY</div>
+            <div class="data-table" id="alarm-summary-table">
+              <div class="table-header">TIME</div><div class="table-header">TAG</div><div class="table-header">TYPE</div><div class="table-header">STATUS</div><div class="table-header">MODE</div>
+              <div>20:50:44</div><div>TS-3003</div><div class="red-text">Fire Alarm</div><div>Unacknowledged</div><div>Virtual</div>
+              <div>20:51:08</div><div>AE-3004B</div><div class="orange-text">Low Gas</div><div>Active</div><div>Virtual</div>
+              <div>20:49:12</div><div>HS-3081</div><div class="yellow-text">Inhibit / Trouble</div><div>Active</div><div>Virtual</div>
+            </div>
+          </div>
+
+          <div class="view-stage screen-panel" id="events-view">
+            <div class="screen-title">EVENT HISTORY</div>
+            <div class="event-list-large" id="event-history-list">
+              <div><span>20:51:08</span> AE-3004B entered Low Gas Alarm at 15.0% LEL.</div>
+              <div><span>20:50:44</span> TS-3003 Fire Alarm activated.</div>
+              <div><span>20:50:43</span> Virtual aerosol countdown started.</div>
+              <div><span>20:49:12</span> HS-3081 LOTO / inhibit switch active.</div>
+              <div><span>20:48:55</span> EQP Controller online.</div>
+            </div>
+          </div>
+
+          <div class="view-stage screen-panel" id="devices-view">
+            <div class="screen-title">DEVICE LIBRARY</div>
+            <div class="device-config-layout">
+              <div>
+                <div class="data-table device-table" id="device-library-table">
+                  <div class="table-header">TAG</div><div class="table-header">TYPE</div><div class="table-header">AREA</div><div class="table-header">MODE</div><div class="table-header">STATUS</div>
+                </div>
+              </div>
+              <form class="device-editor" id="device-editor">
+                <div class="editor-title">DEVICE CONFIGURATION</div>
+                <div class="read-only-banner" id="admin-lock-banner">CONFIG LOCKED - Administrator login required to edit configuration.</div>
+                <label>Tag Number<input id="editor-tag" type="text" readonly /></label>
+                <label>Device Type<input id="editor-type" type="text" /></label>
+                <label>Address<input id="editor-address" type="text" /></label>
+                <label>Area<input id="editor-area" type="text" /></label>
+                <div class="editor-row">
+                  <label>Mode
+                    <select id="editor-mode">
+                      <option>Virtual</option>
+                      <option>Real</option>
+                      <option>Real / Virtual Lab</option>
+                    </select>
+                  </label>
+                  <label>Status
+                    <select id="editor-status">
+                      <option>Normal</option>
+                      <option>Low Gas</option>
+                      <option>High Gas</option>
+                      <option>Fire Alarm</option>
+                      <option>Trouble</option>
+                      <option>Fault</option>
+                      <option>Offline</option>
+                      <option>Output Active</option>
+                      <option>Alarm Active</option>
+                      <option>Inhibit</option>
+                      <option>Supervisory</option>
+                      <option>LON Fault</option>
+                    </select>
+                  </label>
+                </div>
+                <label>Current Value<input id="editor-value" type="text" /></label>
+                <div class="editor-row">
+                  <label>High Alarm<input id="editor-high" type="text" placeholder="Optional" /></label>
+                  <label>High High<input id="editor-high-high" type="text" placeholder="Optional" /></label>
+                </div>
+                <div class="editor-actions">
+                  <button type="button" id="device-save">SAVE DEVICE</button>
+                  <button type="button" id="device-revert">REVERT</button>
+                  <button type="button" id="device-save-json">SAVE JSON</button>
+                </div>
+                <div class="editor-message" id="device-editor-message">Select a device from the table.</div>
+              </form>
+            </div>
+            <div class="device-info-window hmi-hidden" id="device-info-window">
+              <div class="device-info-titlebar">
+                <span id="device-info-title">Device Info</span>
+                <div class="window-controls">
+                  <button type="button" id="device-info-minimize">_</button>
+                  <button type="button" id="device-info-maximize">□</button>
+                  <button type="button" id="device-info-close">X</button>
+                </div>
+              </div>
+              <div class="device-info-body">
+                <section class="info-list device-info-list">
+                  <button class="info-topic active-info-topic" type="button" data-info-topic="device">
+                    <b>DEVICE</b>
+                    <span>Part numbers, manufacturer and device record.</span>
+                  </button>
+                  <button class="info-topic" type="button" data-info-topic="wiring">
+                    <b>WIRING</b>
+                    <span>Device wiring, terminals, polarity and supervision notes.</span>
+                  </button>
+                  <button class="info-topic" type="button" data-info-topic="eol">
+                    <b>EOL RESISTOR</b>
+                    <span>End-of-line resistor location, value check and failure symptoms.</span>
+                  </button>
+                  <button class="info-topic" type="button" data-info-topic="sticker">
+                    <b>INSPECTION STICKER</b>
+                    <span>Sticker placement, date, technician initials and shop test record.</span>
+                  </button>
+                  <button class="info-topic" type="button" data-info-topic="documents">
+                    <b>PDF / PHOTOS</b>
+                    <span>Manuals, datasheets, wiring PDFs and real shop photos.</span>
+                  </button>
+                  <button class="info-topic" type="button" data-info-topic="videos">
+                    <b>VIDEOS</b>
+                    <span>Instructional videos for shop testing, wiring and inspections.</span>
+                  </button>
+                </section>
+                <section class="info-detail">
+                  <div class="info-header">
+                    <div>
+                      <span class="info-kicker" id="device-info-kicker">WFE DEVICE INFORMATION</span>
+                      <h2 id="device-info-heading">Device Reference</h2>
+                    </div>
+                  </div>
+                  <div class="info-panel active-info-panel" data-info-panel="device">
+                    <div class="info-columns">
+                      <div class="info-card">
+                        <h3>Device Info</h3>
+                        <div class="reference-row"><b>Tag</b><input id="info-record-tag" readonly value="--" /></div>
+                        <div class="reference-row"><b>Type</b><input id="info-record-type" class="admin-only info-edit-field" value="--" /></div>
+                        <div class="reference-row"><b>Manufacturer</b><input id="info-record-manufacturer" class="admin-only info-edit-field" value="TBD" /></div>
+                        <div class="reference-row"><b>GE PN</b><input id="info-record-ge-pn" class="admin-only info-edit-field" value="TBD" /></div>
+                        <div class="reference-row"><b>WFE PN</b><input id="info-record-wfe-pn" class="admin-only info-edit-field" value="TBD" /></div>
+                        <div class="reference-row"><b>Manufacturer PN</b><input id="info-record-mfg-pn" class="admin-only info-edit-field" value="TBD" /></div>
+                        <label class="info-edit-label">Notes<textarea id="info-record-notes" class="admin-only info-edit-field"></textarea></label>
+                        <button class="info-attach-button admin-only" id="save-device-info-fields" type="button">SAVE INFO</button>
+                      </div>
+                      <div class="info-card">
+                        <h3>Shop Test Checklist</h3>
+                        <ol id="device-info-checklist">
+                          <li>Verify tag number and device type against project device list.</li>
+                          <li>Inspect wiring terminals, housing, lens and conduit entry condition.</li>
+                          <li>Power device from shop test supply and confirm normal state.</li>
+                          <li>Simulate alarm/fault condition and confirm expected indication.</li>
+                          <li>Apply tested sticker and record technician/date.</li>
+                        </ol>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="info-panel" data-info-panel="wiring">
+                    <div class="info-card">
+                      <div class="info-card-head">
+                        <h3>Wiring References</h3>
+                        <button class="info-attach-button admin-only" type="button" data-attach-category="wiring">ADD WIRING</button>
+                      </div>
+                      <div id="device-wiring-list" class="document-list">No wiring documents assigned to this device.</div>
+                    </div>
+                  </div>
+                  <div class="info-panel" data-info-panel="eol">
+                    <div class="info-card">
+                      <h3>EOL Resistor Notes</h3>
+                      <textarea id="device-eol-notes" class="admin-only info-edit-field">No EOL resistor notes assigned to this device.</textarea>
+                      <button class="info-attach-button admin-only" data-save-info-fields="true" type="button">SAVE EOL</button>
+                    </div>
+                  </div>
+                  <div class="info-panel" data-info-panel="sticker">
+                    <div class="info-card">
+                      <h3>Inspection Sticker / Shop Test</h3>
+                      <textarea id="device-sticker-notes" class="admin-only info-edit-field">No inspection sticker instructions assigned to this device.</textarea>
+                      <button class="info-attach-button admin-only" data-save-info-fields="true" type="button">SAVE SHOP TEST</button>
+                    </div>
+                  </div>
+                  <div class="info-panel" data-info-panel="documents">
+                    <div class="info-columns">
+                      <div class="info-card">
+                        <div class="info-card-head">
+                          <h3>PDF Documents</h3>
+                          <button class="info-attach-button admin-only" type="button" data-attach-category="manuals">ADD PDF</button>
+                        </div>
+                        <div id="device-pdf-list" class="document-list">No PDF documents assigned to this device.</div>
+                      </div>
+                      <div class="info-card">
+                        <div class="info-card-head">
+                          <h3>Photos</h3>
+                          <button class="info-attach-button admin-only" type="button" data-attach-category="photos">ADD PHOTO</button>
+                        </div>
+                        <div id="device-photo-list" class="document-list">No photos assigned to this device.</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="info-panel" data-info-panel="videos">
+                    <div class="info-card-head video-upload-head">
+                      <h3>Instructional Media</h3>
+                      <div>
+                        <button class="info-attach-button admin-only" type="button" data-attach-category="videos">ADD VIDEO</button>
+                        <button class="info-attach-button admin-only" type="button" data-attach-category="audio">ADD AUDIO</button>
+                      </div>
+                    </div>
+                    <div class="video-panel" id="device-video-panel">
+                      <div class="video-list" id="device-video-list">No videos assigned to this device.</div>
+                      <video id="device-info-video" controls preload="metadata"></video>
+                    </div>
+                  </div>
+                  <div class="info-note" id="device-info-note">
+                    Future PDFs and shop photos can be linked directly from this device record.
+                  </div>
+                </section>
+              </div>
+            </div>
+          </div>
+
+          <div class="view-stage screen-panel" id="comms-view">
+            <div class="screen-title">COMMUNICATIONS</div>
+            <div class="comms-grid">
+              <button class="comms-card selectable-comms-card active" type="button" data-comms-module="relay"><b>Relay Module</b><span>16-Ch Ethernet Relay / Modbus TCP</span></button>
+              <button class="comms-card selectable-comms-card" type="button" data-comms-module="io"><b>I/O Module</b><span>Waveshare WSDEV0001 Ethernet DI/DO</span></button>
+              <button class="comms-card selectable-comms-card" type="button" data-comms-module="analog"><b>4-20mA Module</b><span>Waveshare Industrial 8-Ch Analog Output</span></button>
+              <button class="comms-card selectable-comms-card" type="button" data-comms-module="network"><b>Protocol</b><span>Ethernet / Modbus TCP, RTU fallback</span></button>
+            </div>
+            <section class="module-config-panel" id="module-config-panel">
+              <div class="module-config-head">
+                <div>
+                  <b id="module-config-title">Module Configuration</b>
+                  <span id="module-config-summary">Select a module to configure connection settings.</span>
+                </div>
+                <div class="module-config-actions">
+                  <button class="scenario-button" id="module-connect" type="button">CONNECT MODULE</button>
+                  <button class="scenario-button" id="module-disconnect" type="button">DISCONNECT</button>
+                  <button class="scenario-button" id="module-save-config" type="button">SAVE CONFIG</button>
+                </div>
+              </div>
+              <div class="module-config-grid" id="module-config-grid"></div>
+              <div class="module-status-line" id="module-status-line">Not connected.</div>
+            </section>
+            <div class="comms-table-scroll">
+            <div class="data-table comms-map-table" id="comms-map-table">
+              <div class="table-header">DETAIL</div><div class="table-header">PANEL</div><div class="table-header">CHANNEL</div><div class="table-header">DEVICE</div><div class="table-header">SIGNAL</div><div class="table-header">NOTES</div>
+              <div data-module="relay" contenteditable="true">Relay 16CH</div><div data-module="relay" contenteditable="true">Panel 1</div><div data-module="relay" contenteditable="true">CH1</div><div data-module="relay" contenteditable="true">BE-6300</div><div data-module="relay" contenteditable="true">Flame alarm contact</div><div data-module="relay" contenteditable="true">Allestec input</div>
+              <div data-module="relay" contenteditable="true">Relay 16CH</div><div data-module="relay" contenteditable="true">Panel 1</div><div data-module="relay" contenteditable="true">CH2</div><div data-module="relay" contenteditable="true">BE-6302</div><div data-module="relay" contenteditable="true">Flame alarm contact</div><div data-module="relay" contenteditable="true">Allestec input</div>
+              <div data-module="relay" contenteditable="true">Relay 16CH</div><div data-module="relay" contenteditable="true">Panel 1</div><div data-module="relay" contenteditable="true">CH3</div><div data-module="relay" contenteditable="true">BE-6335</div><div data-module="relay" contenteditable="true">Flame alarm contact</div><div data-module="relay" contenteditable="true">Allestec input</div>
+              <div data-module="relay" contenteditable="true">Relay 16CH</div><div data-module="relay" contenteditable="true">Panel 1</div><div data-module="relay" contenteditable="true">CH4</div><div data-module="relay" contenteditable="true">TS-6303 / TS-6314</div><div data-module="relay" contenteditable="true">Thermal alarm zone</div><div data-module="relay" contenteditable="true">CO2 release source</div>
+              <div data-module="relay" contenteditable="true">Relay 16CH</div><div data-module="relay" contenteditable="true">Panel 1</div><div data-module="relay" contenteditable="true">CH5</div><div data-module="relay" contenteditable="true">HS-6308 / HS-6309 / HS-6312</div><div data-module="relay" contenteditable="true">Manual release</div><div data-module="relay" contenteditable="true">CO2 release source</div>
+              <div data-module="relay" contenteditable="true">Relay 16CH</div><div data-module="relay" contenteditable="true">Panel 1</div><div data-module="relay" contenteditable="true">CH6</div><div data-module="relay" contenteditable="true">HS-6305</div><div data-module="relay" contenteditable="true">Horn acknowledge</div><div data-module="relay" contenteditable="true">Key switch</div>
+              <div data-module="relay" contenteditable="true">Relay 16CH</div><div data-module="relay" contenteditable="true">Panel 1</div><div data-module="relay" contenteditable="true">CH7</div><div data-module="relay" contenteditable="true">HS-6363</div><div data-module="relay" contenteditable="true">Purge switch</div><div data-module="relay" contenteditable="true">Key switch</div>
+              <div data-module="relay" contenteditable="true">Relay 16CH</div><div data-module="relay" contenteditable="true">Panel 1</div><div data-module="relay" contenteditable="true">CH8</div><div data-module="relay" contenteditable="true">PSHH-6348B</div><div data-module="relay" contenteditable="true">CO2 pressure confirmation</div><div data-module="relay" contenteditable="true">F3 latch</div>
+              <div data-module="relay" contenteditable="true">Relay 16CH</div><div data-module="relay" contenteditable="true">Panel 2</div><div data-module="relay" contenteditable="true">CH9</div><div data-module="relay" contenteditable="true">BE-6300</div><div data-module="relay" contenteditable="true">Flame alarm contact</div><div data-module="relay" contenteditable="true">Test panel duplicate</div>
+              <div data-module="relay" contenteditable="true">Relay 16CH</div><div data-module="relay" contenteditable="true">Panel 2</div><div data-module="relay" contenteditable="true">CH10</div><div data-module="relay" contenteditable="true">BE-6302</div><div data-module="relay" contenteditable="true">Flame alarm contact</div><div data-module="relay" contenteditable="true">Test panel duplicate</div>
+              <div data-module="relay" contenteditable="true">Relay 16CH</div><div data-module="relay" contenteditable="true">Panel 2</div><div data-module="relay" contenteditable="true">CH11</div><div data-module="relay" contenteditable="true">BE-6335</div><div data-module="relay" contenteditable="true">Flame alarm contact</div><div data-module="relay" contenteditable="true">Test panel duplicate</div>
+              <div data-module="relay" contenteditable="true">Relay 16CH</div><div data-module="relay" contenteditable="true">Panel 2</div><div data-module="relay" contenteditable="true">CH12</div><div data-module="relay" contenteditable="true">TS-6303 / TS-6314</div><div data-module="relay" contenteditable="true">Thermal alarm zone</div><div data-module="relay" contenteditable="true">Test panel duplicate</div>
+              <div data-module="relay" contenteditable="true">Relay 16CH</div><div data-module="relay" contenteditable="true">Panel 2</div><div data-module="relay" contenteditable="true">CH13</div><div data-module="relay" contenteditable="true">HS-6308 / HS-6309 / HS-6312</div><div data-module="relay" contenteditable="true">Manual release</div><div data-module="relay" contenteditable="true">Test panel duplicate</div>
+              <div data-module="relay" contenteditable="true">Relay 16CH</div><div data-module="relay" contenteditable="true">Panel 2</div><div data-module="relay" contenteditable="true">CH14</div><div data-module="relay" contenteditable="true">HS-6305</div><div data-module="relay" contenteditable="true">Horn acknowledge</div><div data-module="relay" contenteditable="true">Test panel duplicate</div>
+              <div data-module="relay" contenteditable="true">Relay 16CH</div><div data-module="relay" contenteditable="true">Panel 2</div><div data-module="relay" contenteditable="true">CH15</div><div data-module="relay" contenteditable="true">HS-6363</div><div data-module="relay" contenteditable="true">Purge switch</div><div data-module="relay" contenteditable="true">Test panel duplicate</div>
+              <div data-module="relay" contenteditable="true">Relay 16CH</div><div data-module="relay" contenteditable="true">Panel 2</div><div data-module="relay" contenteditable="true">CH16</div><div data-module="relay" contenteditable="true">PSHH-6348B</div><div data-module="relay" contenteditable="true">CO2 pressure confirmation</div><div data-module="relay" contenteditable="true">Test panel duplicate</div>
+              <div data-module="analog" contenteditable="true">Analog 8CH</div><div data-module="analog" contenteditable="true">Panel 1 / 2</div><div data-module="analog" contenteditable="true">AO1-AO5</div><div data-module="analog" contenteditable="true">AE-6304A/E</div><div data-module="analog" contenteditable="true">Turbine gas 4-20mA simulation</div><div data-module="analog" contenteditable="true">15/25% LEL</div>
+              <div data-module="analog" contenteditable="true">Analog 8CH</div><div data-module="analog" contenteditable="true">Panel 1 / 2</div><div data-module="analog" contenteditable="true">AO6</div><div data-module="analog" contenteditable="true">AE-6313</div><div data-module="analog" contenteditable="true">Generator gas 4-20mA simulation</div><div data-module="analog" contenteditable="true">15/25% LEL</div>
+              <div data-module="analog" contenteditable="true">Analog 8CH</div><div data-module="analog" contenteditable="true">Panel 1 / 2</div><div data-module="analog" contenteditable="true">AO7-AO8</div><div data-module="analog" contenteditable="true">AE-3029 / AE-3030</div><div data-module="analog" contenteditable="true">IR gas 5/10% LEL simulation</div><div data-module="analog" contenteditable="true">Exhaust IR</div>
+              <div data-module="io" contenteditable="true">I/O 8CH</div><div data-module="io" contenteditable="true">Panel 1 / 2</div><div data-module="io" contenteditable="true">DI/DO TBD</div><div data-module="io" contenteditable="true">Horns / Strobes / Status</div><div data-module="io" contenteditable="true">Digital I/O expansion</div><div data-module="io" contenteditable="true">Assignable</div>
+              <div data-module="network" contenteditable="true">Waveshare I/O module</div><div data-module="network" contenteditable="true">Both Panels</div><div data-module="network" contenteditable="true">TCP 502</div><div data-module="network" contenteditable="true">192.168.1.200</div><div data-module="network" contenteditable="true">Modbus TCP to RTU</div><div data-module="network" contenteditable="true">WSDEV0001, FW V1.523, MAC 04-EE-E8-1F-F3-D8</div>
+            </div>
+            </div>
+            <div class="comms-actions">
+              <button class="scenario-button" id="comms-save-map" type="button">SAVE COMMS MAP</button>
+            </div>
+            <section class="analog-output-console" id="analog-output-console" hidden>
+              <div class="analog-console-head">
+                <div>
+                  <b>ANALOG OUTPUT TEST</b>
+                  <span id="ao-config-summary">COM16 / 9600 8N1 / Slave 1</span>
+                </div>
+                <div class="analog-console-actions">
+                  <button class="scenario-button" id="ao-connect" type="button">CONNECT RS485</button>
+                  <button class="scenario-button" id="ao-all-4ma" type="button">ALL 4 mA</button>
+                </div>
+              </div>
+              <div class="analog-config-grid">
+                <label>Port Label<input id="ao-port-label" type="text" value="COM16" /></label>
+                <label>Baud Rate<input id="ao-baud-rate" type="number" value="9600" min="1200" step="1200" /></label>
+                <label>Data Bits<input id="ao-data-bits" type="number" value="8" min="7" max="8" /></label>
+                <label>Stop Bits<input id="ao-stop-bits" type="number" value="1" min="1" max="2" /></label>
+                <label>Parity<select id="ao-parity"><option value="none">None</option><option value="even">Even</option><option value="odd">Odd</option></select></label>
+                <label>Slave ID<input id="ao-slave-id" type="number" value="1" min="1" max="247" /></label>
+                <button class="scenario-button" id="ao-save-config" type="button">SAVE PORT CONFIG</button>
+              </div>
+              <div class="analog-output-grid" id="analog-output-grid"></div>
+              <div class="analog-status-line" id="ao-status">Select 4-20mA Module-1 or Module-2, connect COM16, then test each AO.</div>
+            </section>
+            <div class="placeholder-message">Confirmed 4-20mA module path: RS485 via FTDI USB Serial Port. Configure the port label, baud rate, parity, stop bits, slave ID, and register map in the selected 4-20mA module before live control.</div>
+          </div>
+
+          <div class="view-stage screen-panel" id="reports-view">
+            <div class="screen-title">REPORTS</div>
+            <div class="action-grid">
+              <button class="scenario-button" id="generate-real-device-report" type="button">GENERAL REAL DEVICE REPORT</button>
+              <button class="scenario-button" data-report-action="event-history" type="button">EVENT HISTORY REPORT</button>
+              <button class="scenario-button" data-report-action="alarm-summary" type="button">ALARM SUMMARY REPORT</button>
+            </div>
+            <div class="placeholder-message" id="report-output">Reports will be generated here for device tests, FAT records, alarm history and inspections.</div>
+          </div>
+
+          <div class="view-stage screen-panel" id="admin-view">
+            <div class="screen-title">ADMIN</div>
+            <div class="action-grid">
+              <button class="scenario-button admin-only" id="admin-open-s3" type="button">OPEN SELECTED S3 PROFILE</button>
+              <button class="scenario-button admin-only" id="admin-system-preferences" type="button">SYSTEM PREFERENCES</button>
+              <button class="scenario-button admin-only" id="admin-save-device-info" type="button">SAVE DEVICE INFO LIBRARY</button>
+              <button class="scenario-button admin-only" id="admin-load-training-timeline" type="button">LOAD TRAINING TIMELINE</button>
+              <button class="scenario-button admin-only" id="admin-save-training-timeline" type="button">SAVE TRAINING TIMELINE</button>
+            </div>
+            <div class="training-offset-panel">
+              <label>TRAINING OFFSET SEC
+                <input class="admin-only" id="training-offset-seconds" type="number" step="0.5" value="0" />
+              </label>
+              <button class="info-attach-button admin-only" id="save-training-offset" type="button">SAVE OFFSET</button>
+              <span>Use negative values if HMI actions are late; positive values if actions are early.</span>
+            </div>
+            <textarea class="timeline-editor admin-only" id="training-timeline-editor" spellcheck="false"></textarea>
+            <div class="placeholder-message" id="admin-output">Operator setup, project settings, device library import, S3 project import, and system preferences will be configured here.</div>
+          </div>
+        </section>
+
+        <aside class="right-panel hidden-right-panel">
+          <div class="panel-title">SELECTED DEVICE</div>
+          <div class="device-card">
+            <div class="device-head">
+              <span class="status-dot orange"></span>
+              <div>
+                <h2 id="detail-tag">AE-3004B</h2>
+                <p id="detail-type">CGS Combustible Gas Detector</p>
+              </div>
+            </div>
+            <div class="detail-grid">
+              <span>Mode</span><b>Virtual</b>
+              <span>Address</span><b>Loop 1 / Node 04</b>
+              <span>Status</span><b class="orange-text">Low Gas</b>
+              <span>Value</span><b>15% LEL</b>
+              <span>Area</span><b>Turbine Enclosure</b>
+              <span>Last Event</span><b>20:51:08</b>
+            </div>
+          </div>
+
+          <div class="panel-title compact">VIRTUAL CONTROLS</div>
+          <div class="control-grid">
+            <button class="control normal">NORMAL</button>
+            <button class="control orange">LOW GAS</button>
+            <button class="control red">HIGH GAS</button>
+            <button class="control yellow">FAULT</button>
+            <button class="control gray">OFFLINE</button>
+            <button class="control blue">TEST</button>
+          </div>
+
+          <div class="panel-title compact">EVENT HISTORY</div>
+          <div class="event-log">
+            <div><span>20:51:08</span> AE-3004B Low Gas Alarm</div>
+            <div><span>20:50:44</span> TS-3003 Fire Alarm</div>
+            <div><span>20:50:43</span> Countdown Started</div>
+            <div><span>20:49:12</span> HS-3081 Inhibit Active</div>
+            <div><span>20:48:55</span> EQP Controller Online</div>
+          </div>
+        </aside>
+      </section>
+
+      <nav class="bottom-nav">
+        <button class="nav-button nav-back" id="show-start-window" type="button">BACK</button>
+        <button class="nav-button active" data-nav="package">MAIN</button>
+        <button class="nav-button" data-nav="topology">TOPOLOGY</button>
+        <button class="nav-button" data-nav="drawing">DRAWINGS</button>
+        <button class="nav-button" data-nav="alarms">ALARMS</button>
+        <button class="nav-button" data-nav="events">EVENTS</button>
+        <button class="nav-button" data-nav="devices">DEVICES</button>
+        <button class="nav-button" data-nav="comms">COMMS</button>
+        <button class="nav-button" data-nav="reports">REPORTS</button>
+        <button class="nav-button" data-nav="admin">ADMIN</button>
+      </nav>
+    </main>
+    <script src="app.js?v=hmi-gas-outputs-20260713e"></script>
+  </body>
+</html>
+
+
+
+
+

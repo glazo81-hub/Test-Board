@@ -1,0 +1,23 @@
+[
+  { "time": 0, "message": "Welcome to the TM2500 XPRESS Automatic Fire and Gas Functional Test." },
+  { "time": 5, "message": "The Fire and Gas Protection System is operating normally." },
+  { "time": 12, "message": "Initiating Automatic Functional Test." },
+  { "time": 18, "message": "Testing Manual Aerosol Suppression Release Stations HS-3092 and HS-3093." },
+  { "time": 23, "device": "HS-3092", "action": "Input Active", "message": "Activating HS-3092." },
+  { "time": 34, "device": "HS-3040", "action": "Acknowledge", "message": "Horn Acknowledge Switch HS-3040 is activated." },
+  { "time": 48, "message": "Aerosol release command generated." },
+  { "time": 55, "device": "EQP-001", "action": "Reset", "message": "Resetting the system." },
+  { "time": 64, "device": "HS-3093", "action": "Input Active", "message": "Activating HS-3093." },
+  { "time": 78, "device": "EQP-001", "action": "Reset", "message": "Resetting the system after HS-3093 test." },
+  { "time": 88, "message": "Testing Heat Detectors TS-3003 and TS-3014." },
+  { "time": 94, "device": "TS-3003", "action": "Fire", "message": "Activating TS-3003." },
+  { "time": 108, "device": "EQP-001", "action": "Reset", "message": "Resetting the system after TS-3003 test." },
+  { "time": 116, "device": "TS-3014", "action": "Fire", "message": "Activating TS-3014." },
+  { "time": 130, "device": "EQP-001", "action": "Reset", "message": "Resetting the system after TS-3014 test." },
+  { "time": 140, "message": "Testing gas detection alarm and shutdown logic." },
+  { "time": 146, "device": "AE-3004A", "action": "Low Gas", "message": "Gas detector AE-3004A low gas alarm test." },
+  { "time": 156, "device": "AE-3004A", "action": "High Gas", "message": "Gas detector AE-3004A high gas shutdown test. Gas does not release Stat-X." },
+  { "time": 168, "device": "EQP-001", "action": "Reset", "message": "Resetting gas alarm test." },
+  { "time": 178, "device": "HS-3081", "action": "Inhibit", "message": "LOTO / suppression inhibit test active. Release outputs are blocked." },
+  { "time": 190, "device": "EQP-001", "action": "Reset", "message": "Automatic functional test complete." }
+]
