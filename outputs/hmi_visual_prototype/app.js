@@ -598,18 +598,6 @@ let trainingTimers = [];
 let trainingWatchdogId = null;
 let trainingTimelineOffsetSeconds = Number(localStorage.getItem("eqp-training-offset-seconds") || "0");
 let fullscreenAttempted = false;
-const allestecDesignSize = { width: 1580, height: 782 };
-
-function fitAllestecBoard() {
-  const viewport = document.querySelector(".allestec-fixed-viewport");
-  const board = document.querySelector(".allestec-fixed-viewport > .allestec-board");
-  if (!viewport || !board) return;
-  const scale = Math.min(
-    viewport.clientWidth / allestecDesignSize.width,
-    viewport.clientHeight / allestecDesignSize.height
-  );
-  board.style.transform = `translate(-50%, -50%) scale(${Math.max(0.1, scale)})`;
-}
 
 async function requestPlatformFullscreen() {
   if (document.fullscreenElement || fullscreenAttempted) return;
@@ -768,7 +756,7 @@ function updateAccessState() {
   document.querySelectorAll("#device-editor input:not(#editor-tag), #device-editor select").forEach((field) => {
     field.disabled = !admin;
   });
-  document.querySelectorAll("#device-save, #device-revert, #device-save-json, .admin-only").forEach((button) => {
+  document.querySelectorAll("#device-save, #device-revert, #device-save-json, #layout-smaller, #layout-larger, #layout-reset, #edit-layout-toggle, .admin-only").forEach((button) => {
     button.disabled = !admin;
   });
   document.querySelectorAll(".action-button").forEach((button) => {
@@ -3600,17 +3588,12 @@ function handleStartMenuAction(action) {
   }
   if (action === "edit-devices-tm2500") {
     openProject("TM2500 XPRESS");
-    const editor = document.querySelector("#package-view .layout-editor");
-    if (editor) editor.hidden = false;
-    setLayoutEditMode(true);
   }
   if (action === "edit-devices-lm6000-eqp") {
     openProject("LM6000 EQP");
-    setAccessMessage("LM6000 EQP layout opened. Add device tags to this clean base plan before positioning them.");
   }
   if (action === "edit-devices-lms100") {
     openProject("LMS100 PA");
-    setAccessMessage("LMS100 layout opened. This turbine does not have configured graphic devices yet.");
   }
   if (["alarm-report", "event-report", "fat-report", "export-pdf"].includes(action)) openViewFromMenu("reports");
   if (action === "import-drawings") openViewFromMenu("drawing");
@@ -3691,9 +3674,6 @@ function showView(viewName, trackHistory = true) {
   if (target) target.classList.add("view-active");
   if (targetViewName === "lm6000") {
     window.requestAnimationFrame(resizeLm6000SketchCanvas);
-  }
-  if (targetViewName === "lm6000-allestec") {
-    window.requestAnimationFrame(fitAllestecBoard);
   }
   if (targetViewName === "project-placeholder") {
     renderProjectPlaceholder();
@@ -3875,6 +3855,7 @@ function selectEditElement(element) {
 }
 
 function setLayoutEditMode(enabled) {
+  if (enabled && !requireAdmin("edit layout")) return;
   layoutEditMode = enabled;
   document.getElementById("package-view").classList.toggle("layout-edit-mode", enabled);
   document.querySelector(".layout-editor").classList.toggle("editing", enabled);
@@ -3887,6 +3868,7 @@ function setLayoutEditMode(enabled) {
 }
 
 function scaleSelected(multiplier) {
+  if (!requireAdmin("edit layout")) return;
   if (!selectedEditElement) return;
   const state = getEditState(selectedEditElement);
   state.scale = Math.max(0.35, Math.min(2.5, Number((state.scale * multiplier).toFixed(2))));
@@ -3895,6 +3877,7 @@ function scaleSelected(multiplier) {
 }
 
 function resetLayout() {
+  if (!requireAdmin("reset layout")) return;
   localStorage.removeItem(layoutStorageKey);
   window.location.reload();
 }
@@ -3946,20 +3929,10 @@ function setAllestecDeviceTransform(element, state) {
 
 function applyAllestecSavedLayout() {
   const saved = getAllestecLayoutState();
-  let migratedLegacyHtmlPosition = false;
   document.querySelectorAll("#lm6000-allestec-view .device-badge[data-device], #lm6000-allestec-view .allestec-html-device[data-device]").forEach((element) => {
     const state = saved[element.dataset.device];
-    // AE-3029/3030 used to be HTML overlays stored in percentages. They are
-    // SVG gas badges now, so retain the engineered SVG coordinates instead of
-    // applying incompatible legacy percentage values.
-    if (element instanceof SVGElement && state?.unit === "%") {
-      delete saved[element.dataset.device];
-      migratedLegacyHtmlPosition = true;
-      return;
-    }
     if (state) setAllestecDeviceTransform(element, state);
   });
-  if (migratedLegacyHtmlPosition) saveAllestecLayoutState(saved);
 }
 
 function setAllestecMoveStatus(text) {
@@ -5131,13 +5104,6 @@ applyAllestecSavedLayout();
 applyAllestecGraphicLayoutState();
 applyAllestecCommsMap();
 selectCommsModule("relay1");
-fitAllestecBoard();
-if (window.ResizeObserver) {
-  const allestecViewport = document.querySelector(".allestec-fixed-viewport");
-  if (allestecViewport) new ResizeObserver(fitAllestecBoard).observe(allestecViewport);
-} else {
-  window.addEventListener("resize", fitAllestecBoard);
-}
 
 document.querySelectorAll("#lm6000-allestec-view [data-allestec-layout-id]").forEach((element) => {
   element.addEventListener("mousedown", (event) => {

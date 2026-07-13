@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>EQP Fire & Gas HMI Prototype</title>
-    <link rel="stylesheet" href="styles.css?v=hmi-gas-outputs-20260709d" />
+    <link rel="stylesheet" href="styles.css?v=hmi-gas-outputs-20260710a" />
   </head>
   <body>
     <section class="start-window" id="start-window">
@@ -520,7 +520,6 @@
           </div>
 
           <div class="view-stage allestec-stage" id="lm6000-allestec-view">
-            <div class="allestec-fixed-viewport">
             <div class="allestec-board">
               <div class="allestec-header">
                 <div>
@@ -762,11 +761,11 @@
                       <g class="device-badge flame-badge normal-badge" data-device="BE-6311" transform="translate(105 425)">
                         <text x="0" y="4">BE-6311</text><use href="#icon-flame" transform="translate(74 0)"></use>
                       </g>
-                      <g class="device-badge gas-badge normal-badge" data-device="LM6-AE-3029" transform="translate(318 88)">
+                      <g class="device-badge gas-badge normal-badge svg-retired-badge" data-device="LM6-AE-3029" transform="translate(318 88)">
                         <rect class="badge-hitbox" x="-8" y="-22" width="124" height="48"></rect>
                         <text x="0" y="-2">AE-3029</text><text x="0" y="11" class="badge-value">0.00% LEL</text><use href="#icon-gas" transform="translate(80 1)"></use>
                       </g>
-                      <g class="device-badge gas-badge normal-badge" data-device="LM6-AE-3030" transform="translate(318 438)">
+                      <g class="device-badge gas-badge normal-badge svg-retired-badge" data-device="LM6-AE-3030" transform="translate(318 438)">
                         <rect class="badge-hitbox" x="-8" y="-22" width="124" height="48"></rect>
                         <text x="0" y="-2">AE-3030</text><text x="0" y="11" class="badge-value">0.00% LEL</text><use href="#icon-gas" transform="translate(80 1)"></use>
                       </g>
@@ -783,6 +782,12 @@
                         <text x="0" y="4">HS-6312</text><use href="#icon-pull" transform="translate(66 0)"></use>
                       </g>
                     </svg>
+                    <button class="allestec-html-device gas-badge normal-badge" type="button" data-device="LM6-AE-3029" style="left: 31.8%; top: 16.9%;">
+                      <span class="html-device-text"><b>AE-3029</b><small class="badge-value">0.00% LEL</small></span><span class="html-device-icon">G</span>
+                    </button>
+                    <button class="allestec-html-device gas-badge normal-badge" type="button" data-device="LM6-AE-3030" style="left: 31.8%; top: 84.2%;">
+                      <span class="html-device-text"><b>AE-3030</b><small class="badge-value">0.00% LEL</small></span><span class="html-device-icon">G</span>
+                    </button>
                   </div>
 
                   <div class="allestec-enclosure turbine-zone">
@@ -847,7 +852,6 @@
                 <small id="allestec-co2-countdown-label">MAIN / RESERVE</small>
               </div>
 
-            </div>
             </div>
           </div>
 
@@ -1333,7 +1337,7 @@
         <button class="nav-button" data-nav="admin">ADMIN</button>
       </nav>
     </main>
-    <script src="app.js?v=hmi-gas-outputs-20260709d"></script>
+    <script src="app.js?v=hmi-gas-outputs-20260710a"></script>
   </body>
 </html>
 
