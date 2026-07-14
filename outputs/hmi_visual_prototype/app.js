@@ -2034,13 +2034,25 @@ function setAllestecIoDrivenOutput(tags, active, status = "Output Active", activ
   tags.forEach((tag) => setDeviceOutput(tag, active ? status : "Normal", active ? activeValue : "Ready"));
 }
 
+// Gas alarm feedback circuits are wired normally closed (fail-safe).
+// A closed input is CLEAR; an open circuit is ALARM.
+const allestecNormallyClosedAlarmInputs = new Set(["DI15", "DI16", "DI17", "DI18"]);
+
 function applyAllestecIoInputs(moduleName, di) {
   const previous = allestecIoLastStates[moduleName] || {};
   const moduleLabel = moduleName === "io2" ? "I/O Module-2" : "I/O Module-1";
   const changes = [];
   ["DI11", "DI12", "DI13", "DI14", "DI15", "DI16", "DI17", "DI18"].forEach((point) => {
-    const active = Boolean(di?.[point]);
-    if (previous[point] !== active) changes.push(`${point} ${active ? "ON" : "OFF"}`);
+    const rawClosed = Boolean(di?.[point]);
+    const normallyClosedAlarm = allestecNormallyClosedAlarmInputs.has(point);
+    const active = normallyClosedAlarm ? !rawClosed : rawClosed;
+    if (previous[point] !== active) {
+      changes.push(
+        normallyClosedAlarm
+          ? `${point} ${active ? "ALARM (OPEN)" : "CLEAR (CLOSED)"}`
+          : `${point} ${active ? "ON" : "OFF"}`
+      );
+    }
     previous[point] = active;
   });
   allestecIoLastStates[moduleName] = previous;
