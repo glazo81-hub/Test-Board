@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>EQP Fire & Gas HMI Prototype</title>
-    <link rel="stylesheet" href="styles.css?v=hmi-gas-outputs-20260714b" />
+    <link rel="stylesheet" href="styles.css?v=hmi-gas-outputs-20260714d" />
   </head>
   <body>
     <section class="start-window" id="start-window">
@@ -502,13 +502,6 @@
                 </div>
               </div>
 
-              <div class="lm6000-drawing-toolbar">
-                <button type="button" id="lm6000-pencil-toggle">PENCIL</button>
-                <button type="button" id="lm6000-eraser-toggle">ERASE</button>
-                <button type="button" id="lm6000-clear-sketch">CLEAR</button>
-                <span>Draw device locations here. We will convert your marks into Fire & Gas icons later.</span>
-              </div>
-
               <div class="lm6000-process-area" id="lm6000-sketch-area">
                 <svg class="lm6000-process-svg" viewBox="0 0 1180 620" role="img" aria-label="LM6000 EQP clean package layout">
                   <defs>
@@ -537,11 +530,112 @@
 
                   <image href="./assets/lm6000_generator_reference.png" x="796" y="296" width="314" height="92" preserveAspectRatio="xMidYMid meet" class="lm6000-generator-reference-image"></image>
 
-                  <text x="1000" y="48" class="lm6000-section-label">LM6000 EQP PACKAGE</text>
+                  <text x="974" y="48" class="lm6000-section-label">LM6000 EQP / CO2</text>
+                  <g class="device-badge controller-badge normal-badge" data-device="EQP-FPP" transform="translate(34 38)">
+                    <text x="0" y="4">EQP-FPP</text><use href="#icon-controller" transform="translate(66 0) scale(0.85)"></use>
+                  </g>
+                  <g class="device-badge module-badge normal-badge" data-device="EDIO1-JB19" transform="translate(112 92)">
+                    <text x="0" y="4">EDIO1-JB19</text><use href="#icon-controller" transform="translate(94 0) scale(0.75)"></use>
+                  </g>
+                  <g class="device-badge module-badge normal-badge" data-device="EDIO2-JB18" transform="translate(842 92)">
+                    <text x="0" y="4">EDIO2-JB18</text><use href="#icon-controller" transform="translate(94 0) scale(0.75)"></use>
+                  </g>
+                  <g class="device-badge module-badge normal-badge" data-device="EDIO3-JB20" transform="translate(26 565)">
+                    <text x="0" y="4">EDIO3-JB20</text><use href="#icon-controller" transform="translate(94 0) scale(0.75)"></use>
+                  </g>
+                  <g class="device-badge gas-badge normal-badge" data-device="AE-6304A" transform="translate(372 300)">
+                    <text x="0" y="-2">AE-6304A</text><text x="0" y="11" class="badge-value">0.00% LEL</text><use href="#icon-gas" transform="translate(88 1)"></use>
+                  </g>
+                  <g class="device-badge gas-badge normal-badge" data-device="AE-6304B" transform="translate(426 352)">
+                    <text x="0" y="-2">AE-6304B</text><text x="0" y="11" class="badge-value">0.00% LEL</text><use href="#icon-gas" transform="translate(88 1)"></use>
+                  </g>
+                  <g class="device-badge gas-badge normal-badge" data-device="AE-6304C" transform="translate(304 408)">
+                    <text x="0" y="-2">AE-6304C</text><text x="0" y="11" class="badge-value">0.00% LEL</text><use href="#icon-gas" transform="translate(88 1)"></use>
+                  </g>
+                  <g class="device-badge gas-badge normal-badge" data-device="AE-6304D" transform="translate(478 238)">
+                    <text x="0" y="-2">AE-6304D</text><text x="0" y="11" class="badge-value">0.00% LEL</text><use href="#icon-gas" transform="translate(88 1)"></use>
+                  </g>
+                  <g class="device-badge gas-badge normal-badge" data-device="AE-6313" transform="translate(900 420)">
+                    <text x="0" y="-2">AE-6313</text><text x="0" y="11" class="badge-value">0.00% LEL</text><use href="#icon-gas" transform="translate(80 1)"></use>
+                  </g>
+                  <g class="device-badge gas-badge normal-badge" data-device="AE-3029" transform="translate(520 150)">
+                    <text x="0" y="-2">AE-3029</text><text x="0" y="11" class="badge-value">0.00% LEL</text><use href="#icon-gas" transform="translate(80 1)"></use>
+                  </g>
+                  <g class="device-badge gas-badge normal-badge" data-device="AE-3030" transform="translate(642 150)">
+                    <text x="0" y="-2">AE-3030</text><text x="0" y="11" class="badge-value">0.00% LEL</text><use href="#icon-gas" transform="translate(80 1)"></use>
+                  </g>
+                  <g class="device-badge flame-badge normal-badge" data-device="BE-6300" transform="translate(192 428)">
+                    <text x="0" y="4">BE-6300</text><use href="#icon-flame" transform="translate(74 0)"></use>
+                  </g>
+                  <g class="device-badge flame-badge normal-badge" data-device="BE-6302" transform="translate(152 270)">
+                    <text x="0" y="4">BE-6302</text><use href="#icon-flame" transform="translate(74 0)"></use>
+                  </g>
+                  <g class="device-badge flame-badge normal-badge" data-device="BE-6335" transform="translate(560 424)">
+                    <text x="0" y="4">BE-6335</text><use href="#icon-flame" transform="translate(74 0)"></use>
+                  </g>
+                  <g class="device-badge flame-badge normal-badge" data-device="BE-6336" transform="translate(570 254)">
+                    <text x="0" y="4">BE-6336</text><use href="#icon-flame" transform="translate(74 0)"></use>
+                  </g>
+                  <g class="device-badge flame-badge normal-badge" data-device="BE-6311" transform="translate(882 334)">
+                    <text x="0" y="4">BE-6311</text><use href="#icon-flame" transform="translate(74 0)"></use>
+                  </g>
+                  <g class="device-badge thermal-badge normal-badge" data-device="TS-6303-6314" transform="translate(214 210)">
+                    <text x="0" y="4">TS-6303/6314</text><use href="#icon-thermal" transform="translate(104 0)"></use>
+                  </g>
+                  <g class="device-badge thermal-badge normal-badge" data-device="TS-6307-6310" transform="translate(1006 520)">
+                    <text x="0" y="4">TS-6307/6310</text><use href="#icon-thermal" transform="translate(104 0)"></use>
+                  </g>
+                  <g class="device-badge pull-badge normal-badge" data-device="HS-6308-6309-6312" transform="translate(770 518)">
+                    <text x="0" y="4">HS-6308/6309/6312</text><use href="#icon-pull" transform="translate(142 0)"></use>
+                  </g>
+                  <g class="device-badge horn-badge normal-badge" data-device="YSA-6306" transform="translate(68 240)">
+                    <text x="0" y="4">YSA-6306</text><use href="#icon-horn" transform="translate(74 0)"></use>
+                  </g>
+                  <g class="device-badge horn-badge normal-badge" data-device="YSA-6346" transform="translate(664 238)">
+                    <text x="0" y="4">YSA-6346</text><use href="#icon-horn" transform="translate(74 0)"></use>
+                  </g>
+                  <g class="device-badge horn-badge normal-badge" data-device="YSA-6347" transform="translate(1032 192)">
+                    <text x="0" y="4">YSA-6347</text><use href="#icon-horn" transform="translate(74 0)"></use>
+                  </g>
+                  <g class="device-badge strobe-badge normal-badge" data-device="YSL-6301" transform="translate(72 308)">
+                    <text x="0" y="4">YSL-6301</text><use href="#icon-strobe" transform="translate(74 0)"></use>
+                  </g>
+                  <g class="device-badge strobe-badge normal-badge" data-device="YSL-6336" transform="translate(650 190)">
+                    <text x="0" y="4">YSL-6336</text><use href="#icon-strobe" transform="translate(74 0)"></use>
+                  </g>
+                  <g class="device-badge strobe-badge normal-badge" data-device="YSL-6344" transform="translate(898 208)">
+                    <text x="0" y="4">YSL-6344</text><use href="#icon-strobe" transform="translate(74 0)"></use>
+                  </g>
+                  <g class="device-badge strobe-badge normal-badge" data-device="YSL-6345" transform="translate(1040 270)">
+                    <text x="0" y="4">YSL-6345</text><use href="#icon-strobe" transform="translate(74 0)"></use>
+                  </g>
+                  <g class="device-badge switch-badge normal-badge" data-device="ZS-6364" transform="translate(72 528)">
+                    <text x="0" y="4">ZS-6364</text><use href="#icon-key" transform="translate(70 0)"></use>
+                  </g>
+                  <g class="device-badge switch-badge normal-badge" data-device="PSHH-6348" transform="translate(180 528)">
+                    <text x="0" y="4">PSHH-6348</text><use href="#icon-thermal" transform="translate(90 0) scale(0.75)"></use>
+                  </g>
+                  <g class="device-badge solenoid-badge normal-badge" data-device="SOV-6359" transform="translate(300 528)">
+                    <text x="0" y="4">SOV-6359</text>
+                  </g>
+                  <g class="device-badge solenoid-badge normal-badge" data-device="SOV-6360" transform="translate(380 528)">
+                    <text x="0" y="4">SOV-6360</text>
+                  </g>
+                  <g class="device-badge solenoid-badge normal-badge" data-device="SOV-6361" transform="translate(460 528)">
+                    <text x="0" y="4">SOV-6361</text>
+                  </g>
+                  <g class="device-badge solenoid-badge normal-badge" data-device="SOV-6362" transform="translate(540 528)">
+                    <text x="0" y="4">SOV-6362</text>
+                  </g>
                 </svg>
                 <canvas class="lm6000-sketch-canvas" id="lm6000-sketch-canvas"></canvas>
               </div>
-              <div class="lm6000-note">Clean LM6000 EQP base plan. Use PENCIL to mark Fire & Gas device locations for the next icon/tag pass.</div>
+              <div class="lm6000-note">LM6000 EQP addressable Fire & Gas / CO2 system from SHELL_LM6000_1457.s3n and WFE drawing 1457.</div>
+              <div class="countdown-box allestec-countdown-box" id="lm6000-eqp-co2-countdown-box">
+                <span>LM6000 EQP CO2</span>
+                <b id="lm6000-eqp-co2-countdown">READY</b>
+                <small id="lm6000-eqp-co2-countdown-label">MAIN / EXTENDED</small>
+              </div>
             </div>
           </div>
 
@@ -891,6 +985,15 @@
             <iframe class="drawing-pdf" src="assets/lm6000_egipto.pdf" title="LM6000 Allestec drawing PDF"></iframe>
           </div>
 
+          <div class="view-stage" id="lm6000-eqp-drawing-view">
+            <div class="pdf-toolbar">
+              <span>LM6000 EQP Drawing - WFE Project GE-1457</span>
+              <button class="admin-only" id="replace-lm6000-eqp-drawing-file" type="button">REPLACE DRAWING</button>
+              <a href="assets/lm6000_eqp_1457.pdf" target="_blank" rel="noreferrer">OPEN PDF</a>
+            </div>
+            <iframe class="drawing-pdf" src="assets/lm6000_eqp_1457.pdf" title="LM6000 EQP drawing PDF"></iframe>
+          </div>
+
           <div class="view-stage topology-stage" id="topology-view">
             <div class="topology-card controller-node" data-device="EQP-001">EQP-001<br /><span>Controller</span></div>
             <div class="topology-bus"></div>
@@ -977,6 +1080,63 @@
                 <button class="topology-node normal" data-device="PSHH-6348B">PSHH-6348B</button>
               </section>
             </div>
+          </div>
+
+          <div class="view-stage topology-stage allestec-topology-stage" id="lm6000-eqp-topology-view">
+            <div class="topology-card controller-node" data-device="EQP-FPP">EQP-FPP<br /><span>LM6000 EQP Controller</span></div>
+            <div class="allestec-topology-groups">
+              <section>
+                <h3>LON ADDRESSABLE</h3>
+                <button class="topology-node normal" data-device="AE-6304A">#09 AE-6304A</button>
+                <button class="topology-node normal" data-device="AE-6304B">#10 AE-6304B</button>
+                <button class="topology-node normal" data-device="AE-6304C">#11 AE-6304C</button>
+                <button class="topology-node normal" data-device="AE-6304D">#12 AE-6304D</button>
+                <button class="topology-node normal" data-device="AE-6313">#14 AE-6313</button>
+                <button class="topology-node normal" data-device="AE-3029">#15 AE-3029</button>
+                <button class="topology-node normal" data-device="AE-3030">#16 AE-3030</button>
+                <button class="topology-node normal" data-device="BE-6300">#17 BE-6300</button>
+                <button class="topology-node normal" data-device="BE-6335">#18 BE-6335</button>
+                <button class="topology-node normal" data-device="BE-6336">#19 BE-6336</button>
+                <button class="topology-node normal" data-device="BE-6311">#20 BE-6311</button>
+                <button class="topology-node normal" data-device="BE-6302">#21 BE-6302</button>
+              </section>
+              <section>
+                <h3>EDIO1-JB19 TURBINE</h3>
+                <button class="topology-node normal" data-device="EDIO1-JB19">EDIO1-JB19</button>
+                <button class="topology-node normal" data-device="TS-6303-6314">TS-6303 / TS-6314</button>
+                <button class="topology-node normal" data-device="HS-6305">HS-6305 Horn Ack</button>
+                <button class="topology-node normal" data-device="YSA-6306">YSA-6306 Horn Out</button>
+                <button class="topology-node normal" data-device="YSA-6346">YSA-6346 Horn In</button>
+                <button class="topology-node normal" data-device="YSL-6301">YSL-6301 Beacon</button>
+                <button class="topology-node normal" data-device="YSL-6336">YSL-6336 Beacon</button>
+              </section>
+              <section>
+                <h3>EDIO2-JB18 GENERATOR</h3>
+                <button class="topology-node normal" data-device="EDIO2-JB18">EDIO2-JB18</button>
+                <button class="topology-node normal" data-device="TS-6307-6310">TS-6307 / TS-6310</button>
+                <button class="topology-node normal" data-device="HS-6308-6309-6312">HS-6308 / HS-6309 / HS-6312</button>
+                <button class="topology-node normal" data-device="YSA-6347">YSA-6347 Horn</button>
+                <button class="topology-node normal" data-device="YSL-6344">YSL-6344 Beacon</button>
+                <button class="topology-node normal" data-device="YSL-6345">YSL-6345 Beacon</button>
+              </section>
+              <section>
+                <h3>EDIO3-JB20 CO2 SKID</h3>
+                <button class="topology-node normal" data-device="EDIO3-JB20">EDIO3-JB20</button>
+                <button class="topology-node normal" data-device="SOV-6359">SOV-6359 Main</button>
+                <button class="topology-node normal" data-device="SOV-6360">SOV-6360 Main</button>
+                <button class="topology-node normal" data-device="SOV-6361">SOV-6361 Extended</button>
+                <button class="topology-node normal" data-device="SOV-6362">SOV-6362 Extended</button>
+                <button class="topology-node normal" data-device="PSH-6357">PSH-6357</button>
+                <button class="topology-node normal" data-device="PSHH-6348">PSHH-6348</button>
+                <button class="topology-node normal" data-device="ZS-6364">ZS-6364 Block Valve</button>
+                <button class="topology-node normal" data-device="HS-6363">HS-6363 Purge</button>
+              </section>
+            </div>
+          </div>
+
+          <div class="view-stage view3d-stage" id="lm6000-3d-view">
+            <canvas id="lm6000-3d-canvas"></canvas>
+            <div class="view3d-hint" id="lm6000-3d-hint">Drag to rotate - scroll to zoom - double-click a device to change its state.</div>
           </div>
 
           <div class="view-stage screen-panel project-placeholder-view" id="project-placeholder-view">
@@ -1360,6 +1520,7 @@
         <button class="nav-button active" data-nav="package">MAIN</button>
         <button class="nav-button" data-nav="topology">TOPOLOGY</button>
         <button class="nav-button" data-nav="drawing">DRAWINGS</button>
+        <button class="nav-button" data-nav="view3d">3D VIEW</button>
         <button class="nav-button" data-nav="alarms">ALARMS</button>
         <button class="nav-button" data-nav="events">EVENTS</button>
         <button class="nav-button" data-nav="devices">DEVICES</button>
@@ -1368,7 +1529,9 @@
         <button class="nav-button" data-nav="admin">ADMIN</button>
       </nav>
     </main>
-    <script src="app.js?v=hmi-gas-outputs-20260714b"></script>
+    <script src="app.js?v=lm6000-eqp-20260714a"></script>
+    <script src="vendor/three/three.min.js"></script>
+    <script src="three-view.js?v=hmi-gas-outputs-20260714d"></script>
   </body>
 </html>
 

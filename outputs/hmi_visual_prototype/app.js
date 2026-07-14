@@ -90,10 +90,10 @@ const fallbackDevices = {
   "PSHH-6348B": { type: "CO2 Pressure Switch High-High", status: "Normal", value: "Normal Pressure", address: "Relay Input / Discharge Pressure Confirm", area: "CO2 Skid", mode: "Virtual" },
   "CO2-BLOCK": { type: "CO2 Block Valve Alias", status: "Normal", value: "Open / Release Enabled", address: "Alias for ZS-6364", area: "CO2 Skid", mode: "Virtual" },
   "CO2-PSH": { type: "CO2 Pressure Switch Alias", status: "Normal", value: "Normal Pressure", address: "Alias for PSHH-6348B", area: "CO2 Skid", mode: "Virtual" },
-  "OUT-HIGH-GAS-TURBINE": { type: "Allestec Alarm Output Feedback", status: "Normal", value: "Ready", address: "I/O DI15", area: "Turbine Alarm Outputs", mode: "I/O Feedback" },
-  "OUT-LOW-GAS-TURBINE": { type: "Allestec Alarm Output Feedback", status: "Normal", value: "Ready", address: "I/O DI16", area: "Turbine Alarm Outputs", mode: "I/O Feedback" },
-  "OUT-HIGH-GAS-GENERATOR": { type: "Allestec Alarm Output Feedback", status: "Normal", value: "Ready", address: "I/O DI17", area: "Generator Alarm Outputs", mode: "I/O Feedback" },
-  "OUT-LOW-GAS-GENERATOR": { type: "Allestec Alarm Output Feedback", status: "Normal", value: "Ready", address: "I/O DI18", area: "Generator Alarm Outputs", mode: "I/O Feedback" },
+  "OUT-HIGH-GAS-TURBINE": { type: "High Gas Turbine", status: "Normal", value: "Ready", address: "I/O DI16", area: "Turbine Alarm Outputs", mode: "I/O Feedback" },
+  "OUT-LOW-GAS-TURBINE": { type: "Low Gas Turbine", status: "Normal", value: "Ready", address: "I/O DI15", area: "Turbine Alarm Outputs", mode: "I/O Feedback" },
+  "OUT-HIGH-GAS-GENERATOR": { type: "High Gas Generator", status: "Normal", value: "Ready", address: "I/O DI18", area: "Generator Alarm Outputs", mode: "I/O Feedback" },
+  "OUT-LOW-GAS-GENERATOR": { type: "Low Gas Generator", status: "Normal", value: "Ready", address: "I/O DI17", area: "Generator Alarm Outputs", mode: "I/O Feedback" },
 };
 
 const defaultS3Logic = {
@@ -369,6 +369,69 @@ const projectScopedTags = {
     "HS-6305", "HS-6363", "SOV-6359", "SOV-6360", "SOV-6361", "SOV-6362", "ZS-6364", "PSH-6348A", "PSHH-6348B", "CO2-BLOCK", "CO2-PSH",
     "OUT-HIGH-GAS-TURBINE", "OUT-LOW-GAS-TURBINE", "OUT-HIGH-GAS-GENERATOR", "OUT-LOW-GAS-GENERATOR",
   ]),
+  "LM6000 EQP": new Set([
+    "EQP-FPP", "FIRE-PANEL",
+    "EDIO1-JB19", "EDIO2-JB18", "EDIO3-JB20",
+    "AE-6304A", "AE-6304B", "AE-6304C", "AE-6304D", "AE-6313", "AE-3029", "AE-3030",
+    "BE-6300", "BE-6302", "BE-6311", "BE-6335", "BE-6336",
+    "TS-6303-6314", "TS-6307-6310",
+    "HS-6305", "HS-6308-6309-6312", "HS-6363",
+    "YSA-6306", "YSA-6346", "YSA-6347",
+    "YSL-6301", "YSL-6336", "YSL-6344", "YSL-6345",
+    "SOV-6359", "SOV-6360", "SOV-6361", "SOV-6362",
+    "ZS-6364", "PSH-6357", "PSHH-6348",
+    "GENERAL_ALARM", "FIRE_GAS_SHOUTDOWN", "ALARM_LEL_TURBINE", "SHOUTDOWN_LEL_TUR",
+    "ALARM_LEL_GEN", "SHOUTDOWN_LEL_GEN", "AGENT_RELEASE", "CO2_AGENT_RELEASE",
+  ]),
+};
+
+const projectDeviceDefinitions = {
+  "LM6000 EQP": {
+    "EQP-FPP": { type: "Eagle Quantum Premier Controller", status: "Normal", value: "Online", address: "S3: SHELL_LM6000_1457 / FPP", area: "Fire Panel", mode: "Virtual" },
+    "FIRE-PANEL": { type: "EQP Fire Panel Status", status: "Normal", value: "Normal", address: "S3 status group", area: "Fire Panel", mode: "Virtual" },
+    "EDIO1-JB19": { type: "EQP EDIO Module", status: "Normal", value: "Online", address: "LON EDIO 1 / JB19 / Address #18", area: "Turbine Skid", mode: "Virtual" },
+    "EDIO2-JB18": { type: "EQP EDIO Module", status: "Normal", value: "Online", address: "LON EDIO 2 / JB18 / Address #19", area: "Generator Skid", mode: "Virtual" },
+    "EDIO3-JB20": { type: "EQP EDIO Module", status: "Normal", value: "Online", address: "LON EDIO 3 / JB20 / Address #20", area: "CO2 Skid", mode: "Virtual" },
+    "AE-6304A": { type: "UD10 / Combustible Gas Detector", status: "Normal", value: "0% LEL", address: "LON Address #9", area: "Turbine Enclosure", mode: "Virtual", highAlarm: "15% LEL", highHighAlarm: "25% LEL" },
+    "AE-6304B": { type: "UD10 / Combustible Gas Detector", status: "Normal", value: "0% LEL", address: "LON Address #10", area: "Turbine Enclosure", mode: "Virtual", highAlarm: "15% LEL", highHighAlarm: "25% LEL" },
+    "AE-6304C": { type: "UD10 / Combustible Gas Detector", status: "Normal", value: "0% LEL", address: "LON Address #11", area: "Turbine Enclosure", mode: "Virtual", highAlarm: "15% LEL", highHighAlarm: "25% LEL" },
+    "AE-6304D": { type: "UD10 / Combustible Gas Detector", status: "Normal", value: "0% LEL", address: "LON Address #12", area: "Turbine Enclosure", mode: "Virtual", highAlarm: "15% LEL", highHighAlarm: "25% LEL" },
+    "AE-6313": { type: "UD10 / Combustible Gas Detector", status: "Normal", value: "0% LEL", address: "LON Address #14", area: "Generator Enclosure", mode: "Virtual", highAlarm: "15% LEL", highHighAlarm: "25% LEL" },
+    "AE-3029": { type: "IR Gas Detector", status: "Normal", value: "0% LEL", address: "LON Address #15", area: "Turbine Exhaust", mode: "Virtual", highAlarm: "5% LEL", highHighAlarm: "10% LEL" },
+    "AE-3030": { type: "IR Gas Detector", status: "Normal", value: "0% LEL", address: "LON Address #16", area: "Turbine Exhaust", mode: "Virtual", highAlarm: "5% LEL", highHighAlarm: "10% LEL" },
+    "BE-6300": { type: "X3301 Flame Detector", status: "Normal", value: "Ready", address: "LON Address #17", area: "Turbine Enclosure", mode: "Virtual" },
+    "BE-6302": { type: "X3301 Flame Detector", status: "Normal", value: "Ready", address: "LON Address #21", area: "Turbine Enclosure", mode: "Virtual" },
+    "BE-6311": { type: "X3301 Flame Detector", status: "Normal", value: "Ready", address: "LON Address #20", area: "Generator Enclosure", mode: "Virtual" },
+    "BE-6335": { type: "X3301 Flame Detector", status: "Normal", value: "Ready", address: "LON Address #18", area: "Turbine Enclosure", mode: "Virtual" },
+    "BE-6336": { type: "X3301 Flame Detector", status: "Normal", value: "Ready", address: "LON Address #19", area: "Turbine Enclosure", mode: "Virtual" },
+    "TS-6303-6314": { type: "Thermal Detector Zone", status: "Normal", value: "Ready", address: "EDIO1-JB19 / Turbine thermal input", area: "Turbine Enclosure", mode: "Virtual" },
+    "TS-6307-6310": { type: "Thermal Detector Zone", status: "Normal", value: "Ready", address: "EDIO2-JB18 / Generator thermal input", area: "Generator Enclosure", mode: "Virtual" },
+    "HS-6305": { type: "Horn Acknowledge Switch", status: "Normal", value: "Ready", address: "EDIO1-JB19 / Horn acknowledge input", area: "Turbine Background", mode: "Virtual" },
+    "HS-6308-6309-6312": { type: "CO2 Manual Release Stations", status: "Normal", value: "Ready", address: "EDIO2-JB18 / Manual release input", area: "Generator / Package", mode: "Virtual" },
+    "HS-6363": { type: "CO2 Purge Switch", status: "Normal", value: "Ready", address: "EDIO3-JB20 / CO2 purge reset", area: "CO2 Skid", mode: "Virtual" },
+    "YSA-6306": { type: "Fire & Gas Horn", status: "Normal", value: "Ready", address: "EDIO1-JB19 / Turbine outside horn", area: "Turbine Enclosure", mode: "Virtual" },
+    "YSA-6346": { type: "Fire & Gas Horn", status: "Normal", value: "Ready", address: "EDIO1-JB19 / Turbine inside horn", area: "Turbine Enclosure", mode: "Virtual" },
+    "YSA-6347": { type: "Fire & Gas Horn", status: "Normal", value: "Ready", address: "EDIO2-JB18 / Generator outside horn", area: "Generator Enclosure", mode: "Virtual" },
+    "YSL-6301": { type: "Strobe Light", status: "Normal", value: "Ready", address: "EDIO1-JB19 / Turbine outside beacon", area: "Turbine Enclosure", mode: "Virtual" },
+    "YSL-6336": { type: "Strobe Light", status: "Normal", value: "Ready", address: "EDIO1-JB19 / Turbine outside beacon", area: "Turbine Enclosure", mode: "Virtual" },
+    "YSL-6344": { type: "Strobe Light", status: "Normal", value: "Ready", address: "EDIO2-JB18 / Generator inside beacon #1", area: "Generator Enclosure", mode: "Virtual" },
+    "YSL-6345": { type: "Strobe Light", status: "Normal", value: "Ready", address: "EDIO2-JB18 / Generator inside beacon #2", area: "Generator Enclosure", mode: "Virtual" },
+    "SOV-6359": { type: "CO2 Main Release Solenoid", status: "Normal", value: "Ready", address: "EDIO3-JB20 / Main operated valve release", area: "CO2 Skid", mode: "Virtual" },
+    "SOV-6360": { type: "CO2 Main Release Solenoid", status: "Normal", value: "Ready", address: "EDIO3-JB20 / Main operated valve release", area: "CO2 Skid", mode: "Virtual" },
+    "SOV-6361": { type: "CO2 Extended Release Solenoid", status: "Normal", value: "Ready", address: "EDIO3-JB20 / Extended reserve release", area: "CO2 Skid", mode: "Virtual" },
+    "SOV-6362": { type: "CO2 Extended Release Solenoid", status: "Normal", value: "Ready", address: "EDIO3-JB20 / Extended reserve release", area: "CO2 Skid", mode: "Virtual" },
+    "ZS-6364": { type: "CO2 Block Valve Limit Switch", status: "Normal", value: "Open / Release Enabled", address: "EDIO3-JB20 / Block valve status", area: "CO2 Skid", mode: "Virtual" },
+    "PSH-6357": { type: "CO2 Pressure Switch", status: "Normal", value: "Normal Pressure", address: "EDIO3-JB20 / CO2 pressure switch", area: "CO2 Skid", mode: "Virtual" },
+    "PSHH-6348": { type: "CO2 Pressure Switch High-High", status: "Normal", value: "Normal Pressure", address: "EDIO3-JB20 / CO2 discharge pressure", area: "CO2 Skid", mode: "Virtual" },
+    "GENERAL_ALARM": { type: "EQP Logic Output", status: "Normal", value: "Ready", address: "S3 Logic", area: "Controller Logic", mode: "Virtual" },
+    "FIRE_GAS_SHOUTDOWN": { type: "EQP Logic Output", status: "Normal", value: "Ready", address: "S3 Logic", area: "Controller Logic", mode: "Virtual" },
+    "ALARM_LEL_TURBINE": { type: "EQP Logic Output", status: "Normal", value: "Ready", address: "S3 Logic", area: "Controller Logic", mode: "Virtual" },
+    "SHOUTDOWN_LEL_TUR": { type: "EQP Logic Output", status: "Normal", value: "Ready", address: "S3 Logic", area: "Controller Logic", mode: "Virtual" },
+    "ALARM_LEL_GEN": { type: "EQP Logic Output", status: "Normal", value: "Ready", address: "S3 Logic", area: "Controller Logic", mode: "Virtual" },
+    "SHOUTDOWN_LEL_GEN": { type: "EQP Logic Output", status: "Normal", value: "Ready", address: "S3 Logic", area: "Controller Logic", mode: "Virtual" },
+    "AGENT_RELEASE": { type: "EQP Logic Output", status: "Normal", value: "Ready", address: "S3 Logic", area: "Controller Logic", mode: "Virtual" },
+    "CO2_AGENT_RELEASE": { type: "EQP Logic Output", status: "Normal", value: "Ready", address: "S3 Logic", area: "Controller Logic", mode: "Virtual" },
+  },
 };
 
 const displayTagAliases = {
@@ -409,6 +472,9 @@ function shouldScopeDeviceForProject(rawTag, projectName = selectedProject) {
   if (normalized.includes("LM6000") && normalized.includes("ALLESTEC")) {
     return projectScopedTags["LM6000 ALLESTEC"].has(rawTag);
   }
+  if (normalized.includes("LM6000") && normalized.includes("EQP")) {
+    return projectScopedTags["LM6000 EQP"].has(rawTag);
+  }
   return false;
 }
 
@@ -424,7 +490,7 @@ function ensureProjectDevice(rawTag, projectName = selectedProject) {
   rawTag = getProjectRawTag(rawTag, projectName);
   const scopedKey = getProjectScopedKey(rawTag, projectName);
   if (devices[scopedKey]) return scopedKey;
-  const source = devices[rawTag] || fallbackDevices[rawTag];
+  const source = projectDeviceDefinitions[projectName]?.[rawTag] || devices[rawTag] || fallbackDevices[rawTag];
   if (!source) return rawTag;
   devices[scopedKey] = {
     ...cloneConfig(source),
@@ -444,6 +510,8 @@ function resolveDeviceId(deviceId, projectName = selectedProject) {
 
 const deviceFunctions = {
   "EQP-001": ["Fire", "Inhibit", "Supervisory", "Fault", "LON Fault", "Low Gas", "High Gas", "Silence", "Acknowledge", "Reset"],
+  "EQP-FPP": ["Fire", "Supervisory", "Fault", "LON Fault", "Low Gas", "High Gas", "Silence", "Acknowledge", "Reset"],
+  "FIRE-PANEL": ["Fire", "Supervisory", "Fault", "LON Fault", "Low Gas", "High Gas", "Silence", "Acknowledge", "Reset"],
   "SOV-6359": ["Output On", "Output Off", "Reset"],
   "SOV-6360": ["Output On", "Output Off", "Reset"],
   "SOV-6361": ["Output On", "Output Off", "Reset"],
@@ -451,6 +519,8 @@ const deviceFunctions = {
   "ZS-6364": ["Normal", "Inhibit", "Fault", "Offline"],
   "PSH-6348A": ["Normal", "Input Active", "Fault", "Offline"],
   "PSHH-6348B": ["Normal", "Input Active", "Fault", "Offline"],
+  "PSH-6357": ["Normal", "Input Active", "Fault", "Offline"],
+  "PSHH-6348": ["Normal", "Input Active", "Fault", "Offline"],
   "HS-6305": ["Normal", "Acknowledge", "Fault", "Offline"],
   "HS-6363": ["Reset", "Input Active", "Fault"],
   gas: ["Normal", "Low Gas", "High Gas", "Fault", "Offline"],
@@ -468,6 +538,8 @@ const graphicInputActions = {
   "ZS-6364": "Toggle Block Valve",
   "PSH-6348A": "Input Active",
   "PSHH-6348B": "Input Active",
+  "PSH-6357": "Input Active",
+  "PSHH-6348": "Input Active",
   "CO2-BLOCK": "Inhibit",
   "CO2-PSH": "Input Active",
   "HS-6305": "Acknowledge",
@@ -497,6 +569,13 @@ const allestecGasOutputAlarmTags = {
   generatorLow: "OUT-LOW-GAS-GENERATOR",
 };
 const allestecTurbineFlameTags = ["BE-6300", "BE-6302", "BE-6335"];
+const lm6000EqpHornTags = ["YSA-6306", "YSA-6346", "YSA-6347"];
+const lm6000EqpStrobeTags = ["YSL-6301", "YSL-6336", "YSL-6344", "YSL-6345"];
+const lm6000EqpTurbineGasTags = ["AE-6304A", "AE-6304B", "AE-6304C", "AE-6304D", "AE-3029", "AE-3030"];
+const lm6000EqpGeneratorGasTags = ["AE-6313"];
+const lm6000EqpFireTags = ["BE-6300", "BE-6302", "BE-6311", "BE-6335", "BE-6336"];
+const lm6000EqpReleaseSourceTags = ["TS-6303-6314", "TS-6307-6310", "HS-6308-6309-6312", ...lm6000EqpFireTags];
+const lm6000EqpCo2OutputTags = ["SOV-6359", "SOV-6360", "SOV-6361", "SOV-6362", "AGENT_RELEASE", "CO2_AGENT_RELEASE"];
 const manualReleaseTags = ["HS-3092", "HS-3093"];
 const thermalReleaseTags = ["TS-3003", "TS-3014"];
 const enclosureGasTags = ["AE-3004A", "AE-3004B", "AE-3004C"];
@@ -578,6 +657,9 @@ let lastReleaseInitiator = "";
 let allestecCo2Stage = "idle";
 let allestecCo2TimerId = null;
 let allestecCo2CountdownSeconds = null;
+let lm6000EqpCo2Stage = "idle";
+let lm6000EqpCo2TimerId = null;
+let lm6000EqpCo2CountdownSeconds = null;
 let hornLatched = false;
 let strobeLatched = false;
 let hornAudio = null;
@@ -1193,13 +1275,129 @@ function stopHornSound() {
 function updateHornSound() {
   const activeHornTags = isAllestecProject()
     ? allestecHornTags.map((tag) => resolveDeviceId(tag))
-    : hornOutputTags;
+    : isLm6000EqpProject()
+      ? lm6000EqpHornTags.map((tag) => resolveDeviceId(tag))
+      : hornOutputTags;
   const hornActive = activeHornTags.some((tag) => devices[tag]?.status === "Output Active" && devices[tag]?.value !== "Silenced");
   if (hornActive) startHornSound();
   else stopHornSound();
 }
 
+function updateLm6000EqpCo2Display() {
+  const box = document.getElementById("lm6000-eqp-co2-countdown-box");
+  const value = document.getElementById("lm6000-eqp-co2-countdown");
+  const label = document.getElementById("lm6000-eqp-co2-countdown-label");
+  if (!box || !value || !label) return;
+  box.classList.toggle("countdown-active", ["main-delay", "main", "reserve"].includes(lm6000EqpCo2Stage));
+  box.classList.toggle("countdown-released", lm6000EqpCo2Stage === "complete");
+  if (lm6000EqpCo2Stage === "main-delay") {
+    value.textContent = `00:${String(lm6000EqpCo2CountdownSeconds || 0).padStart(2, "0")}`;
+    label.textContent = "Main CO2 pre-discharge";
+  } else if (lm6000EqpCo2Stage === "main") {
+    const minutes = Math.floor((lm6000EqpCo2CountdownSeconds || 0) / 60);
+    const seconds = (lm6000EqpCo2CountdownSeconds || 0) % 60;
+    value.textContent = `${minutes}:${String(seconds).padStart(2, "0")}`;
+    label.textContent = "Main bank discharging";
+  } else if (lm6000EqpCo2Stage === "reserve") {
+    const minutes = Math.floor((lm6000EqpCo2CountdownSeconds || 0) / 60);
+    const seconds = (lm6000EqpCo2CountdownSeconds || 0) % 60;
+    value.textContent = `${minutes}:${String(seconds).padStart(2, "0")}`;
+    label.textContent = "Extended reserve discharging";
+  } else if (lm6000EqpCo2Stage === "complete") {
+    value.textContent = "RELEASED";
+    label.textContent = "Main and extended CO2 complete";
+  } else {
+    value.textContent = "READY";
+    label.textContent = "LM6000 EQP CO2";
+  }
+}
+
+function resetLm6000EqpCo2(sourceTag = "EQP-FPP") {
+  if (lm6000EqpCo2TimerId) clearInterval(lm6000EqpCo2TimerId);
+  lm6000EqpCo2TimerId = null;
+  lm6000EqpCo2Stage = "idle";
+  lm6000EqpCo2CountdownSeconds = null;
+  lm6000EqpCo2OutputTags.forEach((tag) => setDeviceOutput(tag, "Normal", "Ready"));
+  addEvent(sourceTag, "LM6000 EQP CO2 sequence reset.");
+  updateLm6000EqpCo2Display();
+}
+
+function startLm6000EqpCo2(sourceTag = selectedDeviceId) {
+  if (lm6000EqpCo2Stage !== "idle") return;
+  lm6000EqpCo2Stage = "main-delay";
+  lm6000EqpCo2CountdownSeconds = 30;
+  setDeviceOutput("AGENT_RELEASE", "Alarm Active", "Main pre-discharge 00:30");
+  setDeviceOutput("CO2_AGENT_RELEASE", "Alarm Active", "CO2 release pending");
+  addEvent(sourceTag, "LM6000 EQP CO2 30 second main release countdown started.");
+  updateLm6000EqpCo2Display();
+  if (lm6000EqpCo2TimerId) clearInterval(lm6000EqpCo2TimerId);
+  lm6000EqpCo2TimerId = window.setInterval(() => {
+    if (lm6000EqpCo2Stage === "main-delay") {
+      lm6000EqpCo2CountdownSeconds = Math.max(0, lm6000EqpCo2CountdownSeconds - 1);
+      setDeviceOutput("AGENT_RELEASE", "Alarm Active", `Main pre-discharge 00:${String(lm6000EqpCo2CountdownSeconds).padStart(2, "0")}`);
+      if (lm6000EqpCo2CountdownSeconds <= 0) {
+        lm6000EqpCo2Stage = "main";
+        lm6000EqpCo2CountdownSeconds = 90;
+        setDeviceOutput("SOV-6359", "Output Active", "Main CO2 release");
+        setDeviceOutput("SOV-6360", "Output Active", "Main CO2 release");
+        setDeviceOutput("PSHH-6348", "Alarm Active", "CO2 discharge pressure confirmed");
+        addEvent(sourceTag, "LM6000 EQP main CO2 solenoids SOV-6359 and SOV-6360 energized.");
+      }
+    } else if (lm6000EqpCo2Stage === "main") {
+      lm6000EqpCo2CountdownSeconds = Math.max(0, lm6000EqpCo2CountdownSeconds - 1);
+      if (lm6000EqpCo2CountdownSeconds <= 0) {
+        lm6000EqpCo2Stage = "reserve";
+        lm6000EqpCo2CountdownSeconds = 90;
+        setDeviceOutput("SOV-6361", "Output Active", "Extended CO2 release");
+        setDeviceOutput("SOV-6362", "Output Active", "Extended CO2 release");
+        addEvent(sourceTag, "LM6000 EQP extended reserve CO2 solenoids SOV-6361 and SOV-6362 energized.");
+      }
+    } else if (lm6000EqpCo2Stage === "reserve") {
+      lm6000EqpCo2CountdownSeconds = Math.max(0, lm6000EqpCo2CountdownSeconds - 1);
+      if (lm6000EqpCo2CountdownSeconds <= 0) {
+        lm6000EqpCo2Stage = "complete";
+        lm6000EqpCo2CountdownSeconds = null;
+        clearInterval(lm6000EqpCo2TimerId);
+        lm6000EqpCo2TimerId = null;
+        setDeviceOutput("CO2_AGENT_RELEASE", "Output Active", "Main and extended CO2 released");
+        addEvent(sourceTag, "LM6000 EQP CO2 release sequence complete.");
+      }
+    }
+    updateLm6000EqpCo2Display();
+    renderAll();
+  }, 1000);
+}
+
+function applyLm6000EqpLogic(sourceTag = selectedDeviceId) {
+  getCurrentProjectDeviceEntries();
+  const releaseActive = lm6000EqpReleaseSourceTags.some((tag) => {
+    const status = devices[resolveDeviceId(tag)]?.status;
+    return ["Fire Alarm", "Alarm Active", "Input Active"].includes(status);
+  });
+  const lowGasTurbine = lm6000EqpTurbineGasTags.some((tag) => devices[resolveDeviceId(tag)]?.status === "Low Gas");
+  const highGasTurbine = lm6000EqpTurbineGasTags.some((tag) => devices[resolveDeviceId(tag)]?.status === "High Gas");
+  const lowGasGen = lm6000EqpGeneratorGasTags.some((tag) => devices[resolveDeviceId(tag)]?.status === "Low Gas");
+  const highGasGen = lm6000EqpGeneratorGasTags.some((tag) => devices[resolveDeviceId(tag)]?.status === "High Gas");
+  const commonAlarm = releaseActive || lowGasTurbine || highGasTurbine || lowGasGen || highGasGen;
+
+  lm6000EqpHornTags.forEach((tag) => setDeviceOutput(tag, commonAlarm && !hornsSilenced ? "Output Active" : "Normal", commonAlarm && !hornsSilenced ? "Sounding" : "Ready"));
+  lm6000EqpStrobeTags.forEach((tag) => setDeviceOutput(tag, commonAlarm ? "Output Active" : "Normal", commonAlarm ? "Flashing" : "Ready"));
+  setDeviceOutput("GENERAL_ALARM", commonAlarm ? "Alarm Active" : "Normal", commonAlarm ? "Any fire/gas alarm" : "Ready");
+  setDeviceOutput("FIRE_GAS_SHOUTDOWN", commonAlarm ? "Output Active" : "Normal", commonAlarm ? "Fire/Gas monitor shutdown" : "Ready");
+  setDeviceOutput("ALARM_LEL_TURBINE", lowGasTurbine ? "Alarm Active" : "Normal", lowGasTurbine ? "Low gas turbine" : "Ready");
+  setDeviceOutput("SHOUTDOWN_LEL_TUR", highGasTurbine ? "Alarm Active" : "Normal", highGasTurbine ? "High gas turbine shutdown" : "Ready");
+  setDeviceOutput("ALARM_LEL_GEN", lowGasGen ? "Alarm Active" : "Normal", lowGasGen ? "Low gas generator" : "Ready");
+  setDeviceOutput("SHOUTDOWN_LEL_GEN", highGasGen ? "Alarm Active" : "Normal", highGasGen ? "High gas generator shutdown" : "Ready");
+
+  if (releaseActive) startLm6000EqpCo2(sourceTag);
+  updateLm6000EqpCo2Display();
+}
+
 function applyS3Logic(sourceTag = selectedDeviceId) {
+  if (isLm6000EqpProject()) {
+    applyLm6000EqpLogic(sourceTag);
+    return;
+  }
   ensureControlDevices();
 
   const manualActiveTags = getActiveTags(manualReleaseTags, ["Alarm Active", "Input Active"]);
@@ -1633,7 +1831,8 @@ function resetDevice(deviceId) {
   if (!device) return;
   const type = device.type.toLowerCase();
   if (getDeviceRawTag(deviceId) === "HS-6363") {
-    resetAllestecCo2Discharge(deviceId);
+    if (isLm6000EqpProject()) resetLm6000EqpCo2(deviceId);
+    else resetAllestecCo2Discharge(deviceId);
     return;
   }
   device.status = "Normal";
@@ -1722,6 +1921,21 @@ function resetAllDevices() {
     resetAllestecPanel();
     return;
   }
+  if (isLm6000EqpProject()) {
+    resetLm6000EqpCo2("EQP-FPP");
+    hornsSilenced = false;
+    stopHornSound();
+    getCurrentProjectDeviceEntries().forEach(([tag, device]) => {
+      const type = (device.type || "").toLowerCase();
+      device.status = "Normal";
+      device.value = type.includes("gas") ? "0% LEL" : type.includes("controller") ? "Online" : type.includes("edio") ? "Module Online" : "Ready";
+    });
+    lm6000EqpHornTags.forEach((tag) => setDeviceOutput(tag, "Normal", "Ready"));
+    lm6000EqpStrobeTags.forEach((tag) => setDeviceOutput(tag, "Normal", "Ready"));
+    addEvent("EQP-FPP", "LM6000 EQP panel reset complete. System returned to NORMAL.");
+    renderAll();
+    return;
+  }
   cancelAerosolCountdown(true);
   resetAllestecCo2Discharge("SYSTEM");
   releaseResetHold = false;
@@ -1797,6 +2011,10 @@ function isAllestecProject() {
   return isAllestecProjectName(selectedProject);
 }
 
+function isLm6000EqpProject(projectName = selectedProject) {
+  return normalizeProjectName(projectName) === "LM6000 EQP";
+}
+
 function isAllestecHardwareMode() {
   return isAllestecProject() && allestecSystemMode !== "virtual";
 }
@@ -1865,6 +2083,10 @@ function isDeviceInCurrentProject(tag, device = devices[tag]) {
     if (device?.projectNamespace) return device.projectNamespace === getProjectNamespace();
     return isAllestecDeviceId(tag);
   }
+  if (isLm6000EqpProject()) {
+    if (device?.projectNamespace) return device.projectNamespace === getProjectNamespace();
+    return projectScopedTags["LM6000 EQP"].has(getDeviceRawTag(tag));
+  }
   if (device?.projectNamespace) return device.projectNamespace === getProjectNamespace();
   return !isAllestecDeviceId(tag);
 }
@@ -1874,6 +2096,14 @@ function getCurrentProjectDeviceEntries() {
     return Array.from(projectScopedTags["LM6000 ALLESTEC"])
       .map((rawTag) => {
         const scopedKey = ensureProjectDevice(rawTag, "LM6000 Allestec");
+        return [scopedKey, devices[scopedKey]];
+      })
+      .filter(([, device]) => Boolean(device));
+  }
+  if (isLm6000EqpProject()) {
+    return Array.from(projectScopedTags["LM6000 EQP"])
+      .map((rawTag) => {
+        const scopedKey = ensureProjectDevice(rawTag, "LM6000 EQP");
         return [scopedKey, devices[scopedKey]];
       })
       .filter(([, device]) => Boolean(device));
@@ -2034,25 +2264,13 @@ function setAllestecIoDrivenOutput(tags, active, status = "Output Active", activ
   tags.forEach((tag) => setDeviceOutput(tag, active ? status : "Normal", active ? activeValue : "Ready"));
 }
 
-// Gas alarm feedback circuits are wired normally closed (fail-safe).
-// A closed input is CLEAR; an open circuit is ALARM.
-const allestecNormallyClosedAlarmInputs = new Set(["DI15", "DI16", "DI17", "DI18"]);
-
 function applyAllestecIoInputs(moduleName, di) {
   const previous = allestecIoLastStates[moduleName] || {};
   const moduleLabel = moduleName === "io2" ? "I/O Module-2" : "I/O Module-1";
   const changes = [];
   ["DI11", "DI12", "DI13", "DI14", "DI15", "DI16", "DI17", "DI18"].forEach((point) => {
-    const rawClosed = Boolean(di?.[point]);
-    const normallyClosedAlarm = allestecNormallyClosedAlarmInputs.has(point);
-    const active = normallyClosedAlarm ? !rawClosed : rawClosed;
-    if (previous[point] !== active) {
-      changes.push(
-        normallyClosedAlarm
-          ? `${point} ${active ? "ALARM (OPEN)" : "CLEAR (CLOSED)"}`
-          : `${point} ${active ? "ON" : "OFF"}`
-      );
-    }
+    const active = Boolean(di?.[point]);
+    if (previous[point] !== active) changes.push(`${point} ${active ? "ON" : "OFF"}`);
     previous[point] = active;
   });
   allestecIoLastStates[moduleName] = previous;
@@ -2065,10 +2283,10 @@ function applyAllestecIoInputs(moduleName, di) {
   const di16Alarm = !previous.DI16;
   const di17Alarm = !previous.DI17;
   const di18Alarm = !previous.DI18;
-  setAllestecIoDrivenOutput([allestecGasOutputAlarmTags.turbineHigh], di15Alarm, "Output Active", "High Gas Turbine Shutdown");
-  setAllestecIoDrivenOutput([allestecGasOutputAlarmTags.turbineLow], di16Alarm, "Output Active", "Low Gas LEL Turbine");
-  setAllestecIoDrivenOutput([allestecGasOutputAlarmTags.generatorHigh], di17Alarm, "Output Active", "High Gas Generator Shutdown");
-  setAllestecIoDrivenOutput([allestecGasOutputAlarmTags.generatorLow], di18Alarm, "Output Active", "Low Gas LEL Generator");
+  setAllestecIoDrivenOutput([allestecGasOutputAlarmTags.turbineLow], di15Alarm, "Low Gas", "Low Gas Turbine");
+  setAllestecIoDrivenOutput([allestecGasOutputAlarmTags.turbineHigh], di16Alarm, "High Gas", "High Gas Turbine");
+  setAllestecIoDrivenOutput([allestecGasOutputAlarmTags.generatorLow], di17Alarm, "Low Gas", "Low Gas Generator");
+  setAllestecIoDrivenOutput([allestecGasOutputAlarmTags.generatorHigh], di18Alarm, "High Gas", "High Gas Generator");
 
   if (previous.DI14) startHornSound();
   else if (!allestecHornTags.some((tag) => devices[resolveDeviceId(tag)]?.status === "Output Active")) stopHornSound();
@@ -2343,7 +2561,7 @@ function applyFunction(action) {
   const rawTag = getDeviceRawTag(selectedDeviceId);
   const irStack = rawTag === "AE-3029" || rawTag === "AE-3030" || rawTag === "LM6-AE-3029" || rawTag === "LM6-AE-3030";
 
-  if (rawTag === "EQP-001") {
+  if (rawTag === "EQP-001" || rawTag === "EQP-FPP" || rawTag === "FIRE-PANEL") {
     if (action === "Acknowledge") {
       acknowledgeAllAlarms();
       return;
@@ -2384,11 +2602,26 @@ function applyFunction(action) {
     return;
   }
 
+  if (isLm6000EqpProject() && rawTag === "ZS-6364" && (action === "Input Active" || action === "Inhibit")) {
+    const closed = ["Inhibit", "Trouble", "Fault", "Offline"].includes(device.status);
+    setDeviceState(selectedDeviceId, closed ? "Normal" : "Inhibit", closed ? "Open / Release Enabled" : "Closed / CO2 Release Blocked");
+    return;
+  }
+
   if (isAllestecProject() && rawTag === "HS-6363" && action === "Input Active") {
     resetAllestecCo2Discharge("SYSTEM");
     device.status = "Supervisory";
     device.value = "Purge Switch Active";
     addEvent(selectedDeviceId, "HS-6363 purge switch active. CO2 pressure/reset circuit cleared.");
+    renderAll();
+    return;
+  }
+
+  if (isLm6000EqpProject() && rawTag === "HS-6363" && action === "Input Active") {
+    resetLm6000EqpCo2(selectedDeviceId);
+    device.status = "Supervisory";
+    device.value = "Purge Switch Active";
+    addEvent(selectedDeviceId, "HS-6363 purge switch active. LM6000 EQP CO2 pressure/reset circuit cleared.");
     renderAll();
     return;
   }
@@ -2404,6 +2637,10 @@ function applyFunction(action) {
   }
   if (isAllestecProject() && ["SOV-6359", "SOV-6360", "SOV-6361", "SOV-6362", "HS-6363"].includes(rawTag) && (action === "Output Off" || action === "Reset" || action === "Normal")) {
     resetAllestecCo2Discharge(selectedDeviceId);
+    return;
+  }
+  if (isLm6000EqpProject() && ["SOV-6359", "SOV-6360", "SOV-6361", "SOV-6362", "HS-6363"].includes(rawTag) && (action === "Output Off" || action === "Reset" || action === "Normal")) {
+    resetLm6000EqpCo2(selectedDeviceId);
     return;
   }
   if (action === "Reset" || action === "Normal") {
@@ -2466,7 +2703,7 @@ function isAnyAllestecStatusActive(tags, statuses) {
 }
 
 function isAllestecOutputAlarmActive(tag) {
-  return devices[resolveDeviceId(tag)]?.status === "Output Active";
+  return ["Output Active", "Low Gas", "High Gas"].includes(devices[resolveDeviceId(tag)]?.status);
 }
 
 function getAllestecBannerItems(active) {
@@ -2772,6 +3009,7 @@ function renderAll() {
   renderSystemStatus();
   renderDeviceLibrary();
   updateBadges();
+  if (typeof update3DHotspots === "function") update3DHotspots();
   updateAerosolCountdownDisplay();
   renderAllestecCo2VisualState();
   renderAllestecCo2CountdownDisplay();
@@ -2825,26 +3063,31 @@ const projectViewRoutes = {
     package: "package",
     topology: "topology",
     drawing: "drawing",
+    view3d: "project-placeholder",
   },
   lm6000Allestec: {
     package: "lm6000-allestec",
     topology: "allestec-topology",
     drawing: "allestec-drawing",
+    view3d: "lm6000-3d",
   },
   lm6000Eqp: {
     package: "lm6000",
-    topology: "topology",
-    drawing: "drawing",
+    topology: "lm6000-eqp-topology",
+    drawing: "lm6000-eqp-drawing",
+    view3d: "project-placeholder",
   },
   lms100: {
     package: "project-placeholder",
     topology: "project-placeholder",
     drawing: "project-placeholder",
+    view3d: "project-placeholder",
   },
   blank: {
     package: "project-placeholder",
     topology: "project-placeholder",
     drawing: "project-placeholder",
+    view3d: "project-placeholder",
     alarms: "project-placeholder",
     events: "project-placeholder",
     devices: "project-placeholder",
@@ -2876,7 +3119,7 @@ function getTargetViewName(viewName, projectName = selectedProject) {
 function getDefaultDeviceForProject(projectName = selectedProject) {
   const name = normalizeProjectName(projectName);
   if (name === "LM6000 ALLESTEC") return "ALL-800";
-  if (name.startsWith("LM6000")) return "ALL-800";
+  if (name === "LM6000 EQP") return ensureProjectDevice("EQP-FPP", "LM6000 EQP");
   return "EQP-001";
 }
 
@@ -3728,6 +3971,11 @@ function showView(viewName, trackHistory = true) {
   if (targetViewName === "comms") {
     renderCommsMap();
   }
+  if (targetViewName === "lm6000-3d" && typeof start3DRenderLoop === "function") {
+    window.requestAnimationFrame(start3DRenderLoop);
+  } else if (typeof stop3DRenderLoop === "function") {
+    stop3DRenderLoop();
+  }
   document.querySelectorAll(".nav-button").forEach((button) => {
     button.classList.toggle("active", button.dataset.nav === viewName);
   });
@@ -4048,13 +4296,23 @@ const projectCommsProfiles = {
   lm6000Eqp: {
     title: "LM6000 EQP communications",
     cards: [
-      ["eqp", "LM6000 EQP", "Future LM6000 EQP project profile"],
-      ["modbus", "Modbus", "Project-specific map pending"],
-      ["s3", "S3", "Project-specific S3 profiles"],
-      ["virtual", "Virtual", "Software simulation"],
+      ["eqp", "EQP Controller", "SHELL_LM6000_1457.s3n"],
+      ["lon", "LON Devices", "Addressable gas, flame, EDIO modules"],
+      ["edio", "EDIO Modules", "EDIO1-JB19 / EDIO2-JB18 / EDIO3-JB20"],
+      ["co2", "CO2 Logic", "Main and extended CO2 release sequence"],
     ],
     rows: [
-      ["Project profile", "LM6000 EQP", "Pending", "LM6000 devices", "Separate from TM2500", "To be mapped from LM6000 drawings"],
+      ["S3 profile", "LM6000 EQP", "Project file", "SHELL_LM6000_1457.s3n", "EQP addressable project", "Separate from LM6000 Allestec and TM2500"],
+      ["Controller", "FIRE-PANEL / EQP-FPP", "Serial Port 1", "RS485 / Modbus", "Controller reports all addressable devices", "No Allestec relay/I/O/4-20mA conversion modules"],
+      ["LON", "Turbine gas", "Address #9-#12", "AE-6304A/B/C/D", "UD10 combustible gas detectors", "15% LEL alarm / 25% LEL shutdown"],
+      ["LON", "Generator gas", "Address #14", "AE-6313", "UD10 combustible gas detector", "15% LEL alarm / 25% LEL shutdown"],
+      ["LON", "Exhaust IR gas", "Address #15-#16", "AE-3029 / AE-3030", "IR gas detectors", "5% LEL alarm / 10% LEL shutdown"],
+      ["LON", "Flame detection", "Address #17-#21", "BE-6300 / 6302 / 6311 / 6335 / 6336", "X3301 flame detectors", "Fire alarm logic from S3"],
+      ["EDIO", "Turbine skid", "EDIO1-JB19", "TS-6303-6314 / HS-6305 / YSA / YSL", "Thermal, horn ack, turbine horn/strobe outputs", "Drawing page 13"],
+      ["EDIO", "Generator skid", "EDIO2-JB18", "TS-6307-6310 / HS-6308-6309-6312 / YSA / YSL", "Thermal, manual release, generator horn/strobe outputs", "Drawing page 17"],
+      ["EDIO", "CO2 skid", "EDIO3-JB20", "SOV-6359-6362 / PSH-6357 / PSHH-6348 / ZS-6364 / HS-6363", "CO2 solenoids, pressure switches, block valve, purge", "Drawing page 19"],
+      ["Logic", "General alarm", "S3 OR logic", "Any fire/gas alarm", "Drives horns and beacons", "From P4PT1.lpd CommonAlarm"],
+      ["Logic", "CO2 release", "S3 logic", "Manual/thermal/fire release sources", "Main and extended CO2 release outputs", "Gas detection does not directly release CO2"],
     ],
   },
   lms100: {
@@ -4104,20 +4362,20 @@ const allestecCommsMapDefaults = {
     ["I/O Module-1", "Panel 1", "DI12", "SOV-6361 / SOV-6362", "Reserve CO2 solenoid feedback", "Reserve discharge at 90 seconds"],
     ["I/O Module-1", "Panel 1", "DI13", "YSL-6336 / YSL-6344 / YSL-6345 / YSL-6306", "Strobe outputs feedback", "Strobes active"],
     ["I/O Module-1", "Panel 1", "DI14", "YSA-6345 / YSA-6346 / YSA-6347", "Horn outputs feedback", "Horns active"],
-    ["I/O Module-1", "Panel 1", "DI15", "HIGH GAS ALARM - TURBINE", "NC loop: closed normal / open alarm", "Turbine high gas shutdown"],
-    ["I/O Module-1", "Panel 1", "DI16", "LOW GAS ALARM - TURBINE", "NC loop: closed normal / open alarm", "Turbine low gas alarm"],
-    ["I/O Module-1", "Panel 1", "DI17", "HIGH GAS ALARM - GENERATOR", "NC loop: closed normal / open alarm", "Generator high gas shutdown"],
-    ["I/O Module-1", "Panel 1", "DI18", "LOW GAS ALARM - GENERATOR", "NC loop: closed normal / open alarm", "Generator low gas alarm"],
+    ["I/O Module-1", "Panel 1", "DI15", "LOW GAS TURBINE", "NC loop: closed normal / open alarm", "Low Gas Turbine"],
+    ["I/O Module-1", "Panel 1", "DI16", "HIGH GAS TURBINE", "NC loop: closed normal / open alarm", "High Gas Turbine"],
+    ["I/O Module-1", "Panel 1", "DI17", "LOW GAS GENERATOR", "NC loop: closed normal / open alarm", "Low Gas Generator"],
+    ["I/O Module-1", "Panel 1", "DI18", "HIGH GAS GENERATOR", "NC loop: closed normal / open alarm", "High Gas Generator"],
   ],
   io2: [
     ["I/O Module-2", "Panel 2", "DI11", "SOV-6359 / SOV-6360", "Main CO2 solenoid feedback", "Main discharge at 30 seconds"],
     ["I/O Module-2", "Panel 2", "DI12", "SOV-6361 / SOV-6362", "Reserve CO2 solenoid feedback", "Reserve discharge at 90 seconds"],
     ["I/O Module-2", "Panel 2", "DI13", "YSL-6336 / YSL-6344 / YSL-6345 / YSL-6306", "Strobe outputs feedback", "Strobes active"],
     ["I/O Module-2", "Panel 2", "DI14", "YSA-6345 / YSA-6346 / YSA-6347", "Horn outputs feedback", "Horns active"],
-    ["I/O Module-2", "Panel 2", "DI15", "HIGH GAS ALARM - TURBINE", "NC loop: closed normal / open alarm", "Turbine high gas shutdown"],
-    ["I/O Module-2", "Panel 2", "DI16", "LOW GAS ALARM - TURBINE", "NC loop: closed normal / open alarm", "Turbine low gas alarm"],
-    ["I/O Module-2", "Panel 2", "DI17", "HIGH GAS ALARM - GENERATOR", "NC loop: closed normal / open alarm", "Generator high gas shutdown"],
-    ["I/O Module-2", "Panel 2", "DI18", "LOW GAS ALARM - GENERATOR", "NC loop: closed normal / open alarm", "Generator low gas alarm"],
+    ["I/O Module-2", "Panel 2", "DI15", "LOW GAS TURBINE", "NC loop: closed normal / open alarm", "Low Gas Turbine"],
+    ["I/O Module-2", "Panel 2", "DI16", "HIGH GAS TURBINE", "NC loop: closed normal / open alarm", "High Gas Turbine"],
+    ["I/O Module-2", "Panel 2", "DI17", "LOW GAS GENERATOR", "NC loop: closed normal / open alarm", "Low Gas Generator"],
+    ["I/O Module-2", "Panel 2", "DI18", "HIGH GAS GENERATOR", "NC loop: closed normal / open alarm", "High Gas Generator"],
   ],
   analog1: [
     ["4-20mA Module-1", "Panel 1", "AO1", "AE-6304A", "Gas detector simulation", "15/25% LEL"],
@@ -5673,4 +5931,3 @@ async function initializeHmi() {
 }
 
 initializeHmi();
-
