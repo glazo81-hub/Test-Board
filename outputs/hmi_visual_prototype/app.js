@@ -543,12 +543,12 @@ const statusClass = {
   Fire: "red-text",
   Trouble: "orange-text",
   Fault: "orange-text",
-  Offline: "orange-text",
+  Offline: "gray-text",
   "LON Fault": "orange-text",
   "Output Active": "red-text",
   "Alarm Active": "red-text",
-  Supervisory: "orange-text",
-  Inhibit: "orange-text",
+  Supervisory: "yellow-text",
+  Inhibit: "yellow-text",
 };
 
 const alarmStatuses = new Set(["Low Gas", "High Gas", "Fire", "Fire Alarm", "Trouble", "Fault", "Offline", "LON Fault", "Alarm Active", "Supervisory", "Inhibit"]);
@@ -718,7 +718,9 @@ function nowTime() {
 
 function getSeverityClass(status) {
   if (["Low Gas", "High Gas", "Fire", "Fire Alarm", "Alarm Active", "Output Active"].includes(status)) return "red";
-  if (["Trouble", "Fault", "Offline", "LON Fault", "Supervisory", "Inhibit"].includes(status)) return "orange";
+  if (["Supervisory", "Inhibit"].includes(status)) return "yellow";
+  if (["Trouble", "Fault", "LON Fault"].includes(status)) return "orange";
+  if (status === "Offline") return "gray";
   return "green";
 }
 
@@ -726,6 +728,14 @@ function isVisualAlarmState(device) {
   const type = (device?.type || "").toLowerCase();
   if (type.includes("horn") && device?.value === "Silenced") return false;
   return ["Low Gas", "High Gas", "Fire", "Fire Alarm", "Alarm Active", "Output Active"].includes(device?.status);
+}
+
+function getDeviceTier(device) {
+  if (isVisualAlarmState(device)) return "alarm";
+  if (["Trouble", "Fault", "LON Fault"].includes(device?.status)) return "trouble";
+  if (["Supervisory", "Inhibit"].includes(device?.status)) return "supervisory";
+  if (device?.status === "Offline") return "offline";
+  return "normal";
 }
 
 function getTextClass(status) {
@@ -1269,6 +1279,7 @@ function applyS3Logic(sourceTag = selectedDeviceId) {
   }
 
   updateAerosolCountdownDisplay();
+  queueEqpOnTestSync();
 }
 
 function renderDeviceVideos(info) {
@@ -1492,7 +1503,7 @@ function renderSelectedDevice() {
   document.getElementById("detail-last-event").textContent = eventHistory.find((event) => event.deviceId === selectedDeviceId || event.tag === displayTag)?.time || "--:--:--";
 
   const dot = document.getElementById("detail-status-dot");
-  dot.className = `status-dot ${isVisualAlarmState(device) ? getSeverityClass(device.status) : "green"}`;
+  dot.className = `status-dot ${getSeverityClass(device.status)}`;
   const modeActions = document.querySelector(".mode-actions");
   const lonAddressable = isLonAddressableDevice(selectedDeviceId);
   if (modeActions) modeActions.hidden = isAllestecProject() || !lonAddressable;
@@ -1688,6 +1699,7 @@ function triggerGraphicInput(deviceId) {
 function acknowledgeAllAlarms() {
   const active = Object.entries(devices).filter(([, device]) => alarmStatuses.has(device.status));
   addEvent("SYSTEM", `${active.length} active alarm(s) acknowledged.`);
+  pulseEqpOnTestCommand("Acknowledge");
   renderAll();
 }
 
@@ -1700,6 +1712,7 @@ function silenceAllOutputs() {
     }
   });
   addEvent("SYSTEM", "Audible horns silenced. Strobes remain active until reset.");
+  pulseEqpOnTestCommand("Silence");
   stopHornSound();
   renderAll();
 }
@@ -1742,6 +1755,7 @@ function resetAllDevices() {
 
   if (!isAllestecProject()) setRelay("relay7", false);
   addEvent("SYSTEM", "Panel reset complete. System returned to NORMAL.");
+  pulseEqpOnTestCommand("Reset");
   if (!isAllestecProject()) applyS3Logic("EQP-001");
   renderAll();
 }
@@ -2035,10 +2049,14 @@ function applyAllestecIoInputs(moduleName, di) {
   setAllestecCo2SolenoidState("reserve", previous.DI12);
   setAllestecIoDrivenOutput(allestecStrobeTags, previous.DI13, "Output Active", "Flashing");
   setAllestecIoDrivenOutput(allestecHornTags, previous.DI14, "Output Active", "On");
-  setAllestecIoDrivenOutput([allestecGasOutputAlarmTags.turbineHigh], previous.DI15, "Output Active", "High Gas Turbine Shutdown");
-  setAllestecIoDrivenOutput([allestecGasOutputAlarmTags.turbineLow], previous.DI16, "Output Active", "Low Gas LEL Turbine");
-  setAllestecIoDrivenOutput([allestecGasOutputAlarmTags.generatorHigh], previous.DI17, "Output Active", "High Gas Generator Shutdown");
-  setAllestecIoDrivenOutput([allestecGasOutputAlarmTags.generatorLow], previous.DI18, "Output Active", "Low Gas LEL Generator");
+  const di15Alarm = !previous.DI15;
+  const di16Alarm = !previous.DI16;
+  const di17Alarm = !previous.DI17;
+  const di18Alarm = !previous.DI18;
+  setAllestecIoDrivenOutput([allestecGasOutputAlarmTags.turbineHigh], di15Alarm, "Output Active", "High Gas Turbine Shutdown");
+  setAllestecIoDrivenOutput([allestecGasOutputAlarmTags.turbineLow], di16Alarm, "Output Active", "Low Gas LEL Turbine");
+  setAllestecIoDrivenOutput([allestecGasOutputAlarmTags.generatorHigh], di17Alarm, "Output Active", "High Gas Generator Shutdown");
+  setAllestecIoDrivenOutput([allestecGasOutputAlarmTags.generatorLow], di18Alarm, "Output Active", "Low Gas LEL Generator");
 
   if (previous.DI14) startHornSound();
   else if (!allestecHornTags.some((tag) => devices[resolveDeviceId(tag)]?.status === "Output Active")) stopHornSound();
@@ -2502,11 +2520,13 @@ function renderAlarmBanner() {
 
   const fire = active.filter(([, device]) => device.status === "Fire Alarm").length;
   const gas = active.filter(([, device]) => device.status === "Low Gas" || device.status === "High Gas").length;
-  const trouble = active.filter(([, device]) => ["Trouble", "Fault", "Offline", "LON Fault", "Supervisory", "Inhibit"].includes(device.status)).length;
+  const trouble = active.filter(([, device]) => ["Trouble", "Fault", "Offline", "LON Fault"].includes(device.status)).length;
+  const supervisory = active.filter(([, device]) => ["Supervisory", "Inhibit"].includes(device.status)).length;
   document.getElementById("alarm-counts").innerHTML = `
     <span class="count ${fire ? "red" : "green"}">${fire} FIRE</span>
     <span class="count ${gas ? "red" : "green"}">${gas} GAS</span>
     <span class="count ${trouble ? "orange" : "green"}">${trouble} TRBL</span>
+    <span class="count ${supervisory ? "yellow" : "green"}">${supervisory} SUPV</span>
   `;
 }
 
@@ -2693,10 +2713,8 @@ function updateBadges() {
     const device = devices[resolvedId];
     if (!device) return;
     const type = (device.type || "").toLowerCase();
-    badge.classList.remove("normal-badge", "lowgas-badge", "alarm-badge", "trouble-badge", "strobe-flash");
-    if (isVisualAlarmState(device)) badge.classList.add("alarm-badge");
-    else if (["Trouble", "Fault", "Offline", "LON Fault", "Supervisory", "Inhibit"].includes(device.status)) badge.classList.add("trouble-badge");
-    else badge.classList.add("normal-badge");
+    badge.classList.remove("normal-badge", "lowgas-badge", "alarm-badge", "trouble-badge", "supervisory-badge", "offline-badge", "strobe-flash");
+    badge.classList.add(`${getDeviceTier(device)}-badge`);
     if ((type.includes("strobe") || type.includes("beacon")) && device.status === "Output Active" && device.value !== "Silenced") {
       badge.classList.add("strobe-flash");
     }
@@ -2709,10 +2727,8 @@ function updateBadges() {
     const resolvedId = resolveDeviceId(node.dataset.device);
     const device = devices[resolvedId];
     if (!device) return;
-    node.classList.remove("normal", "lowgas", "alarm", "trouble", "active", "selected-topology-node");
-    if (isVisualAlarmState(device)) node.classList.add("alarm");
-    else if (["Trouble", "Fault", "Offline", "LON Fault", "Supervisory", "Inhibit"].includes(device.status)) node.classList.add("trouble");
-    else node.classList.add("normal");
+    node.classList.remove("normal", "lowgas", "alarm", "trouble", "supervisory", "offline", "active", "selected-topology-node");
+    node.classList.add(getDeviceTier(device));
     node.classList.toggle("selected-topology-node", resolvedId === selectedDeviceId);
   });
 
@@ -2720,10 +2736,13 @@ function updateBadges() {
     if (point.classList.contains("spare")) return;
     const pointDevices = getGroupedDevices(point);
     if (!pointDevices.length) return;
-    point.classList.remove("normal", "alarm", "trouble", "selected-wired-point");
-    if (pointDevices.some((device) => isVisualAlarmState(device))) point.classList.add("alarm");
-    else if (pointDevices.some((device) => ["Trouble", "Fault", "Offline", "LON Fault", "Supervisory", "Inhibit"].includes(device.status))) point.classList.add("trouble");
-    else point.classList.add("normal");
+    point.classList.remove("normal", "alarm", "trouble", "supervisory", "offline", "selected-wired-point");
+    const tierRank = { alarm: 4, trouble: 3, supervisory: 2, offline: 1, normal: 0 };
+    const worstTier = pointDevices.reduce((worst, device) => {
+      const tier = getDeviceTier(device);
+      return tierRank[tier] > tierRank[worst] ? tier : worst;
+    }, "normal");
+    point.classList.add(worstTier);
     const rawSelected = getDeviceRawTag(selectedDeviceId);
     point.classList.toggle("selected-wired-point", (point.dataset.devices || point.dataset.device || "").includes(rawSelected));
   });
@@ -3987,16 +4006,27 @@ const projectCommsProfiles = {
   tm2500: {
     title: "TM2500 XPRESS EQP communications",
     cards: [
-      ["eqp", "EQP Controller", "Physical controller on the testboard"],
-      ["modbus-rtu", "Modbus RTU", "RS485 device status and alarms"],
-      ["s3", "S3 Profiles", "TEST_EQP / TEST_EDIO / TEST_UD10 / TEST_IR"],
+      ["eqp-on-test", "EQP ON TEST", "S3 profile always loaded while controller is virtual"],
+      ["modbus-rtu", "Modbus RTU", "COM12 / 19200 8N1 / Slave 1"],
+      ["s3", "S3 Profiles", "EQP_ON_TEST plus device-specific profiles"],
       ["virtual", "Virtual Simulation", "Software devices only"],
     ],
     rows: [
-      ["Controller", "EQP Testboard", "Ethernet / RS485", "EQP-001", "Controller diagnostics", "Always physical"],
-      ["Field network", "EQP LON", "Profile loaded in S3", "Real device under test", "Live status when connected", "No complete field loop required"],
-      ["Modbus RTU", "HMI PC", "COM port", "EQP registers", "Alarm / trouble / output status", "Primary lab interface"],
-      ["S3 profile", "Admin", "Manual open", "TEST_EQP.s3n", "Controller-only configuration", "Base clean controller"],
+      ["S3 profile", "TM2500 XPRESS", "Always loaded", "EQP ON TEST", "Virtual HMI to real EQP panel", "Runs while controller remains virtual"],
+      ["EQP Serial Port 1", "EQP Controller", "RS485", "MODBUS Slave", "Address 1", "From S3 controller settings"],
+      ["EQP RTU Settings", "HMI PC", "COM12", "19200 baud / 8N1", "Slave ID 1", "USB-RS485 FTDI adapter"],
+      ["MODBUS to Global Memory", "HMI -> EQP", "00001", "Silence", "Command bit", "Panel silence from HMI"],
+      ["MODBUS to Global Memory", "HMI -> EQP", "00002", "Ack", "Command bit", "Panel acknowledge from HMI"],
+      ["MODBUS to Global Memory", "HMI -> EQP", "00003", "Reset", "Command bit", "Panel reset from HMI"],
+      ["MODBUS to Global Memory", "HMI -> EQP", "00004 / 00005", "HS-3091 / HS-3093", "Manual release inputs", "Virtual pull stations reflected to EQP"],
+      ["MODBUS to Global Memory", "HMI -> EQP", "00006 / 00007", "TS-3003 / TS-3014", "Thermal inputs", "Virtual heat detectors reflected to EQP"],
+      ["MODBUS to Global Memory", "HMI -> EQP", "00008-00012", "LOW gas bits", "AE-3004A/B/C, AE-3029, AE-3030", "Low gas alarms reflected to EQP"],
+      ["MODBUS to Global Memory", "HMI -> EQP", "00015-00019", "HH gas bits", "AE-3004A/B/C, AE-3029, AE-3030", "High-high gas alarms reflected to EQP"],
+      ["MODBUS to Global Memory", "HMI -> EQP", "00013 / 00014", "YSZ-3171 / YSZ-3172", "Stat-X release feedback", "Virtual release reflected to EQP"],
+      ["All to MODBUS", "EQP -> HMI", "00010", "EQP-FPP.Fire Alarm", "Status bit", "Readback from EQP ON TEST"],
+      ["All to MODBUS", "EQP -> HMI", "00012", "EQP-FPP.High Alarm", "Status bit", "High gas readback"],
+      ["All to MODBUS", "EQP -> HMI", "00018", "EQP-FPP.Low Alarm", "Status bit", "Low gas readback"],
+      ["All to MODBUS", "EQP -> HMI", "00023", "EQP-FPP.New Trouble", "Status bit", "Trouble readback"],
       ["S3 profile", "Admin", "Manual open", "TEST_EDIO.s3n", "EDIO device test", "Addressable EQP module"],
       ["S3 profile", "Admin", "Manual open", "TEST_UD10.s3n", "UD10 / gas transmitter test", "Addressable EQP device"],
       ["S3 profile", "Admin", "Manual open", "TEST_IR.s3n", "IR gas detector test", "Addressable EQP device"],
@@ -4062,20 +4092,20 @@ const allestecCommsMapDefaults = {
     ["I/O Module-1", "Panel 1", "DI12", "SOV-6361 / SOV-6362", "Reserve CO2 solenoid feedback", "Reserve discharge at 90 seconds"],
     ["I/O Module-1", "Panel 1", "DI13", "YSL-6336 / YSL-6344 / YSL-6345 / YSL-6306", "Strobe outputs feedback", "Strobes active"],
     ["I/O Module-1", "Panel 1", "DI14", "YSA-6345 / YSA-6346 / YSA-6347", "Horn outputs feedback", "Horns active"],
-    ["I/O Module-1", "Panel 1", "DI15", "HIGH GAS ALARM - TURBINE", "High gas alarm output", "Turbine high gas shutdown"],
-    ["I/O Module-1", "Panel 1", "DI16", "LOW GAS ALARM - TURBINE", "Low gas alarm output", "Turbine low gas alarm"],
-    ["I/O Module-1", "Panel 1", "DI17", "HIGH GAS ALARM - GENERATOR", "High gas alarm output", "Generator high gas shutdown"],
-    ["I/O Module-1", "Panel 1", "DI18", "LOW GAS ALARM - GENERATOR", "Low gas alarm output", "Generator low gas alarm"],
+    ["I/O Module-1", "Panel 1", "DI15", "HIGH GAS ALARM - TURBINE", "NC loop: closed normal / open alarm", "Turbine high gas shutdown"],
+    ["I/O Module-1", "Panel 1", "DI16", "LOW GAS ALARM - TURBINE", "NC loop: closed normal / open alarm", "Turbine low gas alarm"],
+    ["I/O Module-1", "Panel 1", "DI17", "HIGH GAS ALARM - GENERATOR", "NC loop: closed normal / open alarm", "Generator high gas shutdown"],
+    ["I/O Module-1", "Panel 1", "DI18", "LOW GAS ALARM - GENERATOR", "NC loop: closed normal / open alarm", "Generator low gas alarm"],
   ],
   io2: [
     ["I/O Module-2", "Panel 2", "DI11", "SOV-6359 / SOV-6360", "Main CO2 solenoid feedback", "Main discharge at 30 seconds"],
     ["I/O Module-2", "Panel 2", "DI12", "SOV-6361 / SOV-6362", "Reserve CO2 solenoid feedback", "Reserve discharge at 90 seconds"],
     ["I/O Module-2", "Panel 2", "DI13", "YSL-6336 / YSL-6344 / YSL-6345 / YSL-6306", "Strobe outputs feedback", "Strobes active"],
     ["I/O Module-2", "Panel 2", "DI14", "YSA-6345 / YSA-6346 / YSA-6347", "Horn outputs feedback", "Horns active"],
-    ["I/O Module-2", "Panel 2", "DI15", "HIGH GAS ALARM - TURBINE", "High gas alarm output", "Turbine high gas shutdown"],
-    ["I/O Module-2", "Panel 2", "DI16", "LOW GAS ALARM - TURBINE", "Low gas alarm output", "Turbine low gas alarm"],
-    ["I/O Module-2", "Panel 2", "DI17", "HIGH GAS ALARM - GENERATOR", "High gas alarm output", "Generator high gas shutdown"],
-    ["I/O Module-2", "Panel 2", "DI18", "LOW GAS ALARM - GENERATOR", "Low gas alarm output", "Generator low gas alarm"],
+    ["I/O Module-2", "Panel 2", "DI15", "HIGH GAS ALARM - TURBINE", "NC loop: closed normal / open alarm", "Turbine high gas shutdown"],
+    ["I/O Module-2", "Panel 2", "DI16", "LOW GAS ALARM - TURBINE", "NC loop: closed normal / open alarm", "Turbine low gas alarm"],
+    ["I/O Module-2", "Panel 2", "DI17", "HIGH GAS ALARM - GENERATOR", "NC loop: closed normal / open alarm", "Generator high gas shutdown"],
+    ["I/O Module-2", "Panel 2", "DI18", "LOW GAS ALARM - GENERATOR", "NC loop: closed normal / open alarm", "Generator low gas alarm"],
   ],
   analog1: [
     ["4-20mA Module-1", "Panel 1", "AO1", "AE-6304A", "Gas detector simulation", "15/25% LEL"],
@@ -4111,6 +4141,7 @@ const allestecCommsMapDefaults = {
 };
 let selectedCommsModule = "relay1";
 let aoSerialPort = null;
+let eqpOnTestSerialPort = null;
 const analogSerialConfigStorageKey = "hmiAnalogSerialConfig";
 let aoSerialSettings = loadAnalogSerialSettings();
 let aoModbusSlaveId = aoSerialSettings.slaveId;
@@ -4142,6 +4173,30 @@ let allestecIoPollTimer = null;
 const allestecIoLastStates = { io1: {}, io2: {} };
 const allestecIoBridgeUrl = "http://127.0.0.1:8771";
 const hmiBridgeManagerUrl = "http://127.0.0.1:8780";
+const eqpOnTestSerialSettings = { portLabel: "COM12", baudRate: 19200, dataBits: 8, stopBits: 1, parity: "none", slaveId: 1 };
+const eqpOnTestCommandCoils = { Silence: 1, Acknowledge: 2, Reset: 3 };
+const eqpOnTestDeviceCoils = {
+  "HS-3092": 4,
+  "HS-3093": 5,
+  "TS-3003": 6,
+  "TS-3014": 7,
+  "AE-3004A_LOW": 8,
+  "AE-3004B_LOW": 9,
+  "AE-3004C_LOW": 10,
+  "AE-3029_LOW": 11,
+  "AE-3030_LOW": 12,
+  "YSZ-3171": 13,
+  "YSZ-3172": 14,
+  "AE-3004A_HH": 15,
+  "AE-3004B_HH": 16,
+  "AE-3004C_HH": 17,
+  "AE-3029_HH": 18,
+  "AE-3030_HH": 19,
+  SUP: 20,
+  TLB: 21,
+};
+const eqpOnTestLastCoilStates = {};
+let eqpOnTestSyncTimer = null;
 
 function loadAnalogSerialSettings() {
   const fallback = { portLabel: "COM16", baudRate: 9600, dataBits: 8, stopBits: 1, parity: "none", slaveId: 1 };
@@ -4393,6 +4448,11 @@ function modbusWriteSingleRegisterFrame(slaveId, register, value) {
   return modbusFrame([slaveId, 6, (register >> 8) & 0xff, register & 0xff, (value >> 8) & 0xff, value & 0xff]);
 }
 
+function modbusWriteSingleCoilFrame(slaveId, coilAddress, active) {
+  const value = active ? 0xff00 : 0x0000;
+  return modbusFrame([slaveId, 5, (coilAddress >> 8) & 0xff, coilAddress & 0xff, (value >> 8) & 0xff, value & 0xff]);
+}
+
 function modbusReadHoldingRegisterFrame(slaveId, register, qty = 1) {
   return modbusFrame([slaveId, 3, (register >> 8) & 0xff, register & 0xff, (qty >> 8) & 0xff, qty & 0xff]);
 }
@@ -4406,6 +4466,145 @@ function modbusCrcOk(bytes) {
 
 function bytesToHex(bytes) {
   return [...bytes].map((byte) => byte.toString(16).toUpperCase().padStart(2, "0")).join(" ");
+}
+
+function isTm2500Project() {
+  return getCommsProfileKey() === "tm2500";
+}
+
+function setEqpOnTestStatus(message, isError = false) {
+  const status = document.getElementById("eqp-on-test-status");
+  if (!status) return;
+  status.textContent = message;
+  status.classList.toggle("error", isError);
+}
+
+async function serialTransactionOnPort(port, frame, expectedMinLength = 5, timeoutMs = 900) {
+  if (!port || !port.writable || !port.readable) throw new Error("Serial port is not connected.");
+  const writer = port.writable.getWriter();
+  await writer.write(frame);
+  writer.releaseLock();
+
+  const reader = port.readable.getReader();
+  const chunks = [];
+  const started = Date.now();
+  try {
+    while (Date.now() - started < timeoutMs) {
+      const result = await Promise.race([
+        reader.read(),
+        new Promise((resolve) => setTimeout(() => resolve({ timeout: true }), 120)),
+      ]);
+      if (result.timeout) {
+        if (chunks.reduce((sum, chunk) => sum + chunk.length, 0) >= expectedMinLength) break;
+        continue;
+      }
+      if (result.done) break;
+      if (result.value) chunks.push(result.value);
+      if (chunks.reduce((sum, chunk) => sum + chunk.length, 0) >= expectedMinLength) break;
+    }
+  } finally {
+    reader.releaseLock();
+  }
+  const length = chunks.reduce((sum, chunk) => sum + chunk.length, 0);
+  const response = new Uint8Array(length);
+  let offset = 0;
+  chunks.forEach((chunk) => { response.set(chunk, offset); offset += chunk.length; });
+  return response;
+}
+
+async function connectEqpOnTestSerial(options = {}) {
+  const promptForPort = options.prompt !== false;
+  if (!("serial" in navigator)) {
+    setEqpOnTestStatus("Web Serial is not available. Open this HMI in Microsoft Edge or Chrome from localhost.", true);
+    throw new Error("Web Serial is not available.");
+  }
+  if (!eqpOnTestSerialPort && navigator.serial.getPorts) {
+    const authorizedPorts = await navigator.serial.getPorts();
+    eqpOnTestSerialPort = authorizedPorts[0] || null;
+  }
+  if (!eqpOnTestSerialPort && promptForPort) eqpOnTestSerialPort = await navigator.serial.requestPort();
+  if (!eqpOnTestSerialPort) throw new Error("No authorized EQP serial port. Press CONNECT EQP COM12 and select the USB/RS485 adapter.");
+  if (!eqpOnTestSerialPort.readable || !eqpOnTestSerialPort.writable) {
+    await eqpOnTestSerialPort.open({
+      baudRate: eqpOnTestSerialSettings.baudRate,
+      dataBits: eqpOnTestSerialSettings.dataBits,
+      stopBits: eqpOnTestSerialSettings.stopBits,
+      parity: eqpOnTestSerialSettings.parity,
+    });
+  }
+  setEqpOnTestStatus("EQP ON TEST connected: COM12 / 19200 8N1 / Slave 1. Virtual TM2500 inputs will be reflected to the real EQP panel.");
+}
+
+function getEqpOnTestCoilAddress(displayAddress) {
+  return Math.max(0, Number(displayAddress) - 1);
+}
+
+async function writeEqpOnTestCoil(displayAddress, active, label = "") {
+  if (!isTm2500Project()) return false;
+  try {
+    if (!eqpOnTestSerialPort) {
+      if (!navigator.serial?.getPorts) throw new Error("Web Serial is not available.");
+      const ports = await navigator.serial.getPorts();
+      eqpOnTestSerialPort = ports[0] || null;
+      if (!eqpOnTestSerialPort) return false;
+    }
+    await connectEqpOnTestSerial({ prompt: false });
+    const frame = modbusWriteSingleCoilFrame(eqpOnTestSerialSettings.slaveId, getEqpOnTestCoilAddress(displayAddress), active);
+    const response = await serialTransactionOnPort(eqpOnTestSerialPort, frame, 8);
+    if (!modbusCrcOk(response)) throw new Error(`CRC failed. RX ${bytesToHex(response)}`);
+    setEqpOnTestStatus(`EQP ON TEST ${label || `coil ${String(displayAddress).padStart(5, "0")}`} = ${active ? "ON" : "OFF"}.`);
+    return true;
+  } catch (error) {
+    setEqpOnTestStatus(`EQP ON TEST write failed: ${error.message}`, true);
+    addEvent("COMMS", `EQP ON TEST write failed${label ? ` (${label})` : ""}: ${error.message}`);
+    return false;
+  }
+}
+
+async function pulseEqpOnTestCommand(commandName) {
+  if (!isTm2500Project()) return;
+  const displayAddress = eqpOnTestCommandCoils[commandName];
+  if (!displayAddress) return;
+  const label = `${commandName} 000${displayAddress}`;
+  const ok = await writeEqpOnTestCoil(displayAddress, true, label);
+  if (ok) window.setTimeout(() => writeEqpOnTestCoil(displayAddress, false, `${label} clear`), 450);
+}
+
+function buildEqpOnTestCoilStates() {
+  const state = {};
+  const active = (tag, statuses) => statuses.includes(devices[resolveDeviceId(tag)]?.status);
+  state["HS-3092"] = active("HS-3092", ["Alarm Active", "Input Active"]);
+  state["HS-3093"] = active("HS-3093", ["Alarm Active", "Input Active"]);
+  state["TS-3003"] = active("TS-3003", ["Fire Alarm", "Alarm Active"]);
+  state["TS-3014"] = active("TS-3014", ["Fire Alarm", "Alarm Active"]);
+  ["AE-3004A", "AE-3004B", "AE-3004C", "AE-3029", "AE-3030"].forEach((tag) => {
+    state[`${tag}_LOW`] = active(tag, ["Low Gas"]);
+    state[`${tag}_HH`] = active(tag, ["High Gas"]);
+  });
+  state["YSZ-3171"] = active("YSZ-3171", ["Alarm Active", "Output Active"]);
+  state["YSZ-3172"] = active("YSZ-3172", ["Alarm Active", "Output Active"]);
+  state.SUP = active("HS-3081", ["Inhibit", "Supervisory"]) || active("HS-3040", ["Supervisory"]);
+  state.TLB = hasTroubleCondition();
+  return state;
+}
+
+async function syncEqpOnTestCoils() {
+  if (!isTm2500Project()) return;
+  const next = buildEqpOnTestCoilStates();
+  for (const [key, value] of Object.entries(next)) {
+    if (eqpOnTestLastCoilStates[key] === value) continue;
+    eqpOnTestLastCoilStates[key] = value;
+    const displayAddress = eqpOnTestDeviceCoils[key];
+    if (displayAddress) await writeEqpOnTestCoil(displayAddress, value, `${key} ${String(displayAddress).padStart(5, "0")}`);
+  }
+}
+
+function queueEqpOnTestSync() {
+  if (!isTm2500Project()) return;
+  window.clearTimeout(eqpOnTestSyncTimer);
+  eqpOnTestSyncTimer = window.setTimeout(() => {
+    syncEqpOnTestCoils();
+  }, 120);
 }
 
 function setAoStatus(message, isError = false) {
@@ -4488,6 +4687,14 @@ function renderAnalogOutputConsole(moduleName = selectedCommsModule) {
       </div>
     </article>`;
   }).join("");
+}
+
+function renderEqpOnTestConsole(visible = false) {
+  const consolePanel = document.getElementById("eqp-on-test-console");
+  const summary = document.getElementById("eqp-on-test-config-summary");
+  if (!consolePanel) return;
+  consolePanel.hidden = !visible;
+  if (summary) summary.textContent = `${eqpOnTestSerialSettings.portLabel} / ${eqpOnTestSerialSettings.baudRate} 8N1 / Slave ${eqpOnTestSerialSettings.slaveId}`;
 }
 
 async function connectAnalogSerial(options = {}) {
@@ -4585,6 +4792,7 @@ function renderStaticCommsProfile(profile) {
   const table = document.getElementById("comms-map-table");
   if (!table) return;
   renderCommsCards(profile.cards, profile.cards[0]?.[0] || "");
+  renderEqpOnTestConsole(getCommsProfileKey() === "tm2500");
   const saveButton = document.getElementById("comms-save-map");
   if (saveButton) saveButton.hidden = true;
   const headers = ["DETAIL", "SYSTEM", "CHANNEL", "DEVICE", "SIGNAL", "NOTES"];
@@ -4624,9 +4832,11 @@ function renderCommsMap(moduleName = selectedCommsModule) {
   const profileKey = getCommsProfileKey();
   if (profileKey !== "lm6000Allestec") {
     renderAnalogOutputConsole("");
+    if (profileKey !== "tm2500") renderEqpOnTestConsole(false);
     renderStaticCommsProfile(projectCommsProfiles[profileKey] || projectCommsProfiles.tm2500);
     return;
   }
+  renderEqpOnTestConsole(false);
   if (!allestecCommsMapDefaults[moduleName]) moduleName = "relay1";
   selectedCommsModule = moduleName;
   renderCommsCards(
@@ -5014,6 +5224,25 @@ document.getElementById("comms-view")?.addEventListener("click", async (event) =
   const disconnectModuleButton = event.target.closest("#module-disconnect");
   if (disconnectModuleButton) {
     disconnectSelectedCommsModule();
+    return;
+  }
+  const connectEqpButton = event.target.closest("#eqp-on-test-connect");
+  if (connectEqpButton) {
+    try {
+      await connectEqpOnTestSerial();
+      await syncEqpOnTestCoils();
+    } catch (error) {
+      setEqpOnTestStatus(`EQP ON TEST not connected: ${error.message}`, true);
+    }
+    return;
+  }
+  const syncEqpButton = event.target.closest("#eqp-on-test-sync");
+  if (syncEqpButton) {
+    try {
+      await syncEqpOnTestCoils();
+    } catch (error) {
+      setEqpOnTestStatus(`EQP ON TEST sync failed: ${error.message}`, true);
+    }
     return;
   }
   const saveConfigButton = event.target.closest("#ao-save-config");
@@ -5432,13 +5661,4 @@ async function initializeHmi() {
 }
 
 initializeHmi();
-
-
-
-
-
-
-
-
-
 
