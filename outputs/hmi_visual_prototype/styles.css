@@ -4187,30 +4187,43 @@ h1 {
 }
 
 .strobe-flash {
-  animation: strobePulse 0.72s step-end infinite;
+  opacity: 1 !important;
 }
 
 .strobe-flash use {
-  fill: rgba(255, 255, 255, 0.96) !important;
-  stroke: #ffffff !important;
-  color: #ffffff !important;
-  filter: drop-shadow(0 0 5px #ffffff) drop-shadow(0 0 16px #ff3333);
+  fill: rgba(18, 27, 33, 0.94) !important;
+  animation: strobeSymbolPulse 0.72s step-end infinite;
 }
 
 .strobe-flash text {
-  fill: #ffffff !important;
+  animation: strobeTextPulse 0.72s step-end infinite;
 }
 
-@keyframes strobePulse {
+@keyframes strobeSymbolPulse {
   0%,
   48% {
-    opacity: 1;
-    filter: drop-shadow(0 0 8px #ffffff) drop-shadow(0 0 18px #ff3333);
+    stroke: #8dffae;
+    color: #8dffae;
+    filter: drop-shadow(0 0 2px #8dffae);
   }
   49%,
   100% {
-    opacity: 0;
-    filter: none;
+    stroke: #ff2d2d;
+    color: #ff2d2d;
+    filter: drop-shadow(0 0 5px #ff2d2d) drop-shadow(0 0 14px #ff2d2d);
+  }
+}
+
+@keyframes strobeTextPulse {
+  0%,
+  48% {
+    fill: #8dffae;
+    filter: drop-shadow(0 0 1px #8dffae);
+  }
+  49%,
+  100% {
+    fill: #ff6868;
+    filter: drop-shadow(0 0 5px #ff2d2d);
   }
 }
 
