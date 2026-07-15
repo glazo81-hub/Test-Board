@@ -4187,7 +4187,7 @@ h1 {
 }
 
 .strobe-flash {
-  animation: strobePulse 0.72s steps(2, end) infinite;
+  animation: strobePulse 0.72s step-end infinite;
 }
 
 .strobe-flash use {
@@ -4209,8 +4209,8 @@ h1 {
   }
   49%,
   100% {
-    opacity: 0.34;
-    filter: drop-shadow(0 0 2px #ff3333);
+    opacity: 0;
+    filter: none;
   }
 }
 
