@@ -65,8 +65,7 @@ button {
   position: relative;
 }
 
-.top-bar .app-menu,
-.hmi-tools-menu {
+.top-bar .app-menu {
   z-index: 200;
 }
 
@@ -1609,13 +1608,13 @@ h1 {
 }
 
 .co2-bottle-body {
-  fill: url(#co2BottleShell);
-  stroke: #445057;
+  fill: #050708;
+  stroke: #b9c6cc;
   stroke-width: 1.4;
 }
 
 .allestec-co2-piping .co2-bottle-body {
-  fill: url(#co2SystemBottleShell);
+  fill: #050708;
 }
 
 .co2-bottle-neck {
@@ -1625,13 +1624,13 @@ h1 {
 }
 
 .co2-bottle-fill {
-  fill: url(#co2FillGlass);
-  stroke: rgba(255, 255, 255, 0.55);
+  fill: rgba(248, 253, 255, 0.96);
+  stroke: rgba(255, 255, 255, 0.75);
   stroke-width: 1;
 }
 
 .allestec-co2-piping .co2-bottle-fill {
-  fill: url(#co2SystemFillGlass);
+  fill: rgba(248, 253, 255, 0.96);
 }
 
 .co2-bottles {
@@ -1682,9 +1681,7 @@ h1 {
   height: 92px;
   border: 1px solid #596166;
   border-radius: 12px 12px 5px 5px;
-  background:
-    linear-gradient(90deg, #5f676c, #eef2f4 42%, #8a949a 64%, #4f575d),
-    #9aa3a8;
+  background: #050708;
   box-shadow: inset 0 12px 0 #414b52, inset 0 -5px 0 rgba(0, 0, 0, 0.22);
 }
 
@@ -1712,8 +1709,8 @@ h1 {
   bottom: 3px;
   height: 68%;
   border-radius: 4px 4px 3px 3px;
-  background: linear-gradient(180deg, rgba(230, 250, 255, 0.88), rgba(176, 226, 242, 0.45));
-  box-shadow: inset 0 4px 8px rgba(255, 255, 255, 0.32);
+  background: rgba(248, 253, 255, 0.96);
+  box-shadow: inset 0 4px 8px rgba(255, 255, 255, 0.25);
   transform-origin: bottom;
 }
 
@@ -5421,5 +5418,3 @@ h1 {
 .view-stage.view-active {
   display: block;
 }
-
-
