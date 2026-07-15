@@ -476,166 +476,332 @@
             </div>
           </div>
 
-          <div class="view-stage lm6000-stage" id="lm6000-view">
-            <div class="lm6000-board lm6000-pro-board">
-              <div class="lm6000-hmi-header">
-                <div class="lm6000-clock-panel">
-                  <b>13:22:42</b>
-                  <span>LM6000 EQP</span>
+          <div class="view-stage allestec-stage lm6000-eqp-stage" id="lm6000-view">
+            <div class="allestec-board">
+              <div class="allestec-header">
+                <div>
+                  <b>LM6000 EQP</b>
+                  <span id="lm6000-eqp-panel-mode-title">Det-Tronics EQP / Virtual</span>
                 </div>
-                <div class="lm6000-softkeys">
-                  <button type="button">PRV</button>
-                  <button type="button">ALM</button>
-                  <button type="button">BOP</button>
-                </div>
-                <div class="lm6000-ack-panel">
-                  <span>ALARMS ACKNOWLEDGED</span>
-                  <b>SHUTDOWNS ACKNOWLEDGED</b>
-                </div>
-                <div class="lm6000-ready-panel">READY TO START</div>
-                <div class="lm6000-mini-values">
-                  <span>XN25 <b>0</b></span>
-                  <span>XNSD <b>0</b></span>
-                  <span>T3 <b>89</b></span>
-                  <span>T48 <b>88</b></span>
-                  <span>MW <b>0.00</b></span>
+                <div class="allestec-move-tools lm6000-eqp-title-tools">
+                  <span>EQP ADDRESSABLE / LON / 3 EDIO MODULES</span>
                 </div>
               </div>
 
-              <div class="lm6000-process-area" id="lm6000-sketch-area">
-                <svg class="lm6000-process-svg" viewBox="0 0 1180 620" role="img" aria-label="LM6000 EQP clean package layout">
+              <div class="allestec-layout">
+                <section class="allestec-co2-skid allestec-layout-box" data-allestec-layout-id="co2-skid">
+                  <div class="co2-title">HIGH PRESSURE CO2 SKID</div>
+                  <svg class="co2-skid-drawing co2-skid-drawing-legacy" viewBox="0 0 220 328" aria-label="High pressure CO2 skid piping">
+                    <defs>
+                      <linearGradient id="eqp-co2BottleShell" x1="0" x2="1" y1="0" y2="0">
+                        <stop offset="0" stop-color="#4d5960"></stop>
+                        <stop offset="0.42" stop-color="#eef4f6"></stop>
+                        <stop offset="0.66" stop-color="#89949a"></stop>
+                        <stop offset="1" stop-color="#424b52"></stop>
+                      </linearGradient>
+                      <linearGradient id="eqp-co2FillGlass" x1="0" x2="0" y1="0" y2="1">
+                        <stop offset="0" stop-color="rgba(236, 252, 255, 0.95)"></stop>
+                        <stop offset="1" stop-color="rgba(168, 225, 242, 0.55)"></stop>
+                      </linearGradient>
+                    </defs>
+                  <g class="device-badge controller-badge normal-badge" data-device="EQP-FPP" transform="translate(300 24)">
+                    <text x="0" y="4">EQP-FPP</text><use href="#icon-controller" transform="translate(62 0) scale(0.82)"></use>
+                  </g>
+                  <g class="device-badge module-badge normal-badge" data-device="EDIO1-JB19" transform="translate(420 24)">
+                    <text x="0" y="4">EDIO1-JB19</text><use href="#icon-controller" transform="translate(90 0) scale(0.72)"></use>
+                  </g>
+                  <g class="device-badge module-badge normal-badge" data-device="EDIO2-JB18" transform="translate(572 24)">
+                    <text x="0" y="4">EDIO2-JB18</text><use href="#icon-controller" transform="translate(90 0) scale(0.72)"></use>
+                  </g>
+                  <g class="device-badge module-badge normal-badge" data-device="EDIO3-JB20" transform="translate(724 24)">
+                    <text x="0" y="4">EDIO3-JB20</text><use href="#icon-controller" transform="translate(90 0) scale(0.72)"></use>
+                  </g>
+                    <text class="co2-bank-label" x="6" y="30">MAIN</text>
+                    <text class="co2-bank-label" x="6" y="174">RESERVE</text>
+                    <g class="co2-skid-piping">
+                      <path d="M20 52 H202"></path>
+                      <path d="M20 196 H202"></path>
+                      <path d="M202 196 V52 H216"></path>
+                      <path d="M216 52 H220"></path>
+                      <path d="M27 52 V72 M53 52 V72 M79 52 V72 M105 52 V72 M131 52 V72 M157 52 V72 M183 52 V72"></path>
+                      <path d="M27 196 V216 M53 196 V216 M79 196 V216 M105 196 V216 M131 196 V216 M157 196 V216 M183 196 V216"></path>
+                    </g>
+                    <g class="co2-bottle-bank co2-main-bottles-svg" transform="translate(16 72)">
+                      <g transform="translate(0 0)"><rect class="co2-bottle-body" x="0" y="14" width="22" height="78" rx="7"></rect><rect class="co2-bottle-neck" x="7" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="14" height="56" rx="4"></rect></g>
+                      <g transform="translate(26 0)"><rect class="co2-bottle-body" x="0" y="14" width="22" height="78" rx="7"></rect><rect class="co2-bottle-neck" x="7" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="14" height="56" rx="4"></rect></g>
+                      <g transform="translate(52 0)"><rect class="co2-bottle-body" x="0" y="14" width="22" height="78" rx="7"></rect><rect class="co2-bottle-neck" x="7" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="14" height="56" rx="4"></rect></g>
+                      <g transform="translate(78 0)"><rect class="co2-bottle-body" x="0" y="14" width="22" height="78" rx="7"></rect><rect class="co2-bottle-neck" x="7" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="14" height="56" rx="4"></rect></g>
+                      <g transform="translate(104 0)"><rect class="co2-bottle-body" x="0" y="14" width="22" height="78" rx="7"></rect><rect class="co2-bottle-neck" x="7" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="14" height="56" rx="4"></rect></g>
+                      <g transform="translate(130 0)"><rect class="co2-bottle-body" x="0" y="14" width="22" height="78" rx="7"></rect><rect class="co2-bottle-neck" x="7" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="14" height="56" rx="4"></rect></g>
+                      <g transform="translate(156 0)"><rect class="co2-bottle-body" x="0" y="14" width="22" height="78" rx="7"></rect><rect class="co2-bottle-neck" x="7" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="14" height="56" rx="4"></rect></g>
+                    </g>
+                    <g class="co2-bottle-bank co2-reserve-bottles-svg" transform="translate(16 216)">
+                      <g transform="translate(0 0)"><rect class="co2-bottle-body" x="0" y="14" width="22" height="78" rx="7"></rect><rect class="co2-bottle-neck" x="7" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="14" height="56" rx="4"></rect></g>
+                      <g transform="translate(26 0)"><rect class="co2-bottle-body" x="0" y="14" width="22" height="78" rx="7"></rect><rect class="co2-bottle-neck" x="7" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="14" height="56" rx="4"></rect></g>
+                      <g transform="translate(52 0)"><rect class="co2-bottle-body" x="0" y="14" width="22" height="78" rx="7"></rect><rect class="co2-bottle-neck" x="7" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="14" height="56" rx="4"></rect></g>
+                      <g transform="translate(78 0)"><rect class="co2-bottle-body" x="0" y="14" width="22" height="78" rx="7"></rect><rect class="co2-bottle-neck" x="7" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="14" height="56" rx="4"></rect></g>
+                      <g transform="translate(104 0)"><rect class="co2-bottle-body" x="0" y="14" width="22" height="78" rx="7"></rect><rect class="co2-bottle-neck" x="7" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="14" height="56" rx="4"></rect></g>
+                      <g transform="translate(130 0)"><rect class="co2-bottle-body" x="0" y="14" width="22" height="78" rx="7"></rect><rect class="co2-bottle-neck" x="7" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="14" height="56" rx="4"></rect></g>
+                      <g transform="translate(156 0)"><rect class="co2-bottle-body" x="0" y="14" width="22" height="78" rx="7"></rect><rect class="co2-bottle-neck" x="7" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="14" height="56" rx="4"></rect></g>
+                    </g>
+                  </svg>
+                </section>
+
+                <svg class="allestec-co2-piping" viewBox="0 0 1200 620" preserveAspectRatio="none" aria-label="CO2 discharge piping">
                   <defs>
-                    <marker id="lm-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-                      <path d="M 0 0 L 10 5 L 0 10 z" fill="#222"></path>
+                    <marker id="eqp-co2-flow-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                      <path d="M0 0 L10 5 L0 10 Z"></path>
                     </marker>
-                    <marker id="lm-red-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-                      <path d="M 0 0 L 10 5 L 0 10 z" fill="#7e2222"></path>
-                    </marker>
-                    <linearGradient id="lmMetal" x1="0" x2="1">
-                      <stop offset="0" stop-color="#707070"></stop>
-                      <stop offset="0.22" stop-color="#e8e8e8"></stop>
-                      <stop offset="0.5" stop-color="#8f8f8f"></stop>
-                      <stop offset="0.82" stop-color="#ededed"></stop>
-                      <stop offset="1" stop-color="#5b5b5b"></stop>
+                    <linearGradient id="eqp-co2SystemBottleShell" x1="0" x2="1" y1="0" y2="0">
+                      <stop offset="0" stop-color="#4d5960"></stop>
+                      <stop offset="0.42" stop-color="#eef4f6"></stop>
+                      <stop offset="0.66" stop-color="#89949a"></stop>
+                      <stop offset="1" stop-color="#424b52"></stop>
+                    </linearGradient>
+                    <linearGradient id="eqp-co2SystemFillGlass" x1="0" x2="0" y1="0" y2="1">
+                      <stop offset="0" stop-color="rgba(236, 252, 255, 0.95)"></stop>
+                      <stop offset="1" stop-color="rgba(168, 225, 242, 0.55)"></stop>
+                    </linearGradient>
+                    <linearGradient id="eqp-co2FlowMainGradient" gradientUnits="userSpaceOnUse" x1="-360" y1="52" x2="40" y2="52">
+                      <stop offset="0" stop-color="rgba(235, 252, 255, 0)"></stop>
+                      <stop offset="0.45" stop-color="rgba(235, 252, 255, 0.05)"></stop>
+                      <stop offset="0.52" stop-color="rgba(235, 252, 255, 0.95)"></stop>
+                      <stop offset="0.6" stop-color="rgba(235, 252, 255, 0.08)"></stop>
+                      <stop offset="1" stop-color="rgba(235, 252, 255, 0)"></stop>
+                      <animate attributeName="x1" from="-360" to="980" dur="2.1s" repeatCount="indefinite"></animate>
+                      <animate attributeName="x2" from="40" to="1380" dur="2.1s" repeatCount="indefinite"></animate>
+                    </linearGradient>
+                    <linearGradient id="eqp-co2FlowBranchGradient" gradientUnits="userSpaceOnUse" x1="0" y1="28" x2="0" y2="114">
+                      <stop offset="0" stop-color="rgba(235, 252, 255, 0)"></stop>
+                      <stop offset="0.42" stop-color="rgba(235, 252, 255, 0.08)"></stop>
+                      <stop offset="0.55" stop-color="rgba(235, 252, 255, 0.92)"></stop>
+                      <stop offset="0.72" stop-color="rgba(235, 252, 255, 0.1)"></stop>
+                      <stop offset="1" stop-color="rgba(235, 252, 255, 0)"></stop>
+                      <animate attributeName="y1" from="20" to="88" dur="1.15s" repeatCount="indefinite"></animate>
+                      <animate attributeName="y2" from="70" to="138" dur="1.15s" repeatCount="indefinite"></animate>
                     </linearGradient>
                   </defs>
-
-                  <rect x="24" y="78" width="724" height="494" class="lm6000-enclosure turbine"></rect>
-                  <rect x="748" y="78" width="408" height="494" class="lm6000-enclosure generator"></rect>
-                  <line x1="748" y1="78" x2="748" y2="572" class="lm-zone-line"></line>
-
-                  <image href="./assets/lm6000_vent_fans_reference.png" x="70" y="50" width="274" height="158" preserveAspectRatio="xMidYMid meet" class="lm-fan-reference-image"></image>
-
-                  <image href="./assets/lm6000_turbine_reference.png" x="44" y="186" width="672" height="348" preserveAspectRatio="xMidYMid meet" class="lm6000-turbine-reference-image"></image>
-
-                  <image href="./assets/lm6000_generator_reference.png" x="796" y="296" width="314" height="92" preserveAspectRatio="xMidYMid meet" class="lm6000-generator-reference-image"></image>
-
-                  <text x="974" y="48" class="lm6000-section-label">LM6000 EQP / CO2</text>
-                  <g class="device-badge controller-badge normal-badge" data-device="EQP-FPP" transform="translate(34 38)">
-                    <text x="0" y="4">EQP-FPP</text><use href="#icon-controller" transform="translate(66 0) scale(0.85)"></use>
+                  <g class="co2-unified-skid">
+                    <text class="co2-bank-label" x="32" y="86">MAIN</text>
+                    <text class="co2-bank-label" x="32" y="250">RESERVE</text>
+                    <g class="co2-skid-piping">
+                      <path class="co2-pipe co2-supply-pipe" d="M38 112 H198 V52 H248"></path>
+                      <path class="co2-pipe co2-supply-pipe" d="M38 274 H198 V112"></path>
+                      <circle class="co2-pipe-junction" cx="198" cy="52" r="5"></circle>
+                      <circle class="co2-pipe-junction" cx="198" cy="112" r="5"></circle>
+                      <circle class="co2-pipe-junction" cx="198" cy="274" r="5"></circle>
+                      <path d="M45 112 V132 M67 112 V132 M89 112 V132 M111 112 V132 M133 112 V132 M155 112 V132 M177 112 V132"></path>
+                      <path d="M45 274 V294 M67 274 V294 M89 274 V294 M111 274 V294 M133 274 V294 M155 274 V294 M177 274 V294"></path>
+                    </g>
+                    <g class="co2-main-bottles-svg" transform="translate(34 132)">
+                      <g transform="translate(0 0)"><rect class="co2-bottle-body" x="0" y="14" width="20" height="72" rx="6"></rect><rect class="co2-bottle-neck" x="6" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="12" height="50" rx="4"></rect></g>
+                      <g transform="translate(22 0)"><rect class="co2-bottle-body" x="0" y="14" width="20" height="72" rx="6"></rect><rect class="co2-bottle-neck" x="6" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="12" height="50" rx="4"></rect></g>
+                      <g transform="translate(44 0)"><rect class="co2-bottle-body" x="0" y="14" width="20" height="72" rx="6"></rect><rect class="co2-bottle-neck" x="6" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="12" height="50" rx="4"></rect></g>
+                      <g transform="translate(66 0)"><rect class="co2-bottle-body" x="0" y="14" width="20" height="72" rx="6"></rect><rect class="co2-bottle-neck" x="6" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="12" height="50" rx="4"></rect></g>
+                      <g transform="translate(88 0)"><rect class="co2-bottle-body" x="0" y="14" width="20" height="72" rx="6"></rect><rect class="co2-bottle-neck" x="6" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="12" height="50" rx="4"></rect></g>
+                      <g transform="translate(110 0)"><rect class="co2-bottle-body" x="0" y="14" width="20" height="72" rx="6"></rect><rect class="co2-bottle-neck" x="6" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="12" height="50" rx="4"></rect></g>
+                      <g transform="translate(132 0)"><rect class="co2-bottle-body" x="0" y="14" width="20" height="72" rx="6"></rect><rect class="co2-bottle-neck" x="6" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="12" height="50" rx="4"></rect></g>
+                    </g>
+                    <g class="co2-reserve-bottles-svg" transform="translate(34 294)">
+                      <g transform="translate(0 0)"><rect class="co2-bottle-body" x="0" y="14" width="20" height="72" rx="6"></rect><rect class="co2-bottle-neck" x="6" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="12" height="50" rx="4"></rect></g>
+                      <g transform="translate(22 0)"><rect class="co2-bottle-body" x="0" y="14" width="20" height="72" rx="6"></rect><rect class="co2-bottle-neck" x="6" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="12" height="50" rx="4"></rect></g>
+                      <g transform="translate(44 0)"><rect class="co2-bottle-body" x="0" y="14" width="20" height="72" rx="6"></rect><rect class="co2-bottle-neck" x="6" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="12" height="50" rx="4"></rect></g>
+                      <g transform="translate(66 0)"><rect class="co2-bottle-body" x="0" y="14" width="20" height="72" rx="6"></rect><rect class="co2-bottle-neck" x="6" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="12" height="50" rx="4"></rect></g>
+                      <g transform="translate(88 0)"><rect class="co2-bottle-body" x="0" y="14" width="20" height="72" rx="6"></rect><rect class="co2-bottle-neck" x="6" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="12" height="50" rx="4"></rect></g>
+                      <g transform="translate(110 0)"><rect class="co2-bottle-body" x="0" y="14" width="20" height="72" rx="6"></rect><rect class="co2-bottle-neck" x="6" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="12" height="50" rx="4"></rect></g>
+                      <g transform="translate(132 0)"><rect class="co2-bottle-body" x="0" y="14" width="20" height="72" rx="6"></rect><rect class="co2-bottle-neck" x="6" y="0" width="8" height="16" rx="2"></rect><rect class="co2-bottle-fill" x="4" y="30" width="12" height="50" rx="4"></rect></g>
+                    </g>
                   </g>
-                  <g class="device-badge module-badge normal-badge" data-device="EDIO1-JB19" transform="translate(112 92)">
-                    <text x="0" y="4">EDIO1-JB19</text><use href="#icon-controller" transform="translate(94 0) scale(0.75)"></use>
-                  </g>
-                  <g class="device-badge module-badge normal-badge" data-device="EDIO2-JB18" transform="translate(842 92)">
-                    <text x="0" y="4">EDIO2-JB18</text><use href="#icon-controller" transform="translate(94 0) scale(0.75)"></use>
-                  </g>
-                  <g class="device-badge module-badge normal-badge" data-device="EDIO3-JB20" transform="translate(26 565)">
-                    <text x="0" y="4">EDIO3-JB20</text><use href="#icon-controller" transform="translate(94 0) scale(0.75)"></use>
-                  </g>
-                  <g class="device-badge gas-badge normal-badge" data-device="AE-6304A" transform="translate(372 300)">
-                    <text x="0" y="-2">AE-6304A</text><text x="0" y="11" class="badge-value">0.00% LEL</text><use href="#icon-gas" transform="translate(88 1)"></use>
-                  </g>
-                  <g class="device-badge gas-badge normal-badge" data-device="AE-6304B" transform="translate(426 352)">
-                    <text x="0" y="-2">AE-6304B</text><text x="0" y="11" class="badge-value">0.00% LEL</text><use href="#icon-gas" transform="translate(88 1)"></use>
-                  </g>
-                  <g class="device-badge gas-badge normal-badge" data-device="AE-6304C" transform="translate(304 408)">
-                    <text x="0" y="-2">AE-6304C</text><text x="0" y="11" class="badge-value">0.00% LEL</text><use href="#icon-gas" transform="translate(88 1)"></use>
-                  </g>
-                  <g class="device-badge gas-badge normal-badge" data-device="AE-6304D" transform="translate(478 238)">
-                    <text x="0" y="-2">AE-6304D</text><text x="0" y="11" class="badge-value">0.00% LEL</text><use href="#icon-gas" transform="translate(88 1)"></use>
-                  </g>
-                  <g class="device-badge gas-badge normal-badge" data-device="AE-6313" transform="translate(900 420)">
-                    <text x="0" y="-2">AE-6313</text><text x="0" y="11" class="badge-value">0.00% LEL</text><use href="#icon-gas" transform="translate(80 1)"></use>
-                  </g>
-                  <g class="device-badge gas-badge normal-badge" data-device="AE-3029" transform="translate(520 150)">
-                    <text x="0" y="-2">AE-3029</text><text x="0" y="11" class="badge-value">0.00% LEL</text><use href="#icon-gas" transform="translate(80 1)"></use>
-                  </g>
-                  <g class="device-badge gas-badge normal-badge" data-device="AE-3030" transform="translate(642 150)">
-                    <text x="0" y="-2">AE-3030</text><text x="0" y="11" class="badge-value">0.00% LEL</text><use href="#icon-gas" transform="translate(80 1)"></use>
-                  </g>
-                  <g class="device-badge flame-badge normal-badge" data-device="BE-6300" transform="translate(192 428)">
-                    <text x="0" y="4">BE-6300</text><use href="#icon-flame" transform="translate(74 0)"></use>
-                  </g>
-                  <g class="device-badge flame-badge normal-badge" data-device="BE-6302" transform="translate(152 270)">
-                    <text x="0" y="4">BE-6302</text><use href="#icon-flame" transform="translate(74 0)"></use>
-                  </g>
-                  <g class="device-badge flame-badge normal-badge" data-device="BE-6335" transform="translate(560 424)">
-                    <text x="0" y="4">BE-6335</text><use href="#icon-flame" transform="translate(74 0)"></use>
-                  </g>
-                  <g class="device-badge flame-badge normal-badge" data-device="BE-6336" transform="translate(570 254)">
-                    <text x="0" y="4">BE-6336</text><use href="#icon-flame" transform="translate(74 0)"></use>
-                  </g>
-                  <g class="device-badge flame-badge normal-badge" data-device="BE-6311" transform="translate(882 334)">
-                    <text x="0" y="4">BE-6311</text><use href="#icon-flame" transform="translate(74 0)"></use>
-                  </g>
-                  <g class="device-badge thermal-badge normal-badge" data-device="TS-6303-6314" transform="translate(214 210)">
-                    <text x="0" y="4">TS-6303/6314</text><use href="#icon-thermal" transform="translate(104 0)"></use>
-                  </g>
-                  <g class="device-badge thermal-badge normal-badge" data-device="TS-6307-6310" transform="translate(1006 520)">
-                    <text x="0" y="4">TS-6307/6310</text><use href="#icon-thermal" transform="translate(104 0)"></use>
-                  </g>
-                  <g class="device-badge pull-badge normal-badge" data-device="HS-6308-6309-6312" transform="translate(770 518)">
-                    <text x="0" y="4">HS-6308/6309/6312</text><use href="#icon-pull" transform="translate(142 0)"></use>
-                  </g>
-                  <g class="device-badge horn-badge normal-badge" data-device="YSA-6306" transform="translate(68 240)">
-                    <text x="0" y="4">YSA-6306</text><use href="#icon-horn" transform="translate(74 0)"></use>
-                  </g>
-                  <g class="device-badge horn-badge normal-badge" data-device="YSA-6346" transform="translate(664 238)">
-                    <text x="0" y="4">YSA-6346</text><use href="#icon-horn" transform="translate(74 0)"></use>
-                  </g>
-                  <g class="device-badge horn-badge normal-badge" data-device="YSA-6347" transform="translate(1032 192)">
-                    <text x="0" y="4">YSA-6347</text><use href="#icon-horn" transform="translate(74 0)"></use>
-                  </g>
-                  <g class="device-badge strobe-badge normal-badge" data-device="YSL-6301" transform="translate(72 308)">
-                    <text x="0" y="4">YSL-6301</text><use href="#icon-strobe" transform="translate(74 0)"></use>
-                  </g>
-                  <g class="device-badge strobe-badge normal-badge" data-device="YSL-6336" transform="translate(650 190)">
-                    <text x="0" y="4">YSL-6336</text><use href="#icon-strobe" transform="translate(74 0)"></use>
-                  </g>
-                  <g class="device-badge strobe-badge normal-badge" data-device="YSL-6344" transform="translate(898 208)">
-                    <text x="0" y="4">YSL-6344</text><use href="#icon-strobe" transform="translate(74 0)"></use>
-                  </g>
-                  <g class="device-badge strobe-badge normal-badge" data-device="YSL-6345" transform="translate(1040 270)">
-                    <text x="0" y="4">YSL-6345</text><use href="#icon-strobe" transform="translate(74 0)"></use>
-                  </g>
-                  <g class="device-badge switch-badge normal-badge" data-device="ZS-6364" transform="translate(72 528)">
-                    <text x="0" y="4">ZS-6364</text><use href="#icon-key" transform="translate(70 0)"></use>
-                  </g>
-                  <g class="device-badge switch-badge normal-badge" data-device="PSHH-6348" transform="translate(180 528)">
-                    <text x="0" y="4">PSHH-6348</text><use href="#icon-thermal" transform="translate(90 0) scale(0.75)"></use>
-                  </g>
-                  <g class="device-badge solenoid-badge normal-badge" data-device="SOV-6359" transform="translate(300 528)">
+                  <g class="co2-line-tag device-badge solenoid-badge normal-badge" data-device="SOV-6359" transform="translate(42 96)">
+                    <rect class="co2-line-hitbox co2-hitbox" data-device="SOV-6359" x="-4" y="-15" width="74" height="24"></rect>
                     <text x="0" y="4">SOV-6359</text>
                   </g>
-                  <g class="device-badge solenoid-badge normal-badge" data-device="SOV-6360" transform="translate(380 528)">
+                  <g class="co2-line-tag device-badge solenoid-badge normal-badge" data-device="SOV-6360" transform="translate(42 112)">
+                    <rect class="co2-line-hitbox co2-hitbox" data-device="SOV-6360" x="-4" y="-15" width="74" height="24"></rect>
                     <text x="0" y="4">SOV-6360</text>
                   </g>
-                  <g class="device-badge solenoid-badge normal-badge" data-device="SOV-6361" transform="translate(460 528)">
+                  <g>
+                    <path class="co2-pipe co2-supply-pipe" d="M284 52 H1128"></path>
+                    <path class="co2-pipe-flow co2-supply-flow" d="M284 52 H1128"></path>
+                  </g>
+                  <g class="co2-pressure-switch co2-ps-before device-badge switch-badge normal-badge" data-device="PSH-6357">
+                    <rect class="co2-ps-hitbox co2-hitbox" data-device="PSH-6357" x="194" y="14" width="72" height="50"></rect>
+                    <circle cx="222" cy="52" r="8"></circle>
+                    <line x1="222" y1="52" x2="222" y2="34"></line>
+                    <text x="222" y="20" class="co2-ps-tag">PSH-6357</text>
+                  </g>
+                  <g class="co2-block-valve-symbol device-badge switch-badge normal-badge" data-device="ZS-6364">
+                    <rect class="co2-valve-hitbox co2-hitbox" data-device="ZS-6364" x="238" y="8" width="58" height="58"></rect>
+                    <path d="M254 46 L266 52 L254 58 Z"></path>
+                    <path d="M278 46 L266 52 L278 58 Z"></path>
+                    <line x1="266" y1="44" x2="266" y2="29"></line>
+                    <rect x="257" y="21" width="18" height="8" rx="2"></rect>
+                    <text class="co2-valve-tag" x="266" y="76">ZS-6364</text>
+                  </g>
+                  <g class="co2-pressure-switch co2-ps-after device-badge switch-badge normal-badge" data-device="PSHH-6348">
+                    <rect class="co2-ps-hitbox co2-hitbox" data-device="PSHH-6348" x="282" y="14" width="82" height="50"></rect>
+                    <circle cx="304" cy="52" r="8"></circle>
+                    <line x1="304" y1="52" x2="304" y2="34"></line>
+                    <text x="324" y="20" class="co2-ps-tag">PSHH-6348</text>
+                  </g>
+                  <g class="co2-line-tag device-badge switch-badge normal-badge" data-device="HS-6363" transform="translate(216 92)">
+                    <rect class="co2-line-hitbox co2-hitbox" data-device="HS-6363" x="-8" y="-20" width="112" height="36"></rect>
+                    <text x="0" y="4">HS-6363</text><use href="#icon-key" transform="translate(76 0)"></use>
+                  </g>
+                  <g class="co2-line-tag device-badge switch-badge normal-badge" data-device="HS-6305" transform="translate(216 118)">
+                    <rect class="co2-line-hitbox co2-hitbox" data-device="HS-6305" x="-8" y="-20" width="112" height="36"></rect>
+                    <text x="0" y="4">HS-6305</text><use href="#icon-key" transform="translate(76 0)"></use>
+                  </g>
+                  <g class="co2-line-tag device-badge solenoid-badge normal-badge" data-device="SOV-6361" transform="translate(42 258)">
+                    <rect class="co2-line-hitbox co2-hitbox" data-device="SOV-6361" x="-4" y="-15" width="74" height="24"></rect>
                     <text x="0" y="4">SOV-6361</text>
                   </g>
-                  <g class="device-badge solenoid-badge normal-badge" data-device="SOV-6362" transform="translate(540 528)">
+                  <g class="co2-line-tag device-badge solenoid-badge normal-badge" data-device="SOV-6362" transform="translate(42 274)">
+                    <rect class="co2-line-hitbox co2-hitbox" data-device="SOV-6362" x="-4" y="-15" width="74" height="24"></rect>
                     <text x="0" y="4">SOV-6362</text>
                   </g>
+                  <g>
+                    <path class="co2-pipe co2-branch-pipe turbine-branch" d="M380 52 L380 128"></path>
+                    <path class="co2-pipe-flow co2-branch-flow turbine-branch" d="M380 52 L380 128"></path>
+                    <g class="co2-nozzle nozzle-turbine upper" transform="translate(380 128)">
+                    <path d="M-9 0 L9 0 L5 22 L-5 22 Z"></path>
+                    <path class="co2-jet" d="M-18 22 C-34 84 -16 132 -48 186 C-12 164 18 146 28 92 C34 58 20 36 18 22 Z"></path>
+                    </g>
+                  </g>
+                  <g>
+                    <path class="co2-pipe co2-branch-pipe turbine-branch" d="M540 52 L540 128"></path>
+                    <path class="co2-pipe-flow co2-branch-flow turbine-branch" d="M540 52 L540 128"></path>
+                    <g class="co2-nozzle nozzle-turbine lower" transform="translate(540 128)">
+                    <path d="M-9 0 L9 0 L5 22 L-5 22 Z"></path>
+                    <path class="co2-jet" d="M-18 22 C-34 84 -16 132 -48 186 C-12 164 18 146 28 92 C34 58 20 36 18 22 Z"></path>
+                    </g>
+                  </g>
+                  <g>
+                    <path class="co2-pipe co2-branch-pipe generator-branch" d="M760 52 L760 128"></path>
+                    <path class="co2-pipe-flow co2-branch-flow generator-branch" d="M760 52 L760 128"></path>
+                    <g class="co2-nozzle nozzle-generator upper" transform="translate(760 128)">
+                    <path d="M-9 0 L9 0 L5 22 L-5 22 Z"></path>
+                    <path class="co2-jet" d="M-18 22 C-34 84 -16 132 -48 186 C-12 164 18 146 28 92 C34 58 20 36 18 22 Z"></path>
+                    </g>
+                  </g>
+                  <g>
+                    <path class="co2-pipe co2-branch-pipe generator-branch" d="M1128 52 L1128 128"></path>
+                    <path class="co2-pipe-flow co2-branch-flow generator-branch" d="M1128 52 L1128 128"></path>
+                    <g class="co2-nozzle nozzle-generator lower" transform="translate(1128 128)">
+                    <path d="M-9 0 L9 0 L5 22 L-5 22 Z"></path>
+                    <path class="co2-jet" d="M-18 22 C-34 84 -16 132 -48 186 C-12 164 18 146 28 92 C34 58 20 36 18 22 Z"></path>
+                    </g>
+                  </g>
                 </svg>
-                <canvas class="lm6000-sketch-canvas" id="lm6000-sketch-canvas"></canvas>
+
+                <section class="allestec-package">
+                  <div class="allestec-enclosure generator-zone">
+                    <div class="co2-room-fill"></div>
+                    <img class="allestec-generator-img" src="assets/lm6000_generator_reference.png" alt="LM6000 EQP generator reference" />
+                    <svg class="allestec-device-layer" viewBox="0 0 1000 520" aria-label="Generator enclosure devices">
+                      <g class="device-badge strobe-badge normal-badge" data-device="YSL-6345" transform="translate(86 58)">
+                        <text x="0" y="4">YSL-6345</text><use href="#icon-strobe" transform="translate(74 0)"></use>
+                      </g>
+                      <g class="device-badge pull-badge normal-badge" data-device="HS-6308-6309-6312" transform="translate(70 126)">
+                        <text x="0" y="4">HS-6308</text><use href="#icon-pull" transform="translate(66 0)"></use>
+                      </g>
+                      <g class="device-badge pull-badge normal-badge" data-device="HS-6308-6309-6312" transform="translate(198 126)">
+                        <text x="0" y="4">HS-6309</text><use href="#icon-pull" transform="translate(66 0)"></use>
+                      </g>
+                      <g class="device-badge thermal-badge normal-badge" data-device="TS-6307-6310" transform="translate(58 226)">
+                        <text x="0" y="4">TS-6307/6310</text><use href="#icon-thermal" transform="translate(66 0)"></use>
+                      </g>
+                      <g class="device-badge horn-badge normal-badge" data-device="YSA-6347" transform="translate(58 318)">
+                        <text x="0" y="4">YSA-6347</text><use href="#icon-horn" transform="translate(74 0)"></use>
+                      </g>
+                      <g class="device-badge flame-badge normal-badge" data-device="BE-6311" transform="translate(105 425)">
+                        <text x="0" y="4">BE-6311</text><use href="#icon-flame" transform="translate(74 0)"></use>
+                      </g>
+                      <g class="device-badge gas-badge normal-badge" data-device="AE-3029" transform="translate(318 88)">
+                        <rect class="badge-hitbox" x="-8" y="-22" width="124" height="48"></rect>
+                        <text x="0" y="-2">AE-3029</text><text x="0" y="11" class="badge-value">0.00% LEL</text><use href="#icon-gas" transform="translate(88 1)"></use>
+                      </g>
+                      <g class="device-badge gas-badge normal-badge" data-device="AE-3030" transform="translate(318 438)">
+                        <rect class="badge-hitbox" x="-8" y="-22" width="124" height="48"></rect>
+                        <text x="0" y="-2">AE-3030</text><text x="0" y="11" class="badge-value">0.00% LEL</text><use href="#icon-gas" transform="translate(88 1)"></use>
+                      </g>
+                      <g class="device-badge gas-badge normal-badge" data-device="AE-6313" transform="translate(462 360)">
+                        <text x="0" y="-2">AE-6313</text><text x="0" y="11" class="badge-value">0.00% LEL</text><use href="#icon-gas" transform="translate(80 1)"></use>
+                      </g>
+                      <g class="device-badge thermal-badge normal-badge" data-device="TS-6307-6310" transform="translate(515 62)">
+                        <text x="0" y="4">TS-6307/6310</text><use href="#icon-thermal" transform="translate(66 0)"></use>
+                      </g>
+                      <g class="device-badge horn-badge normal-badge" data-device="YSA-6306" transform="translate(785 118)">
+                        <text x="0" y="4">YSA-6306</text><use href="#icon-horn" transform="translate(74 0)"></use>
+                      </g>
+                      <g class="device-badge pull-badge normal-badge" data-device="HS-6308-6309-6312" transform="translate(742 430)">
+                        <text x="0" y="4">HS-6312</text><use href="#icon-pull" transform="translate(66 0)"></use>
+                      </g>
+                    </svg>
+                  </div>
+
+                  <div class="allestec-enclosure turbine-zone">
+                    <div class="co2-room-fill"></div>
+                    <img class="allestec-turbine-img" src="assets/lm6000_turbine_reference.png" alt="LM6000 EQP turbine reference" />
+                    <svg class="allestec-device-layer" viewBox="0 0 1000 520" aria-label="Turbine enclosure devices">
+                      <g class="device-badge thermal-badge normal-badge" data-device="TS-6303-6314" transform="translate(265 85)">
+                        <text x="0" y="4">TS-6303/6314</text><use href="#icon-thermal" transform="translate(66 0)"></use>
+                      </g>
+                      <g class="device-badge strobe-badge normal-badge" data-device="YSL-6336" transform="translate(535 68)">
+                        <text x="0" y="4">YSL-6336</text><use href="#icon-strobe" transform="translate(74 0)"></use>
+                      </g>
+                      <g class="device-badge gas-badge normal-badge" data-device="AE-6304A" transform="translate(454 132)">
+                        <text x="0" y="-2">AE-6304A</text><text x="0" y="11" class="badge-value">0.00% LEL</text><use href="#icon-gas" transform="translate(88 1)"></use>
+                      </g>
+                      <g class="device-badge gas-badge normal-badge" data-device="AE-6304B" transform="translate(454 190)">
+                        <text x="0" y="-2">AE-6304B</text><text x="0" y="11" class="badge-value">0.00% LEL</text><use href="#icon-gas" transform="translate(88 1)"></use>
+                      </g>
+                      <g class="device-badge gas-badge normal-badge" data-device="AE-6304C" transform="translate(454 318)">
+                        <text x="0" y="-2">AE-6304C</text><text x="0" y="11" class="badge-value">0.00% LEL</text><use href="#icon-gas" transform="translate(88 1)"></use>
+                      </g>
+                      <g class="device-badge gas-badge normal-badge" data-device="AE-6304D" transform="translate(210 178)">
+                        <text x="0" y="-2">AE-6304D</text><text x="0" y="11" class="badge-value">0.00% LEL</text><use href="#icon-gas" transform="translate(88 1)"></use>
+                      </g>
+                      <g class="device-badge flame-badge normal-badge" data-device="BE-6336" transform="translate(640 238)">
+                        <text x="0" y="4">BE-6336</text><use href="#icon-flame" transform="translate(74 0)"></use>
+                      </g>
+                      <g class="device-badge flame-badge normal-badge" data-device="BE-6300" transform="translate(178 392)">
+                        <text x="0" y="4">BE-6300</text><use href="#icon-flame" transform="translate(74 0)"></use>
+                      </g>
+                      <g class="device-badge flame-badge normal-badge" data-device="BE-6302" transform="translate(82 240)">
+                        <text x="0" y="4">BE-6302</text><use href="#icon-flame" transform="translate(74 0)"></use>
+                      </g>
+                      <g class="device-badge flame-badge normal-badge" data-device="BE-6335" transform="translate(308 395)">
+                        <text x="0" y="4">BE-6335</text><use href="#icon-flame" transform="translate(74 0)"></use>
+                      </g>
+                      <g class="device-badge strobe-badge normal-badge" data-device="YSL-6344" transform="translate(605 410)">
+                        <text x="0" y="4">YSL-6344</text><use href="#icon-strobe" transform="translate(74 0)"></use>
+                      </g>
+                      <g class="device-badge strobe-badge normal-badge" data-device="YSL-6301" transform="translate(668 366)">
+                        <text x="0" y="4">YSL-6301</text><use href="#icon-strobe" transform="translate(74 0)"></use>
+                      </g>
+                      <g class="device-badge thermal-badge normal-badge" data-device="TS-6303-6314" transform="translate(805 385)">
+                        <text x="0" y="4">TS-6303/6314</text><use href="#icon-thermal" transform="translate(66 0)"></use>
+                      </g>
+                      <g class="device-badge horn-badge normal-badge" data-device="YSA-6346" transform="translate(810 150)">
+                        <text x="0" y="4">YSA-6346</text><use href="#icon-horn" transform="translate(74 0)"></use>
+                      </g>
+                    </svg>
+                  </div>
+                </section>
               </div>
-              <div class="lm6000-note">LM6000 EQP addressable Fire & Gas / CO2 system from SHELL_LM6000_1457.s3n and WFE drawing 1457.</div>
+
+              <div class="panel-command-actions allestec-command-actions">
+                <button type="button" id="lm6000-eqp-ack">ACK</button>
+                <button type="button" id="lm6000-eqp-silence">SILENCE</button>
+                <button type="button" id="lm6000-eqp-reset">RESET</button>
+              </div>
               <div class="countdown-box allestec-countdown-box" id="lm6000-eqp-co2-countdown-box">
                 <span>LM6000 EQP CO2</span>
                 <b id="lm6000-eqp-co2-countdown">READY</b>
                 <small id="lm6000-eqp-co2-countdown-label">MAIN / EXTENDED</small>
               </div>
+
             </div>
           </div>
 
@@ -1425,7 +1591,7 @@
             <section class="analog-output-console" id="eqp-on-test-console" hidden>
               <div class="analog-console-head">
                 <div>
-                  <b>EQP ON TEST MODBUS RTU</b>
+                  <b>EQP WRITE MAP MODBUS RTU</b>
                   <span id="eqp-on-test-config-summary">COM12 / 19200 8N1 / Slave 1</span>
                 </div>
                 <div class="analog-console-actions">
@@ -1433,7 +1599,7 @@
                   <button class="scenario-button" id="eqp-on-test-sync" type="button">SYNC NOW</button>
                 </div>
               </div>
-              <div class="analog-status-line" id="eqp-on-test-status">EQP ON TEST S3 profile: MODBUS Slave, Serial Port 1 RS485, 19200 baud, None parity, Address 1. Press CONNECT EQP COM12 and select the FTDI USB/RS485 adapter.</div>
+              <div class="analog-status-line" id="eqp-on-test-status">EQP write map: MODBUS Slave, Serial Port 1 RS485, 19200 baud, None parity, Address 1. Press CONNECT EQP COM12 and select the USB/RS485 adapter.</div>
             </section>
             <div class="placeholder-message">Confirmed 4-20mA module path: RS485 via FTDI USB Serial Port. Configure the port label, baud rate, parity, stop bits, slave ID, and register map in the selected 4-20mA module before live control.</div>
           </div>
@@ -1523,7 +1689,7 @@
         <button class="nav-button" data-nav="admin">ADMIN</button>
       </nav>
     </main>
-    <script src="app.js?v=lm6000-eqp-20260714a"></script>
+    <script src="app.js?v=eqp-write-map-20260715a"></script>
   </body>
 </html>
 

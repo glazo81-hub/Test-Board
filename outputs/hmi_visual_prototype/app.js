@@ -1310,6 +1310,19 @@ function updateLm6000EqpCo2Display() {
     value.textContent = "READY";
     label.textContent = "LM6000 EQP CO2";
   }
+  renderLm6000EqpCo2VisualState();
+}
+
+function renderLm6000EqpCo2VisualState() {
+  const view = document.getElementById("lm6000-view");
+  if (!view) return;
+  const blockClosed = ["Inhibit", "Trouble", "Fault", "Offline"].includes(devices[resolveDeviceId("ZS-6364")]?.status);
+  view.classList.toggle("co2-flow-blocked", blockClosed);
+  view.classList.toggle("co2-pre-discharge", lm6000EqpCo2Stage === "main-delay");
+  view.classList.toggle("co2-main-discharging", lm6000EqpCo2Stage === "main");
+  view.classList.toggle("co2-main-empty", lm6000EqpCo2Stage === "reserve" || lm6000EqpCo2Stage === "complete");
+  view.classList.toggle("co2-reserve-discharging", lm6000EqpCo2Stage === "reserve");
+  view.classList.toggle("co2-reserve-empty", lm6000EqpCo2Stage === "complete");
 }
 
 function resetLm6000EqpCo2(sourceTag = "EQP-FPP") {
@@ -1364,6 +1377,7 @@ function startLm6000EqpCo2(sourceTag = selectedDeviceId) {
       }
     }
     updateLm6000EqpCo2Display();
+    queueEqpOnTestSync();
     renderAll();
   }, 1000);
 }
@@ -1391,6 +1405,7 @@ function applyLm6000EqpLogic(sourceTag = selectedDeviceId) {
 
   if (releaseActive) startLm6000EqpCo2(sourceTag);
   updateLm6000EqpCo2Display();
+  queueEqpOnTestSync();
 }
 
 function applyS3Logic(sourceTag = selectedDeviceId) {
@@ -1933,6 +1948,8 @@ function resetAllDevices() {
     lm6000EqpHornTags.forEach((tag) => setDeviceOutput(tag, "Normal", "Ready"));
     lm6000EqpStrobeTags.forEach((tag) => setDeviceOutput(tag, "Normal", "Ready"));
     addEvent("EQP-FPP", "LM6000 EQP panel reset complete. System returned to NORMAL.");
+    pulseEqpOnTestCommand("Reset");
+    queueEqpOnTestSync();
     renderAll();
     return;
   }
@@ -3012,6 +3029,7 @@ function renderAll() {
   updateAerosolCountdownDisplay();
   renderAllestecCo2VisualState();
   renderAllestecCo2CountdownDisplay();
+  updateLm6000EqpCo2Display();
   updateHornSound();
   if (!allestecDragState && !allestecGraphicDragState) {
     applyAllestecSavedLayout();
@@ -4264,14 +4282,14 @@ const projectCommsProfiles = {
       ["S3 profile", "TM2500 XPRESS", "Always loaded", "EQP ON TEST", "Virtual HMI to real EQP panel", "Runs while controller remains virtual"],
       ["EQP Serial Port 1", "EQP Controller", "RS485", "MODBUS Slave", "Address 1", "From S3 controller settings"],
       ["EQP RTU Settings", "HMI PC", "COM12", "19200 baud / 8N1", "Slave ID 1", "USB-RS485 FTDI adapter"],
-      ["MODBUS to Global Memory", "HMI -> EQP", "00001", "Silence", "Command bit", "Panel silence from HMI"],
-      ["MODBUS to Global Memory", "HMI -> EQP", "00002", "Ack", "Command bit", "Panel acknowledge from HMI"],
-      ["MODBUS to Global Memory", "HMI -> EQP", "00003", "Reset", "Command bit", "Panel reset from HMI"],
-      ["MODBUS to Global Memory", "HMI -> EQP", "00004 / 00005", "HS-3091 / HS-3093", "Manual release inputs", "Virtual pull stations reflected to EQP"],
-      ["MODBUS to Global Memory", "HMI -> EQP", "00006 / 00007", "TS-3003 / TS-3014", "Thermal inputs", "Virtual heat detectors reflected to EQP"],
-      ["MODBUS to Global Memory", "HMI -> EQP", "00008-00012", "LOW gas bits", "AE-3004A/B/C, AE-3029, AE-3030", "Low gas alarms reflected to EQP"],
-      ["MODBUS to Global Memory", "HMI -> EQP", "00015-00019", "HH gas bits", "AE-3004A/B/C, AE-3029, AE-3030", "High-high gas alarms reflected to EQP"],
-      ["MODBUS to Global Memory", "HMI -> EQP", "00013 / 00014", "YSZ-3171 / YSZ-3172", "Stat-X release feedback", "Virtual release reflected to EQP"],
+      ["MODBUS to Global Memory", "HMI -> EQP", "00101", "Silence", "Command bit", "Panel silence from HMI"],
+      ["MODBUS to Global Memory", "HMI -> EQP", "00102", "Ack", "Command bit", "Panel acknowledge from HMI"],
+      ["MODBUS to Global Memory", "HMI -> EQP", "00103", "Reset", "Command bit", "Panel reset from HMI"],
+      ["MODBUS to Global Memory", "HMI -> EQP", "00104 / 00105", "HS-3091 / HS-3093", "Manual release inputs", "Virtual pull stations reflected to EQP"],
+      ["MODBUS to Global Memory", "HMI -> EQP", "00106 / 00107", "TS-3003 / TS-3014", "Thermal inputs", "Virtual heat detectors reflected to EQP"],
+      ["MODBUS to Global Memory", "HMI -> EQP", "00108-00112", "LOW gas bits", "AE-3004A/B/C, AE-3029, AE-3030", "Low gas alarms reflected to EQP"],
+      ["MODBUS to Global Memory", "HMI -> EQP", "00115-00119", "HH gas bits", "AE-3004A/B/C, AE-3029, AE-3030", "High-high gas alarms reflected to EQP"],
+      ["MODBUS to Global Memory", "HMI -> EQP", "00113 / 00114", "YSZ-3171 / YSZ-3172", "Release feedback", "Virtual release reflected to EQP"],
       ["All to MODBUS", "EQP -> HMI", "00010", "EQP-FPP.Fire Alarm", "Status bit", "Readback from EQP ON TEST"],
       ["All to MODBUS", "EQP -> HMI", "00012", "EQP-FPP.High Alarm", "Status bit", "High gas readback"],
       ["All to MODBUS", "EQP -> HMI", "00018", "EQP-FPP.Low Alarm", "Status bit", "Low gas readback"],
@@ -4293,6 +4311,8 @@ const projectCommsProfiles = {
     rows: [
       ["S3 profile", "LM6000 EQP", "Project file", "SHELL_LM6000_1457.s3n", "EQP addressable project", "Separate from LM6000 Allestec and TM2500"],
       ["Controller", "FIRE-PANEL / EQP-FPP", "Serial Port 1", "RS485 / Modbus", "Controller reports all addressable devices", "No Allestec relay/I/O/4-20mA conversion modules"],
+      ["EQP RTU Settings", "HMI PC", "COM12", "19200 baud / 8N1", "Slave ID 1", "USB-RS485 adapter to EQP Serial Port 1"],
+      ["MODBUS to Global Memory", "HMI -> EQP", "00101-00121", "Test-Board EQP_Modbus.csv", "Common EQP write map", "Used for EQP projects only"],
       ["LON", "Turbine gas", "Address #9-#12", "AE-6304A/B/C/D", "UD10 combustible gas detectors", "15% LEL alarm / 25% LEL shutdown"],
       ["LON", "Generator gas", "Address #14", "AE-6313", "UD10 combustible gas detector", "15% LEL alarm / 25% LEL shutdown"],
       ["LON", "Exhaust IR gas", "Address #15-#16", "AE-3029 / AE-3030", "IR gas detectors", "5% LEL alarm / 10% LEL shutdown"],
@@ -4433,26 +4453,27 @@ const allestecIoLastStates = { io1: {}, io2: {} };
 const allestecIoBridgeUrl = "http://127.0.0.1:8771";
 const hmiBridgeManagerUrl = "http://127.0.0.1:8780";
 const eqpOnTestSerialSettings = { portLabel: "COM12", baudRate: 19200, dataBits: 8, stopBits: 1, parity: "none", slaveId: 1 };
-const eqpOnTestCommandCoils = { Silence: 1, Acknowledge: 2, Reset: 3 };
+const eqpOnTestCommandCoils = { Silence: 101, Acknowledge: 102, Ack: 102, Reset: 103 };
 const eqpOnTestDeviceCoils = {
-  "HS-3092": 4,
-  "HS-3093": 5,
-  "TS-3003": 6,
-  "TS-3014": 7,
-  "AE-3004A_LOW": 8,
-  "AE-3004B_LOW": 9,
-  "AE-3004C_LOW": 10,
-  "AE-3029_LOW": 11,
-  "AE-3030_LOW": 12,
-  "YSZ-3171": 13,
-  "YSZ-3172": 14,
-  "AE-3004A_HH": 15,
-  "AE-3004B_HH": 16,
-  "AE-3004C_HH": 17,
-  "AE-3029_HH": 18,
-  "AE-3030_HH": 19,
-  SUP: 20,
-  TLB: 21,
+  "HS-3091": 104,
+  "HS-3092": 104,
+  "HS-3093": 105,
+  "TS-3003": 106,
+  "TS-3014": 107,
+  "AE-3004A_LOW": 108,
+  "AE-3004B_LOW": 109,
+  "AE-3004C_LOW": 110,
+  "AE-3029_LOW": 111,
+  "AE-3030_LOW": 112,
+  "YSZ-3171": 113,
+  "YSZ-3172": 114,
+  "AE-3004A_HH": 115,
+  "AE-3004B_HH": 116,
+  "AE-3004C_HH": 117,
+  "AE-3029_HH": 118,
+  "AE-3030_HH": 119,
+  SUP: 120,
+  TLB: 121,
 };
 const eqpOnTestLastCoilStates = {};
 let eqpOnTestSyncTimer = null;
@@ -4731,6 +4752,10 @@ function isTm2500Project() {
   return getCommsProfileKey() === "tm2500";
 }
 
+function isEqpWriteProject() {
+  return isTm2500Project() || isLm6000EqpProject();
+}
+
 function setEqpOnTestStatus(message, isError = false) {
   const status = document.getElementById("eqp-on-test-status");
   if (!status) return;
@@ -4791,7 +4816,7 @@ async function connectEqpOnTestSerial(options = {}) {
       parity: eqpOnTestSerialSettings.parity,
     });
   }
-  setEqpOnTestStatus("EQP ON TEST connected: COM12 / 19200 8N1 / Slave 1. Virtual TM2500 inputs will be reflected to the real EQP panel.");
+  setEqpOnTestStatus("EQP writer connected: COM12 / 19200 8N1 / Slave 1. Virtual EQP test inputs will be reflected to the real EQP panel.");
 }
 
 function getEqpOnTestCoilAddress(displayAddress) {
@@ -4799,7 +4824,7 @@ function getEqpOnTestCoilAddress(displayAddress) {
 }
 
 async function writeEqpOnTestCoil(displayAddress, active, label = "") {
-  if (!isTm2500Project()) return false;
+  if (!isEqpWriteProject()) return false;
   try {
     if (!eqpOnTestSerialPort) {
       if (!navigator.serial?.getPorts) throw new Error("Web Serial is not available.");
@@ -4811,20 +4836,20 @@ async function writeEqpOnTestCoil(displayAddress, active, label = "") {
     const frame = modbusWriteSingleCoilFrame(eqpOnTestSerialSettings.slaveId, getEqpOnTestCoilAddress(displayAddress), active);
     const response = await serialTransactionOnPort(eqpOnTestSerialPort, frame, 8);
     if (!modbusCrcOk(response)) throw new Error(`CRC failed. RX ${bytesToHex(response)}`);
-    setEqpOnTestStatus(`EQP ON TEST ${label || `coil ${String(displayAddress).padStart(5, "0")}`} = ${active ? "ON" : "OFF"}.`);
+    setEqpOnTestStatus(`EQP write ${label || `coil ${String(displayAddress).padStart(5, "0")}`} = ${active ? "ON" : "OFF"}.`);
     return true;
   } catch (error) {
-    setEqpOnTestStatus(`EQP ON TEST write failed: ${error.message}`, true);
-    addEvent("COMMS", `EQP ON TEST write failed${label ? ` (${label})` : ""}: ${error.message}`);
+    setEqpOnTestStatus(`EQP write failed: ${error.message}`, true);
+    addEvent("COMMS", `EQP write failed${label ? ` (${label})` : ""}: ${error.message}`);
     return false;
   }
 }
 
 async function pulseEqpOnTestCommand(commandName) {
-  if (!isTm2500Project()) return;
+  if (!isEqpWriteProject()) return;
   const displayAddress = eqpOnTestCommandCoils[commandName];
   if (!displayAddress) return;
-  const label = `${commandName} 000${displayAddress}`;
+  const label = `${commandName} ${String(displayAddress).padStart(5, "0")}`;
   const ok = await writeEqpOnTestCoil(displayAddress, true, label);
   if (ok) window.setTimeout(() => writeEqpOnTestCoil(displayAddress, false, `${label} clear`), 450);
 }
@@ -4832,6 +4857,28 @@ async function pulseEqpOnTestCommand(commandName) {
 function buildEqpOnTestCoilStates() {
   const state = {};
   const active = (tag, statuses) => statuses.includes(devices[resolveDeviceId(tag)]?.status);
+  const activeAny = (tags, statuses) => tags.some((tag) => active(tag, statuses));
+  if (isLm6000EqpProject()) {
+    state["HS-3091"] = activeAny(["HS-6308", "HS-6309", "HS-6312"], ["Alarm Active", "Input Active", "Fire Alarm"]);
+    state["HS-3093"] = false;
+    state["TS-3003"] = activeAny(["TS-6303", "TS-6314"], ["Fire Alarm", "Alarm Active"]);
+    state["TS-3014"] = activeAny(["TS-6307", "TS-6310"], ["Fire Alarm", "Alarm Active"]);
+    [
+      ["AE-3004A", "AE-6304A"],
+      ["AE-3004B", "AE-6304B"],
+      ["AE-3004C", "AE-6304C"],
+      ["AE-3029", "AE-3029"],
+      ["AE-3030", "AE-3030"],
+    ].forEach(([coilTag, deviceTag]) => {
+      state[`${coilTag}_LOW`] = active(deviceTag, ["Low Gas"]);
+      state[`${coilTag}_HH`] = active(deviceTag, ["High Gas"]);
+    });
+    state["YSZ-3171"] = activeAny(["SOV-6359", "SOV-6360"], ["Alarm Active", "Output Active"]);
+    state["YSZ-3172"] = activeAny(["SOV-6361", "SOV-6362"], ["Alarm Active", "Output Active"]);
+    state.SUP = activeAny(["ZS-6364"], ["Inhibit", "Supervisory"]);
+    state.TLB = hasTroubleCondition();
+    return state;
+  }
   state["HS-3092"] = active("HS-3092", ["Alarm Active", "Input Active"]);
   state["HS-3093"] = active("HS-3093", ["Alarm Active", "Input Active"]);
   state["TS-3003"] = active("TS-3003", ["Fire Alarm", "Alarm Active"]);
@@ -4848,7 +4895,7 @@ function buildEqpOnTestCoilStates() {
 }
 
 async function syncEqpOnTestCoils() {
-  if (!isTm2500Project()) return;
+  if (!isEqpWriteProject()) return;
   const next = buildEqpOnTestCoilStates();
   for (const [key, value] of Object.entries(next)) {
     if (eqpOnTestLastCoilStates[key] === value) continue;
@@ -4859,7 +4906,7 @@ async function syncEqpOnTestCoils() {
 }
 
 function queueEqpOnTestSync() {
-  if (!isTm2500Project()) return;
+  if (!isEqpWriteProject()) return;
   window.clearTimeout(eqpOnTestSyncTimer);
   eqpOnTestSyncTimer = window.setTimeout(() => {
     syncEqpOnTestCoils();
@@ -5051,7 +5098,7 @@ function renderStaticCommsProfile(profile) {
   const table = document.getElementById("comms-map-table");
   if (!table) return;
   renderCommsCards(profile.cards, profile.cards[0]?.[0] || "");
-  renderEqpOnTestConsole(getCommsProfileKey() === "tm2500");
+  renderEqpOnTestConsole(isEqpWriteProject());
   const saveButton = document.getElementById("comms-save-map");
   if (saveButton) saveButton.hidden = true;
   const headers = ["DETAIL", "SYSTEM", "CHANNEL", "DEVICE", "SIGNAL", "NOTES"];
@@ -5091,7 +5138,7 @@ function renderCommsMap(moduleName = selectedCommsModule) {
   const profileKey = getCommsProfileKey();
   if (profileKey !== "lm6000Allestec") {
     renderAnalogOutputConsole("");
-    if (profileKey !== "tm2500") renderEqpOnTestConsole(false);
+    if (!isEqpWriteProject()) renderEqpOnTestConsole(false);
     renderStaticCommsProfile(projectCommsProfiles[profileKey] || projectCommsProfiles.tm2500);
     return;
   }
@@ -5444,6 +5491,9 @@ document.getElementById("confirm-real-ready").addEventListener("click", confirmR
 document.getElementById("ack-all-alarms").addEventListener("click", acknowledgeAllAlarms);
 document.getElementById("silence-all-alarms").addEventListener("click", silenceAllOutputs);
 document.getElementById("reset-all-devices").addEventListener("click", resetAllDevices);
+document.getElementById("lm6000-eqp-ack")?.addEventListener("click", acknowledgeAllAlarms);
+document.getElementById("lm6000-eqp-silence")?.addEventListener("click", silenceAllOutputs);
+document.getElementById("lm6000-eqp-reset")?.addEventListener("click", resetAllDevices);
 document.getElementById("allestec-ack")?.addEventListener("click", acknowledgeAllAlarms);
 document.getElementById("allestec-silence")?.addEventListener("click", silenceAllOutputs);
 document.getElementById("allestec-reset")?.addEventListener("click", resetAllDevices);
