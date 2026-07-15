@@ -3989,10 +3989,6 @@ function showView(viewName, trackHistory = true) {
 }
 
 function navigateBack() {
-  if (viewHistory.length) {
-    showView(viewHistory.pop(), false);
-    return;
-  }
   showStartWindow();
 }
 
@@ -4153,19 +4149,22 @@ function selectEditElement(element) {
   if (selectedEditElement) selectedEditElement.classList.remove("selected-edit");
   selectedEditElement = element;
   selectedEditElement.classList.add("selected-edit");
-  document.getElementById("selected-layout-item").textContent = `Selected: ${element.dataset.editId}`;
+  const selectedLabel = document.getElementById("selected-layout-item");
+  if (selectedLabel) selectedLabel.textContent = `Selected: ${element.dataset.editId}`;
 }
 
 function setLayoutEditMode(enabled) {
   if (enabled && !requireAdmin("edit layout")) return;
   layoutEditMode = enabled;
   document.getElementById("package-view").classList.toggle("layout-edit-mode", enabled);
-  document.querySelector(".layout-editor").classList.toggle("editing", enabled);
-  document.getElementById("edit-layout-toggle").textContent = enabled ? "EDITING ON" : "EDIT LAYOUT";
+  document.querySelector(".layout-editor")?.classList.toggle("editing", enabled);
+  const toggle = document.getElementById("edit-layout-toggle");
+  if (toggle) toggle.textContent = enabled ? "EDITING ON" : "EDIT LAYOUT";
   if (!enabled && selectedEditElement) {
     selectedEditElement.classList.remove("selected-edit");
     selectedEditElement = null;
-    document.getElementById("selected-layout-item").textContent = "Selected: none";
+    const selectedLabel = document.getElementById("selected-layout-item");
+    if (selectedLabel) selectedLabel.textContent = "Selected: none";
   }
 }
 
@@ -4265,13 +4264,22 @@ function getProjectLayoutViewSelector(projectName = selectedProject) {
 
 function getProjectLayoutElements(projectName = selectedProject) {
   const selector = getProjectLayoutViewSelector(projectName);
-  return document.querySelectorAll(`${selector} .device-badge[data-device], ${selector} .field-device[data-device], ${selector} .eqp-controller[data-device], ${selector} .wired-point[data-device], ${selector} .allestec-html-device[data-device]`);
+  const elements = Array.from(document.querySelectorAll(`${selector} .device-badge[data-device], ${selector} .field-device[data-device], ${selector} .eqp-controller[data-device], ${selector} .wired-point[data-device], ${selector} .allestec-html-device[data-device]`));
+  return elements.filter((element) => {
+    if (element.classList.contains("overlay-hidden")) return false;
+    if (element.hidden) return false;
+    if (element instanceof SVGElement) return true;
+    const style = window.getComputedStyle(element);
+    if (style.display === "none" || style.visibility === "hidden") return false;
+    return element.style.left || element.style.top || element.classList.contains("allestec-html-device");
+  });
 }
 
 function applyProjectDeviceLayout(projectName = selectedProject) {
   const saved = getProjectDeviceLayoutState(projectName);
   getProjectLayoutElements(projectName).forEach((element) => {
     const state = saved[element.dataset.device];
+    if (element instanceof SVGElement && state?.unit === "%") return;
     if (state) setAllestecDeviceTransform(element, state);
   });
 }
@@ -4321,6 +4329,7 @@ function saveAndCloseAllestecDeviceEditMode() {
   const projectName = activeLayoutEditProject || getLayoutProjectName(selectedProject);
   const saved = getProjectDeviceLayoutState(projectName);
   getProjectLayoutElements(projectName).forEach((element) => {
+    if (saved[element.dataset.device] && element.classList.contains("overlay-hidden")) return;
     saved[element.dataset.device] = getAllestecDeviceTransform(element);
   });
   saveProjectDeviceLayoutState(saved, projectName);
@@ -5869,13 +5878,13 @@ window.addEventListener("mouseup", () => {
   dragState = null;
 });
 
-document.getElementById("edit-layout-toggle").addEventListener("click", () => {
+document.getElementById("edit-layout-toggle")?.addEventListener("click", () => {
   setLayoutEditMode(!layoutEditMode);
 });
 
-document.getElementById("layout-smaller").addEventListener("click", () => scaleSelected(0.9));
-document.getElementById("layout-larger").addEventListener("click", () => scaleSelected(1.1));
-document.getElementById("layout-reset").addEventListener("click", resetLayout);
+document.getElementById("layout-smaller")?.addEventListener("click", () => scaleSelected(0.9));
+document.getElementById("layout-larger")?.addEventListener("click", () => scaleSelected(1.1));
+document.getElementById("layout-reset")?.addEventListener("click", resetLayout);
 
 document.getElementById("show-start-window").addEventListener("click", navigateBack);
 
