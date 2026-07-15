@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>EQP Fire & Gas HMI Prototype</title>
-    <link rel="stylesheet" href="styles.css?v=hmi-gas-outputs-20260714d" />
+    <link rel="stylesheet" href="styles.css?v=layout-tools-20260715a" />
   </head>
   <body>
     <section class="start-window" id="start-window">
@@ -48,10 +48,10 @@
             <button type="button" data-menu-action="change-admin-password">Change Admin Password</button>
             <button type="button" data-menu-action="info-library">Info Library</button>
             <span class="menu-separator"></span>
-            <button type="button" data-menu-action="edit-devices-tm2500">Tools - Layout - TM2500 XPRESS</button>
-            <button type="button" data-menu-action="edit-devices-lm6000-allestec">Tools - Layout - LM6000 Allestec</button>
-            <button type="button" data-menu-action="edit-devices-lm6000-eqp">Tools - Layout - LM6000 EQP</button>
-            <button type="button" data-menu-action="edit-devices-lms100">Tools - Layout - LMS100</button>
+            <button type="button" data-menu-action="edit-devices-tm2500">Layout > TM2500 XPRESS</button>
+            <button type="button" data-menu-action="edit-devices-lm6000-allestec">Layout > LM6000 Allestec</button>
+            <button type="button" data-menu-action="edit-devices-lm6000-eqp">Layout > LM6000 EQP</button>
+            <button type="button" data-menu-action="edit-devices-lms100">Layout > LMS100</button>
             <button type="button" data-menu-action="reset-simulation">Reset Simulation</button>
           </div>
         </div>
@@ -122,11 +122,10 @@
               <button type="button" data-menu-action="logout">Logout</button>
               <button type="button" data-menu-action="change-admin-password">Change Admin Password</button>
               <span class="menu-separator"></span>
-              <button type="button" data-menu-action="edit-devices-tm2500">Tools - Layout - TM2500 XPRESS</button>
-              <button type="button" data-menu-action="edit-devices-lm6000-allestec">Tools - Layout - LM6000 Allestec</button>
-              <button type="button" data-menu-action="save-layout-lm6000-allestec">Tools - Save Layout - LM6000 Allestec</button>
-              <button type="button" data-menu-action="edit-devices-lm6000-eqp">Tools - Layout - LM6000 EQP</button>
-              <button type="button" data-menu-action="edit-devices-lms100">Tools - Layout - LMS100</button>
+              <button type="button" data-menu-action="edit-devices-tm2500">Layout > TM2500 XPRESS</button>
+              <button type="button" data-menu-action="edit-devices-lm6000-allestec">Layout > LM6000 Allestec</button>
+              <button type="button" data-menu-action="edit-devices-lm6000-eqp">Layout > LM6000 EQP</button>
+              <button type="button" data-menu-action="edit-devices-lms100">Layout > LMS100</button>
             </div>
           </div>
           <button class="status-pill training top-action" id="training-autotest" type="button">TRAINING</button>
@@ -239,6 +238,7 @@
         </aside>
 
         <section class="main-view">
+          <button class="project-save-layout" id="project-save-layout" type="button" hidden>SAVE LAYOUT</button>
           <div class="view-stage view-active" id="package-view">
             <div class="layout-editor" hidden>
               <button id="edit-layout-toggle" type="button">EDIT LAYOUT</button>
@@ -1689,7 +1689,7 @@
         <button class="nav-button" data-nav="admin">ADMIN</button>
       </nav>
     </main>
-    <script src="app.js?v=eqp-write-map-20260715a"></script>
+    <script src="app.js?v=layout-tools-20260715a"></script>
   </body>
 </html>
 

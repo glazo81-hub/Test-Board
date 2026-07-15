@@ -632,6 +632,7 @@ const statusClass = {
 
 const alarmStatuses = new Set(["Low Gas", "High Gas", "Fire", "Fire Alarm", "Trouble", "Fault", "Offline", "LON Fault", "Alarm Active", "Supervisory", "Inhibit"]);
 const layoutStorageKey = "eqp-hmi-layout-v1";
+const projectDeviceLayoutStoragePrefix = "eqp-project-device-layout-v1";
 const allestecLayoutStorageKey = "eqp-lm6000-allestec-device-layout-v2";
 const allestecGraphicLayoutStorageKey = "eqp-lm6000-allestec-graphic-layout-v4";
 const allestecSystemModeStorageKey = "eqp-lm6000-allestec-system-mode-v1";
@@ -642,6 +643,7 @@ let currentInfoDeviceId = "";
 let currentRole = "Guest";
 let layoutEditMode = false;
 let allestecMoveMode = false;
+let activeLayoutEditProject = "";
 let allestecGraphicEditMode = false;
 let selectedEditElement = null;
 let dragState = null;
@@ -3032,7 +3034,7 @@ function renderAll() {
   updateLm6000EqpCo2Display();
   updateHornSound();
   if (!allestecDragState && !allestecGraphicDragState) {
-    applyAllestecSavedLayout();
+    applyAllProjectDeviceLayouts();
     applyAllestecGraphicLayoutState();
   }
 }
@@ -3873,23 +3875,21 @@ function handleStartMenuAction(action) {
   if (action === "logout") logout();
   if (action === "change-admin-password") changeAdminPassword();
   if (action === "reset-simulation") resetAllDevices();
-  if (action === "edit-devices-lm6000-allestec") {
-    openProject("LM6000 Allestec");
-    setAllestecMoveMode(true);
-  }
-  if (action === "save-layout-lm6000-allestec") {
-    openProject("LM6000 Allestec");
-    saveAndCloseAllestecDeviceEditMode();
-  }
   if (action === "edit-devices-tm2500") {
     openProject("TM2500 XPRESS");
-    setLayoutEditMode(true);
+    setAllestecMoveMode(true, "TM2500 XPRESS");
+  }
+  if (action === "edit-devices-lm6000-allestec") {
+    openProject("LM6000 Allestec");
+    setAllestecMoveMode(true, "LM6000 Allestec");
   }
   if (action === "edit-devices-lm6000-eqp") {
     openProject("LM6000 EQP");
+    setAllestecMoveMode(true, "LM6000 EQP");
   }
   if (action === "edit-devices-lms100") {
     openProject("LMS100 PA");
+    setAllestecMoveMode(true, "LMS100");
   }
   if (["alarm-report", "event-report", "fat-report", "export-pdf"].includes(action)) openViewFromMenu("reports");
   if (action === "import-drawings") openViewFromMenu("drawing");
@@ -4184,20 +4184,46 @@ function resetLayout() {
   window.location.reload();
 }
 
-function getAllestecLayoutState() {
+function getLayoutProjectName(projectName = selectedProject) {
+  const normalized = normalizeProjectName(projectName);
+  if (normalized === "LM6000 EQP") return "LM6000 EQP";
+  if (normalized === "LM6000 ALLESTEC") return "LM6000 ALLESTEC";
+  if ((projectName || "").toUpperCase().includes("LMS100")) return "LMS100";
+  return "TM2500 XPRESS";
+}
+
+function getProjectDeviceLayoutStorageKey(projectName = selectedProject) {
+  return `${projectDeviceLayoutStoragePrefix}-${getProjectNamespace(getLayoutProjectName(projectName)).toLowerCase()}`;
+}
+
+function getProjectDeviceLayoutState(projectName = selectedProject) {
+  const key = getProjectDeviceLayoutStorageKey(projectName);
   try {
-    return JSON.parse(localStorage.getItem(allestecLayoutStorageKey) || "{}");
+    const saved = JSON.parse(localStorage.getItem(key) || "{}");
+    if (Object.keys(saved).length) return saved;
+    if (getLayoutProjectName(projectName) === "LM6000 ALLESTEC") {
+      return JSON.parse(localStorage.getItem(allestecLayoutStorageKey) || "{}");
+    }
+    return {};
   } catch {
     return {};
   }
 }
 
+function saveProjectDeviceLayoutState(state, projectName = selectedProject) {
+  localStorage.setItem(getProjectDeviceLayoutStorageKey(projectName), JSON.stringify(state));
+}
+
+function getAllestecLayoutState() {
+  return getProjectDeviceLayoutState("LM6000 Allestec");
+}
+
 function saveAllestecLayoutState(state) {
-  localStorage.setItem(allestecLayoutStorageKey, JSON.stringify(state));
+  saveProjectDeviceLayoutState(state, "LM6000 Allestec");
 }
 
 function getAllestecDeviceTransform(element) {
-  if (element.classList?.contains("allestec-html-device")) {
+  if (!(element instanceof SVGElement) || element.classList?.contains("allestec-html-device")) {
     const scaleMatch = /scale\(([-\d.]+)\)/.exec(element.style.transform || "");
     return {
       x: parseFloat(element.style.left) || 0,
@@ -4217,7 +4243,7 @@ function getAllestecDeviceTransform(element) {
 }
 
 function setAllestecDeviceTransform(element, state) {
-  if (element.classList?.contains("allestec-html-device")) {
+  if (!(element instanceof SVGElement) || element.classList?.contains("allestec-html-device")) {
     const safeX = Math.max(-105, Math.min(108, Number(state.x) || 0));
     const safeY = Math.max(-15, Math.min(108, Number(state.y) || 0));
     element.style.left = `${safeX}%`;
@@ -4229,12 +4255,33 @@ function setAllestecDeviceTransform(element, state) {
   element.setAttribute("transform", `translate(${state.x} ${state.y})${scale}`);
 }
 
-function applyAllestecSavedLayout() {
-  const saved = getAllestecLayoutState();
-  document.querySelectorAll("#lm6000-allestec-view .device-badge[data-device], #lm6000-allestec-view .allestec-html-device[data-device]").forEach((element) => {
+function getProjectLayoutViewSelector(projectName = selectedProject) {
+  const layoutName = getLayoutProjectName(projectName);
+  if (layoutName === "LM6000 ALLESTEC") return "#lm6000-allestec-view";
+  if (layoutName === "LM6000 EQP") return "#lm6000-view";
+  if (layoutName === "TM2500 XPRESS") return "#package-view";
+  return "#package-view";
+}
+
+function getProjectLayoutElements(projectName = selectedProject) {
+  const selector = getProjectLayoutViewSelector(projectName);
+  return document.querySelectorAll(`${selector} .device-badge[data-device], ${selector} .field-device[data-device], ${selector} .eqp-controller[data-device], ${selector} .wired-point[data-device], ${selector} .allestec-html-device[data-device]`);
+}
+
+function applyProjectDeviceLayout(projectName = selectedProject) {
+  const saved = getProjectDeviceLayoutState(projectName);
+  getProjectLayoutElements(projectName).forEach((element) => {
     const state = saved[element.dataset.device];
     if (state) setAllestecDeviceTransform(element, state);
   });
+}
+
+function applyAllestecSavedLayout() {
+  applyProjectDeviceLayout("LM6000 Allestec");
+}
+
+function applyAllProjectDeviceLayouts() {
+  ["TM2500 XPRESS", "LM6000 Allestec", "LM6000 EQP"].forEach((projectName) => applyProjectDeviceLayout(projectName));
 }
 
 function setAllestecMoveStatus(text) {
@@ -4242,30 +4289,44 @@ function setAllestecMoveStatus(text) {
   if (status) status.textContent = text;
 }
 
-function setAllestecMoveMode(enabled) {
+function setAllestecMoveMode(enabled, projectName = selectedProject) {
   if (enabled && allestecGraphicEditMode) setAllestecGraphicEditMode(false);
+  if (enabled && !requireAdmin("edit device layout")) return;
+  const layoutProject = getLayoutProjectName(projectName);
   allestecMoveMode = enabled;
-  document.getElementById("lm6000-allestec-view")?.classList.toggle("allestec-edit-mode", enabled);
+  activeLayoutEditProject = enabled ? layoutProject : "";
+  document.querySelectorAll(".project-layout-edit-mode, .allestec-edit-mode").forEach((view) => {
+    view.classList.remove("project-layout-edit-mode", "allestec-edit-mode");
+  });
+  const activeView = document.querySelector(getProjectLayoutViewSelector(layoutProject));
+  activeView?.classList.toggle("project-layout-edit-mode", enabled);
+  activeView?.classList.toggle("allestec-edit-mode", enabled);
   document.getElementById("allestec-move-toggle")?.classList.toggle("active", enabled);
   const saveButton = document.getElementById("allestec-save-layout");
   if (saveButton) saveButton.hidden = true;
+  const projectSaveButton = document.getElementById("project-save-layout");
+  if (projectSaveButton) {
+    projectSaveButton.hidden = !enabled;
+    projectSaveButton.textContent = enabled ? `SAVE LAYOUT` : "SAVE LAYOUT";
+  }
   const toggle = document.getElementById("allestec-move-toggle");
   if (toggle) toggle.textContent = enabled ? "MOVING ON" : "MOVE DEVICES";
-  setAllestecMoveStatus(enabled ? "Drag any tag to move it" : "");
+  setAllestecMoveStatus(enabled ? `Drag tags in ${layoutProject}` : "");
   if (!enabled) {
     document.querySelectorAll(".allestec-selected-edit").forEach((item) => item.classList.remove("allestec-selected-edit"));
   }
 }
 
 function saveAndCloseAllestecDeviceEditMode() {
-  const saved = getAllestecLayoutState();
-  document.querySelectorAll("#lm6000-allestec-view .device-badge[data-device], #lm6000-allestec-view .allestec-html-device[data-device]").forEach((element) => {
+  const projectName = activeLayoutEditProject || getLayoutProjectName(selectedProject);
+  const saved = getProjectDeviceLayoutState(projectName);
+  getProjectLayoutElements(projectName).forEach((element) => {
     saved[element.dataset.device] = getAllestecDeviceTransform(element);
   });
-  saveAllestecLayoutState(saved);
-  setAllestecMoveMode(false);
-  setAllestecMoveStatus("Device layout saved");
-  addEvent("LM6000 ALLESTEC", "Device layout saved from Tools > Edit Devices.");
+  saveProjectDeviceLayoutState(saved, projectName);
+  setAllestecMoveMode(false, projectName);
+  setAllestecMoveStatus(`${projectName} layout saved`);
+  addEvent(projectName, "Device layout saved from Tools > Layout.");
 }
 
 const commsColumns = ["detail", "panel", "channel", "device", "signal", "notes"];
@@ -5294,7 +5355,7 @@ function getElementDeviceIds(element) {
 }
 
 function findAllestecDeviceBadge(event) {
-  const selector = ".allestec-html-device[data-device], .allestec-device-layer .device-badge[data-device], .co2-device-layer .device-badge[data-device]";
+  const selector = ".allestec-html-device[data-device], .device-badge[data-device], .field-device[data-device], .eqp-controller[data-device], .wired-point[data-device]";
   const pathMatch = event.composedPath?.().find((item) => item instanceof Element && item.matches?.(selector));
   const directMatch = pathMatch || event.target.closest?.(selector);
   if (directMatch) return directMatch;
@@ -5439,6 +5500,13 @@ document.getElementById("lm6000-allestec-view")?.addEventListener("mousedown", (
   beginAllestecDeviceDrag(event, findAllestecDeviceBadge(event));
 });
 
+["package-view", "lm6000-view"].forEach((viewId) => {
+  document.getElementById(viewId)?.addEventListener("mousedown", (event) => {
+    if (!allestecMoveMode) return;
+    beginAllestecDeviceDrag(event, findAllestecDeviceBadge(event));
+  });
+});
+
 document.querySelectorAll(".co2-hitbox[data-device]").forEach((hitbox) => {
   hitbox.addEventListener("click", (event) => {
     event.stopPropagation();
@@ -5509,6 +5577,7 @@ document.getElementById("lm6000-clear-sketch")?.addEventListener("click", clearL
 document.getElementById("allestec-move-toggle")?.addEventListener("click", () => setAllestecMoveMode(!allestecMoveMode));
 document.getElementById("allestec-graphic-edit-toggle")?.addEventListener("click", () => setAllestecGraphicEditMode(!allestecGraphicEditMode));
 document.getElementById("allestec-save-layout")?.addEventListener("click", saveAndCloseAllestecDeviceEditMode);
+document.getElementById("project-save-layout")?.addEventListener("click", saveAndCloseAllestecDeviceEditMode);
 document.getElementById("allestec-reset-layout")?.addEventListener("click", resetAllestecDevicePositions);
 document.querySelectorAll(".selectable-comms-card").forEach((button) => {
   button.addEventListener("click", () => selectCommsModule(button.dataset.commsModule));
@@ -5674,7 +5743,7 @@ document.querySelectorAll(".adjustable").forEach((element) => {
   });
 });
 
-applyAllestecSavedLayout();
+applyAllProjectDeviceLayouts();
 applyAllestecGraphicLayoutState();
 applyAllestecCommsMap();
 selectCommsModule("relay1");
@@ -5787,9 +5856,10 @@ window.addEventListener("mouseup", () => {
     return;
   }
   if (allestecDragState) {
-    const saved = getAllestecLayoutState();
+    const projectName = activeLayoutEditProject || getLayoutProjectName(selectedProject);
+    const saved = getProjectDeviceLayoutState(projectName);
     saved[allestecDragState.element.dataset.device] = getAllestecDeviceTransform(allestecDragState.element);
-    saveAllestecLayoutState(saved);
+    saveProjectDeviceLayoutState(saved, projectName);
     setAllestecMoveStatus(`Saved: ${allestecDragState.element.dataset.device}`);
     allestecDragState = null;
     return;

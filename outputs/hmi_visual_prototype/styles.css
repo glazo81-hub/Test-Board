@@ -666,11 +666,18 @@ h1 {
   display: inline-block;
   border-radius: 50%;
   box-shadow: 0 0 8px currentColor;
+  transition: background-color 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease;
 }
 
 .dot {
   margin-right: 8px;
 }
+
+.dot.red, .status-dot.red { color: var(--red); }
+.dot.orange, .status-dot.orange { color: var(--orange); }
+.dot.yellow, .status-dot.yellow { color: var(--yellow); }
+.dot.gray, .status-dot.gray { color: var(--gray); opacity: 0.75; }
+.dot.green, .status-dot.green { color: var(--green); }
 
 .group-row {
   justify-content: flex-start;
@@ -1785,6 +1792,7 @@ h1 {
   pointer-events: auto !important;
   transform: translate(0, 0) scale(1);
   transform-origin: top left;
+  transition: color 0.25s ease, opacity 0.25s ease, filter 0.25s ease;
 }
 
 .allestec-html-device .html-device-text {
@@ -1814,10 +1822,23 @@ h1 {
 .allestec-html-device.alarm-badge,
 .allestec-html-device.lowgas-badge {
   color: #ff4d4d;
+  animation: alarmGlow 0.5s ease-in-out infinite;
+}
+
+.allestec-html-device.supervisory-badge {
+  color: #f4d13d;
+  animation: supervisoryPulse 2.6s ease-in-out infinite;
 }
 
 .allestec-html-device.trouble-badge {
-  color: #ffd45c;
+  color: #ff8a22;
+  animation: troublePulse 1.6s ease-in-out infinite;
+}
+
+.allestec-html-device.offline-badge {
+  color: #9aa4ab !important;
+  opacity: 0.6 !important;
+  filter: grayscale(0.5);
 }
 
 .badge-hitbox {
@@ -2263,14 +2284,22 @@ h1 {
 }
 
 .allestec-edit-mode .allestec-device-layer .device-badge,
-.allestec-edit-mode .co2-device-layer .device-badge {
+.allestec-edit-mode .co2-device-layer .device-badge,
+.project-layout-edit-mode .device-badge[data-device],
+.project-layout-edit-mode .field-device[data-device],
+.project-layout-edit-mode .eqp-controller[data-device],
+.project-layout-edit-mode .wired-point[data-device] {
   pointer-events: bounding-box;
   cursor: move;
   user-select: none;
 }
 
 .allestec-edit-mode .allestec-device-layer .device-badge *,
-.allestec-edit-mode .co2-device-layer .device-badge * {
+.allestec-edit-mode .co2-device-layer .device-badge *,
+.project-layout-edit-mode .device-badge[data-device] *,
+.project-layout-edit-mode .field-device[data-device] *,
+.project-layout-edit-mode .eqp-controller[data-device] *,
+.project-layout-edit-mode .wired-point[data-device] * {
   pointer-events: none !important;
 }
 
@@ -2317,7 +2346,12 @@ h1 {
 .allestec-edit-mode .allestec-device-layer .device-badge:hover,
 .allestec-edit-mode .co2-device-layer .device-badge:hover,
 .allestec-device-layer .device-badge.allestec-selected-edit,
-.co2-device-layer .device-badge.allestec-selected-edit {
+.co2-device-layer .device-badge.allestec-selected-edit,
+.project-layout-edit-mode .device-badge[data-device]:hover,
+.project-layout-edit-mode .field-device[data-device]:hover,
+.project-layout-edit-mode .eqp-controller[data-device]:hover,
+.project-layout-edit-mode .wired-point[data-device]:hover,
+.allestec-selected-edit {
   filter: drop-shadow(0 0 8px #7fe8ff);
 }
 
@@ -2768,6 +2802,11 @@ h1 {
 
 .red-text {
   color: var(--red) !important;
+  font-weight: 900;
+}
+
+.gray-text {
+  color: var(--gray) !important;
   font-weight: 900;
 }
 
@@ -3582,6 +3621,26 @@ h1 {
   background: var(--blue);
 }
 
+.project-save-layout {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  z-index: 80;
+  min-width: 126px;
+  border: 1px solid #7fe8ff;
+  border-radius: 3px;
+  padding: 8px 14px;
+  color: #031216;
+  background: linear-gradient(#e9ffff, #7fe8ff 55%, #30a8c3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.75);
+  font-weight: 900;
+  letter-spacing: 0;
+}
+
+.project-save-layout:hover {
+  filter: brightness(1.08);
+}
+
 #selected-layout-item {
   min-width: 150px;
   color: var(--cyan);
@@ -4052,6 +4111,7 @@ h1 {
   stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
+  transition: stroke 0.25s ease, color 0.25s ease, filter 0.25s ease, opacity 0.25s ease;
 }
 
 .device-badge text {
@@ -4063,6 +4123,7 @@ h1 {
   stroke-width: 4px !important;
   stroke-linejoin: round;
   text-anchor: start;
+  transition: fill 0.25s ease, filter 0.25s ease, opacity 0.25s ease;
 }
 
 .device-badge .badge-value {
@@ -4113,6 +4174,21 @@ h1 {
   fill: #ff6868 !important;
 }
 
+.alarm-badge use,
+.alarm-badge text {
+  animation: alarmGlow 0.5s ease-in-out infinite;
+}
+
+@keyframes alarmGlow {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 2px currentColor);
+  }
+  50% {
+    filter: drop-shadow(0 0 6px currentColor) drop-shadow(0 0 12px currentColor);
+  }
+}
+
 .strobe-flash {
   animation: strobePulse 0.72s steps(2, end) infinite;
 }
@@ -4141,6 +4217,32 @@ h1 {
   }
 }
 
+.supervisory-badge use {
+  stroke: #f4d13d;
+  color: #f4d13d;
+}
+
+.supervisory-badge text {
+  fill: #f4d13d !important;
+}
+
+.supervisory-badge use,
+.supervisory-badge text {
+  animation: supervisoryPulse 2.6s ease-in-out infinite;
+}
+
+@keyframes supervisoryPulse {
+  0%,
+  100% {
+    opacity: 0.72;
+    filter: drop-shadow(0 0 1px currentColor);
+  }
+  50% {
+    opacity: 1;
+    filter: drop-shadow(0 0 7px currentColor);
+  }
+}
+
 .trouble-badge use {
   stroke: #ff8a22;
   color: #ff8a22;
@@ -4148,6 +4250,35 @@ h1 {
 
 .trouble-badge text {
   fill: #ff8a22 !important;
+}
+
+.trouble-badge use,
+.trouble-badge text {
+  animation: troublePulse 1.6s ease-in-out infinite;
+}
+
+@keyframes troublePulse {
+  0%,
+  62%,
+  100% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 0.55;
+  }
+}
+
+.offline-badge use {
+  stroke: #9aa4ab;
+  color: #9aa4ab;
+  fill: rgba(40, 46, 50, 0.9);
+  stroke-dasharray: 3 2;
+  opacity: 0.55;
+}
+
+.offline-badge text {
+  fill: #9aa4ab !important;
+  opacity: 0.55;
 }
 
 .controller-badge use {
@@ -4298,6 +4429,7 @@ h1 {
   gap: 0 6px;
   cursor: pointer;
   box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.18), 0 0 14px rgba(0, 0, 0, 0.55);
+  transition: background-color 0.25s ease, opacity 0.25s ease, filter 0.25s ease;
 }
 
 .field-device.marker-compact {
@@ -4362,18 +4494,68 @@ h1 {
 .topology-node.alarm,
 .controller-node.alarm {
   background: var(--red);
+  animation: nodeAlarmPulse 0.5s ease-in-out infinite;
+}
+
+.field-device.supervisory,
+.topology-node.supervisory,
+.controller-node.supervisory {
+  background: var(--yellow);
+  animation: nodeSupervisoryPulse 2.6s ease-in-out infinite;
 }
 
 .field-device.trouble,
 .topology-node.trouble,
 .controller-node.trouble {
   background: var(--orange);
+  animation: nodeTroublePulse 1.6s ease-in-out infinite;
+}
+
+.field-device.offline,
+.topology-node.offline,
+.controller-node.offline {
+  background: var(--gray);
+  opacity: 0.55;
+  filter: grayscale(0.4);
 }
 
 .field-device.active,
 .topology-node.active,
 .controller-node.active {
   background: var(--blue);
+}
+
+@keyframes nodeAlarmPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 4px var(--red);
+  }
+  50% {
+    box-shadow: 0 0 14px var(--red), 0 0 22px var(--red);
+  }
+}
+
+@keyframes nodeSupervisoryPulse {
+  0%,
+  100% {
+    opacity: 0.78;
+    box-shadow: 0 0 2px var(--yellow);
+  }
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 10px var(--yellow);
+  }
+}
+
+@keyframes nodeTroublePulse {
+  0%,
+  62%,
+  100% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 0.6;
+  }
 }
 
 .field-device.allestec-device {
@@ -4578,6 +4760,7 @@ h1 {
   text-align: center;
   font-weight: 900;
   cursor: pointer;
+  transition: background-color 0.25s ease, opacity 0.25s ease, filter 0.25s ease;
 }
 
 .controller-node span {
@@ -4602,6 +4785,7 @@ h1 {
   font-size: 13px;
   font-weight: 900;
   cursor: pointer;
+  transition: background-color 0.25s ease, opacity 0.25s ease, filter 0.25s ease;
 }
 
 .edio-topology-row {
@@ -4653,6 +4837,7 @@ h1 {
   font-weight: 900;
   cursor: pointer;
   text-align: left;
+  transition: background-color 0.25s ease, opacity 0.25s ease, filter 0.25s ease;
 }
 
 .wired-point b {
@@ -4674,10 +4859,23 @@ h1 {
 
 .wired-point.alarm {
   background: var(--red);
+  animation: nodeAlarmPulse 0.5s ease-in-out infinite;
+}
+
+.wired-point.supervisory {
+  background: var(--yellow);
+  animation: nodeSupervisoryPulse 2.6s ease-in-out infinite;
 }
 
 .wired-point.trouble {
   background: var(--orange);
+  animation: nodeTroublePulse 1.6s ease-in-out infinite;
+}
+
+.wired-point.offline {
+  background: var(--gray);
+  opacity: 0.55;
+  filter: grayscale(0.4);
 }
 
 .wired-point.spare {
@@ -5223,7 +5421,5 @@ h1 {
 .view-stage.view-active {
   display: block;
 }
-
-
 
 
