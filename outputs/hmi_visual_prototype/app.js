@@ -3009,7 +3009,6 @@ function renderAll() {
   renderSystemStatus();
   renderDeviceLibrary();
   updateBadges();
-  if (typeof update3DHotspots === "function") update3DHotspots();
   updateAerosolCountdownDisplay();
   renderAllestecCo2VisualState();
   renderAllestecCo2CountdownDisplay();
@@ -3063,31 +3062,26 @@ const projectViewRoutes = {
     package: "package",
     topology: "topology",
     drawing: "drawing",
-    view3d: "project-placeholder",
   },
   lm6000Allestec: {
     package: "lm6000-allestec",
     topology: "allestec-topology",
     drawing: "allestec-drawing",
-    view3d: "lm6000-3d",
   },
   lm6000Eqp: {
     package: "lm6000",
     topology: "lm6000-eqp-topology",
     drawing: "lm6000-eqp-drawing",
-    view3d: "project-placeholder",
   },
   lms100: {
     package: "project-placeholder",
     topology: "project-placeholder",
     drawing: "project-placeholder",
-    view3d: "project-placeholder",
   },
   blank: {
     package: "project-placeholder",
     topology: "project-placeholder",
     drawing: "project-placeholder",
-    view3d: "project-placeholder",
     alarms: "project-placeholder",
     events: "project-placeholder",
     devices: "project-placeholder",
@@ -3970,11 +3964,6 @@ function showView(viewName, trackHistory = true) {
   }
   if (targetViewName === "comms") {
     renderCommsMap();
-  }
-  if (targetViewName === "lm6000-3d" && typeof start3DRenderLoop === "function") {
-    window.requestAnimationFrame(start3DRenderLoop);
-  } else if (typeof stop3DRenderLoop === "function") {
-    stop3DRenderLoop();
   }
   document.querySelectorAll(".nav-button").forEach((button) => {
     button.classList.toggle("active", button.dataset.nav === viewName);
