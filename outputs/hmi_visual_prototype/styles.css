@@ -1394,14 +1394,14 @@ h1 {
   aspect-ratio: 2.02 / 1;
   height: auto;
   max-width: 1580px;
-  max-height: calc(100vh - 150px);
+  max-height: calc(100vh - 210px);
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  grid-template-rows: 68px minmax(0, 1fr) 58px;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: 68px minmax(0, 1fr);
   border: 2px solid #68747d;
   background: #050708;
   color: #111;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .allestec-header {
@@ -4756,35 +4756,26 @@ h1 {
 }
 
 .allestec-stage .countdown-box.allestec-countdown-box {
-  position: static;
-  right: auto;
-  bottom: auto;
-  z-index: 5;
+  position: absolute;
+  right: 12px;
+  bottom: -58px;
+  z-index: 40;
   width: 92px;
   padding: 4px 3px;
   pointer-events: auto;
-  justify-self: end;
-  align-self: center;
-  grid-column: 2;
-  grid-row: 3;
-  margin-right: 12px;
+  margin: 0;
 }
 
 .allestec-stage .panel-command-actions.allestec-command-actions {
-  position: static;
-  right: auto;
-  bottom: auto;
-  z-index: 5;
+  position: absolute;
+  right: 112px;
+  bottom: -49px;
+  z-index: 40;
   display: grid;
   grid-template-columns: repeat(3, 58px);
   gap: 6px;
   pointer-events: auto;
-  justify-self: end;
-  align-self: center;
-  grid-column: 1;
-  grid-row: 3;
-  margin-left: auto;
-  margin-right: 112px;
+  margin: 0;
 }
 
 .drawing-pdf {
