@@ -2124,14 +2124,23 @@ h1 {
 
 .lms100-layout {
   grid-template-columns: minmax(0, 1fr);
+  padding: 4px 8px 64px;
+  align-items: stretch;
 }
 
 .lms100-package {
   grid-template-columns: minmax(0, 1fr);
-  aspect-ratio: 2.2 / 1;
-  max-width: 1180px;
+  aspect-ratio: 2.36 / 1;
+  max-width: 1360px;
   width: 100%;
+  min-height: 460px;
   justify-self: center;
+  align-self: center;
+  padding: 16px 12px 22px;
+}
+
+.lms100-package::before {
+  inset: 16px 12px 22px;
 }
 
 .lms100-package::after {
@@ -2143,10 +2152,10 @@ h1 {
 }
 
 .lms100-turbine-img {
-  left: 8%;
-  top: 18%;
-  width: 84%;
-  height: 62%;
+  left: 7%;
+  top: 14%;
+  width: 86%;
+  height: 70%;
   object-fit: contain;
 }
 
