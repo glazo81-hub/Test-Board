@@ -1396,7 +1396,8 @@ h1 {
   max-width: 1580px;
   max-height: calc(100vh - 150px);
   display: grid;
-  grid-template-rows: 68px 1fr;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: 68px minmax(0, 1fr) 58px;
   border: 2px solid #68747d;
   background: #050708;
   color: #111;
@@ -1404,6 +1405,7 @@ h1 {
 }
 
 .allestec-header {
+  grid-column: 1 / -1;
   display: grid;
   grid-template-columns: minmax(205px, 0.8fr) minmax(0, 1.75fr) minmax(175px, 0.55fr);
   gap: 8px;
@@ -1505,6 +1507,7 @@ h1 {
 }
 
 .allestec-layout {
+  grid-column: 1 / -1;
   position: relative;
   min-height: 0;
   display: grid;
@@ -2185,21 +2188,30 @@ h1 {
 }
 
 .countdown-box.allestec-countdown-box {
-  right: 12px;
-  bottom: 12px;
-  z-index: 999;
+  position: static;
+  z-index: 5;
   width: 92px;
   padding: 4px 3px;
   pointer-events: auto;
+  justify-self: end;
+  align-self: center;
+  grid-column: 2;
+  grid-row: 3;
+  margin-right: 12px;
 }
 
 .panel-command-actions.allestec-command-actions {
-  right: 112px;
-  bottom: 12px;
-  z-index: 999;
+  position: static;
+  z-index: 5;
   grid-template-columns: repeat(3, 58px);
   gap: 6px;
   pointer-events: auto;
+  justify-self: end;
+  align-self: center;
+  grid-column: 1;
+  grid-row: 3;
+  margin-left: auto;
+  margin-right: 112px;
 }
 
 .panel-command-actions.allestec-command-actions button {
