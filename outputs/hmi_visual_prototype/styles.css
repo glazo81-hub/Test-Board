@@ -2160,11 +2160,11 @@ h1 {
   min-height: 460px;
   justify-self: center;
   align-self: center;
-  padding: 82px 8px 48px;
+  padding: 82px 8px 20px;
 }
 
 .lms100-package::before {
-  inset: 82px 8px 48px;
+  inset: 82px 8px 20px;
 }
 
 .lms100-package::after {
@@ -2180,10 +2180,10 @@ h1 {
 }
 
 .lms100-turbine-img {
-  left: 1%;
-  top: 21%;
-  width: 98%;
-  height: 68%;
+  left: 2%;
+  top: 24%;
+  width: 96%;
+  height: 64%;
   object-fit: contain;
 }
 
