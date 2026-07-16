@@ -2154,17 +2154,17 @@ h1 {
 
 .lms100-package {
   grid-template-columns: minmax(0, 1fr);
-  aspect-ratio: 2.36 / 1;
-  max-width: 1460px;
-  width: 99%;
-  min-height: 460px;
+  aspect-ratio: 2.18 / 1;
+  max-width: 1360px;
+  width: 100%;
+  min-height: 500px;
   justify-self: center;
   align-self: center;
-  padding: 82px 8px 20px;
+  padding: 82px 12px 20px;
 }
 
 .lms100-package::before {
-  inset: 82px 8px 20px;
+  inset: 82px 12px 20px;
 }
 
 .lms100-package::after {
