@@ -381,9 +381,32 @@ const projectScopedTags = {
     "GENERAL_ALARM", "FIRE_GAS_SHOUTDOWN", "ALARM_LEL_TURBINE", "SHOUTDOWN_LEL_TUR",
     "ALARM_LEL_GEN", "SHOUTDOWN_LEL_GEN", "AGENT_RELEASE", "CO2_AGENT_RELEASE",
   ]),
+  "LMS100": new Set([
+    "LMS100-PANEL",
+    "LMS100-AE-1001", "LMS100-AE-1002", "LMS100-AE-1003",
+    "LMS100-BE-1001", "LMS100-BE-1002", "LMS100-BE-1003",
+    "LMS100-TS-1001", "LMS100-TS-1002",
+    "LMS100-YSA-1001", "LMS100-YSA-1002",
+    "LMS100-YSL-1001", "LMS100-YSL-1002",
+  ]),
 };
 
 const projectDeviceDefinitions = {
+  "LMS100": {
+    "LMS100-PANEL": { type: "LMS100 Fire & Gas Panel", status: "Normal", value: "Online", address: "LMS100 preliminary controller", area: "Turbine Package", mode: "Virtual" },
+    "LMS100-AE-1001": { type: "Gas Detector", status: "Normal", value: "0% LEL", address: "Pending drawing assignment", area: "Turbine Enclosure", mode: "Virtual", highAlarm: "15% LEL", highHighAlarm: "25% LEL" },
+    "LMS100-AE-1002": { type: "Gas Detector", status: "Normal", value: "0% LEL", address: "Pending drawing assignment", area: "Turbine Enclosure", mode: "Virtual", highAlarm: "15% LEL", highHighAlarm: "25% LEL" },
+    "LMS100-AE-1003": { type: "Gas Detector", status: "Normal", value: "0% LEL", address: "Pending drawing assignment", area: "Turbine Enclosure", mode: "Virtual", highAlarm: "15% LEL", highHighAlarm: "25% LEL" },
+    "LMS100-BE-1001": { type: "Flame Detector", status: "Normal", value: "Ready", address: "Pending drawing assignment", area: "Turbine Enclosure", mode: "Virtual" },
+    "LMS100-BE-1002": { type: "Flame Detector", status: "Normal", value: "Ready", address: "Pending drawing assignment", area: "Turbine Enclosure", mode: "Virtual" },
+    "LMS100-BE-1003": { type: "Flame Detector", status: "Normal", value: "Ready", address: "Pending drawing assignment", area: "Turbine Enclosure", mode: "Virtual" },
+    "LMS100-TS-1001": { type: "Thermal Detector", status: "Normal", value: "Ready", address: "Pending drawing assignment", area: "Turbine Enclosure", mode: "Virtual" },
+    "LMS100-TS-1002": { type: "Thermal Detector", status: "Normal", value: "Ready", address: "Pending drawing assignment", area: "Turbine Enclosure", mode: "Virtual" },
+    "LMS100-YSA-1001": { type: "Fire & Gas Horn", status: "Normal", value: "Ready", address: "Pending output assignment", area: "Turbine Enclosure", mode: "Virtual" },
+    "LMS100-YSA-1002": { type: "Fire & Gas Horn", status: "Normal", value: "Ready", address: "Pending output assignment", area: "Turbine Enclosure", mode: "Virtual" },
+    "LMS100-YSL-1001": { type: "Strobe Light", status: "Normal", value: "Ready", address: "Pending output assignment", area: "Turbine Enclosure", mode: "Virtual" },
+    "LMS100-YSL-1002": { type: "Strobe Light", status: "Normal", value: "Ready", address: "Pending output assignment", area: "Turbine Enclosure", mode: "Virtual" },
+  },
   "LM6000 EQP": {
     "EQP-FPP": { type: "Eagle Quantum Premier Controller", status: "Normal", value: "Online", address: "S3: SHELL_LM6000_1457 / FPP", area: "Fire Panel", mode: "Virtual" },
     "FIRE-PANEL": { type: "EQP Fire Panel Status", status: "Normal", value: "Normal", address: "S3 status group", area: "Fire Panel", mode: "Virtual" },
@@ -476,6 +499,9 @@ function shouldScopeDeviceForProject(rawTag, projectName = selectedProject) {
   if (normalized.includes("LM6000") && normalized.includes("EQP")) {
     return projectScopedTags["LM6000 EQP"].has(rawTag);
   }
+  if (normalized.includes("LMS100")) {
+    return projectScopedTags["LMS100"].has(rawTag);
+  }
   return false;
 }
 
@@ -491,7 +517,7 @@ function ensureProjectDevice(rawTag, projectName = selectedProject) {
   rawTag = getProjectRawTag(rawTag, projectName);
   const scopedKey = getProjectScopedKey(rawTag, projectName);
   if (devices[scopedKey]) return scopedKey;
-  const source = projectDeviceDefinitions[projectName]?.[rawTag] || devices[rawTag] || fallbackDevices[rawTag];
+  const source = projectDeviceDefinitions[projectName]?.[rawTag] || projectDeviceDefinitions[getLayoutProjectName(projectName)]?.[rawTag] || devices[rawTag] || fallbackDevices[rawTag];
   if (!source) return rawTag;
   devices[scopedKey] = {
     ...cloneConfig(source),
@@ -2107,6 +2133,10 @@ function isDeviceInCurrentProject(tag, device = devices[tag]) {
     if (device?.projectNamespace) return device.projectNamespace === getProjectNamespace();
     return projectScopedTags["LM6000 EQP"].has(getDeviceRawTag(tag));
   }
+  if (getProjectFamily() === "lms100") {
+    if (device?.projectNamespace) return device.projectNamespace === getProjectNamespace();
+    return projectScopedTags["LMS100"].has(getDeviceRawTag(tag));
+  }
   if (device?.projectNamespace) return device.projectNamespace === getProjectNamespace();
   return !isAllestecDeviceId(tag);
 }
@@ -2124,6 +2154,14 @@ function getCurrentProjectDeviceEntries() {
     return Array.from(projectScopedTags["LM6000 EQP"])
       .map((rawTag) => {
         const scopedKey = ensureProjectDevice(rawTag, "LM6000 EQP");
+        return [scopedKey, devices[scopedKey]];
+      })
+      .filter(([, device]) => Boolean(device));
+  }
+  if (getProjectFamily() === "lms100") {
+    return Array.from(projectScopedTags["LMS100"])
+      .map((rawTag) => {
+        const scopedKey = ensureProjectDevice(rawTag, "LMS100");
         return [scopedKey, devices[scopedKey]];
       })
       .filter(([, device]) => Boolean(device));
@@ -3095,7 +3133,7 @@ const projectViewRoutes = {
     drawing: "lm6000-eqp-drawing",
   },
   lms100: {
-    package: "project-placeholder",
+    package: "lms100",
     topology: "project-placeholder",
     drawing: "project-placeholder",
   },
@@ -3114,7 +3152,7 @@ const projectViewRoutes = {
 
 function isDevelopedProject(projectName = selectedProject) {
   const name = normalizeProjectName(projectName);
-  return name === "TM2500 XPRESS" || name === "LM6000 EQP" || name === "LM6000 ALLESTEC";
+  return name === "TM2500 XPRESS" || name === "LM6000 EQP" || name === "LM6000 ALLESTEC" || name.startsWith("LMS100");
 }
 
 function getProjectRouteKey(projectName = selectedProject) {
@@ -3123,6 +3161,7 @@ function getProjectRouteKey(projectName = selectedProject) {
   if (name === "TM2500 XPRESS") return "tm2500";
   if (name === "LM6000 ALLESTEC") return "lm6000Allestec";
   if (name === "LM6000 EQP") return "lm6000Eqp";
+  if (name.startsWith("LMS100")) return "lms100";
   return "blank";
 }
 
@@ -3135,6 +3174,7 @@ function getDefaultDeviceForProject(projectName = selectedProject) {
   const name = normalizeProjectName(projectName);
   if (name === "LM6000 ALLESTEC") return "ALL-800";
   if (name === "LM6000 EQP") return ensureProjectDevice("EQP-FPP", "LM6000 EQP");
+  if (name.startsWith("LMS100")) return ensureProjectDevice("LMS100-PANEL", "LMS100");
   return "EQP-001";
 }
 
@@ -3978,6 +4018,9 @@ function showView(viewName, trackHistory = true) {
       applyAllestecGraphicLayoutState();
     });
   }
+  if (targetViewName === "lms100") {
+    window.requestAnimationFrame(() => applyProjectDeviceLayout("LMS100"));
+  }
   if (targetViewName === "project-placeholder") {
     renderProjectPlaceholder();
   }
@@ -4259,6 +4302,7 @@ function getProjectLayoutViewSelector(projectName = selectedProject) {
   const layoutName = getLayoutProjectName(projectName);
   if (layoutName === "LM6000 ALLESTEC") return "#lm6000-allestec-view";
   if (layoutName === "LM6000 EQP") return "#lm6000-view";
+  if (layoutName === "LMS100") return "#lms100-view";
   if (layoutName === "TM2500 XPRESS") return "#package-view";
   return "#package-view";
 }
@@ -4290,7 +4334,7 @@ function applyAllestecSavedLayout() {
 }
 
 function applyAllProjectDeviceLayouts() {
-  ["TM2500 XPRESS", "LM6000 Allestec", "LM6000 EQP"].forEach((projectName) => applyProjectDeviceLayout(projectName));
+  ["TM2500 XPRESS", "LM6000 Allestec", "LM6000 EQP", "LMS100"].forEach((projectName) => applyProjectDeviceLayout(projectName));
 }
 
 function setAllestecMoveStatus(text) {
@@ -5570,6 +5614,9 @@ document.getElementById("reset-all-devices").addEventListener("click", resetAllD
 document.getElementById("lm6000-eqp-ack")?.addEventListener("click", acknowledgeAllAlarms);
 document.getElementById("lm6000-eqp-silence")?.addEventListener("click", silenceAllOutputs);
 document.getElementById("lm6000-eqp-reset")?.addEventListener("click", resetAllDevices);
+document.getElementById("lms100-ack")?.addEventListener("click", acknowledgeAllAlarms);
+document.getElementById("lms100-silence")?.addEventListener("click", silenceAllOutputs);
+document.getElementById("lms100-reset")?.addEventListener("click", resetAllDevices);
 document.getElementById("allestec-ack")?.addEventListener("click", acknowledgeAllAlarms);
 document.getElementById("allestec-silence")?.addEventListener("click", silenceAllOutputs);
 document.getElementById("allestec-reset")?.addEventListener("click", resetAllDevices);

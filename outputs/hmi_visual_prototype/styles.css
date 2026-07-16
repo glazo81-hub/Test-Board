@@ -2119,6 +2119,34 @@ h1 {
   order: 2;
 }
 
+.lms100-layout {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.lms100-package {
+  grid-template-columns: minmax(0, 1fr);
+  aspect-ratio: 2.2 / 1;
+  max-width: 1180px;
+  width: 100%;
+  justify-self: center;
+}
+
+.lms100-package::after {
+  display: none;
+}
+
+.lms100-turbine-zone {
+  order: 1;
+}
+
+.lms100-turbine-img {
+  left: 8%;
+  top: 18%;
+  width: 84%;
+  height: 62%;
+  object-fit: contain;
+}
+
 .allestec-enclosure {
   position: relative;
   z-index: 2;
