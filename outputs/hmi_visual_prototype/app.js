@@ -508,7 +508,7 @@ function getProjectNamespace(projectName = selectedProject || projectConfig.name
   const normalized = (projectName || "").toUpperCase();
   if (normalized.includes("LM6000") && normalized.includes("ALLESTEC")) return projectNamespaces["LM6000 ALLESTEC"];
   if (normalized.includes("LM6000") && normalized.includes("EQP")) return projectNamespaces["LM6000 EQP"];
-  if (normalized.includes("LMS100")) return projectNamespaces.LMS100;
+  if (normalized === "LMS100 PA" || normalized === "LMS100") return projectNamespaces.LMS100;
   return projectNamespaces["TM2500 XPRESS"];
 }
 
@@ -533,7 +533,7 @@ function shouldScopeDeviceForProject(rawTag, projectName = selectedProject) {
   if (normalized.includes("LM6000") && normalized.includes("EQP")) {
     return projectScopedTags["LM6000 EQP"].has(rawTag);
   }
-  if (normalized.includes("LMS100")) {
+  if (normalized === "LMS100 PA" || normalized === "LMS100") {
     return projectScopedTags["LMS100"].has(rawTag);
   }
   return false;
@@ -793,9 +793,9 @@ function getGroupedDevices(element) {
 }
 
 const turbinePackages = {
-  tm2500: ["TM2500 XPRESS", "TM2500 GEN8", "TM2500", "TM2500 DYNAMIS", "TM2500-RPS", "TM2500-JEREH", "TM2500-EQ", "SOLAR"],
-  lm6000: ["LM6000 EQP", "LM6000 Allestec", "LM6000 PF", "LM6000 PC"],
-  lms100: ["LMS100 PA", "LMS100 PB", "LMS100 Package", "LMS100 Demo"],
+  tm2500: ["TM2500 XPRESS"],
+  lm6000: ["LM6000 EQP", "LM6000 Allestec"],
+  lms100: ["LMS100 PA"],
 };
 const turbineFamilies = [
   { id: "tm2500", label: "TM2500" },
@@ -2270,7 +2270,7 @@ function isLm6000EqpProject(projectName = selectedProject) {
 }
 
 function isLms100Project(projectName = selectedProject) {
-  return normalizeProjectName(projectName).startsWith("LMS100");
+  return normalizeProjectName(projectName) === "LMS100 PA";
 }
 
 function isAllestecHardwareMode() {
@@ -3340,8 +3340,8 @@ function normalizeProjectName(projectName = selectedProject) {
 
 function getProjectFamily(projectName = selectedProject) {
   const name = normalizeProjectName(projectName);
-  if (name.startsWith("LM6000")) return "lm6000";
-  if (name.startsWith("LMS100")) return "lms100";
+  if (name === "LM6000 EQP" || name === "LM6000 ALLESTEC") return "lm6000";
+  if (name === "LMS100 PA") return "lms100";
   return "tm2500";
 }
 
@@ -3385,7 +3385,7 @@ const projectViewRoutes = {
 
 function isDevelopedProject(projectName = selectedProject) {
   const name = normalizeProjectName(projectName);
-  return name === "TM2500 XPRESS" || name === "LM6000 EQP" || name === "LM6000 ALLESTEC" || name.startsWith("LMS100");
+  return name === "TM2500 XPRESS" || name === "LM6000 EQP" || name === "LM6000 ALLESTEC" || name === "LMS100 PA";
 }
 
 function getProjectRouteKey(projectName = selectedProject) {
@@ -3394,7 +3394,7 @@ function getProjectRouteKey(projectName = selectedProject) {
   if (name === "TM2500 XPRESS") return "tm2500";
   if (name === "LM6000 ALLESTEC") return "lm6000Allestec";
   if (name === "LM6000 EQP") return "lm6000Eqp";
-  if (name.startsWith("LMS100")) return "lms100";
+  if (name === "LMS100 PA") return "lms100";
   return "blank";
 }
 
@@ -3407,7 +3407,7 @@ function getDefaultDeviceForProject(projectName = selectedProject) {
   const name = normalizeProjectName(projectName);
   if (name === "LM6000 ALLESTEC") return "ALL-800";
   if (name === "LM6000 EQP") return ensureProjectDevice("EQP-FPP", "LM6000 EQP");
-  if (name.startsWith("LMS100")) return ensureProjectDevice("LMS100-PANEL", "LMS100");
+  if (name === "LMS100 PA") return ensureProjectDevice("LMS100-PANEL", "LMS100");
   return "EQP-001";
 }
 
@@ -4163,7 +4163,7 @@ function handleStartMenuAction(action) {
   }
   if (action === "edit-devices-lms100") {
     openProject("LMS100 PA");
-    setAllestecMoveMode(true, "LMS100");
+    setAllestecMoveMode(true, "LMS100 PA");
   }
   if (["alarm-report", "event-report", "fat-report", "export-pdf"].includes(action)) openViewFromMenu("reports");
   if (action === "import-drawings") openViewFromMenu("drawing");
@@ -4464,7 +4464,7 @@ function getLayoutProjectName(projectName = selectedProject) {
   const normalized = normalizeProjectName(projectName);
   if (normalized === "LM6000 EQP") return "LM6000 EQP";
   if (normalized === "LM6000 ALLESTEC") return "LM6000 ALLESTEC";
-  if ((projectName || "").toUpperCase().includes("LMS100")) return "LMS100";
+  if (normalized === "LMS100 PA") return "LMS100 PA";
   return "TM2500 XPRESS";
 }
 
@@ -4535,7 +4535,7 @@ function getProjectLayoutViewSelector(projectName = selectedProject) {
   const layoutName = getLayoutProjectName(projectName);
   if (layoutName === "LM6000 ALLESTEC") return "#lm6000-allestec-view";
   if (layoutName === "LM6000 EQP") return "#lm6000-view";
-  if (layoutName === "LMS100") return "#lms100-view";
+  if (layoutName === "LMS100 PA") return "#lms100-view";
   if (layoutName === "TM2500 XPRESS") return "#package-view";
   return "#package-view";
 }
@@ -4567,7 +4567,7 @@ function applyAllestecSavedLayout() {
 }
 
 function applyAllProjectDeviceLayouts() {
-  ["TM2500 XPRESS", "LM6000 Allestec", "LM6000 EQP", "LMS100"].forEach((projectName) => applyProjectDeviceLayout(projectName));
+  ["TM2500 XPRESS", "LM6000 Allestec", "LM6000 EQP", "LMS100 PA"].forEach((projectName) => applyProjectDeviceLayout(projectName));
 }
 
 function setAllestecMoveStatus(text) {

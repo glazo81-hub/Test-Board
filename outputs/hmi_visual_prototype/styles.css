@@ -4807,7 +4807,8 @@ h1 {
   transform: translateY(1px);
 }
 
-.allestec-stage .countdown-box.allestec-countdown-box {
+#lm6000-allestec-view .countdown-box.allestec-countdown-box,
+#lm6000-view .countdown-box.allestec-countdown-box {
   position: absolute;
   right: 12px;
   bottom: -58px;
@@ -4818,7 +4819,8 @@ h1 {
   margin: 0;
 }
 
-.allestec-stage .panel-command-actions.allestec-command-actions {
+#lm6000-allestec-view .panel-command-actions.allestec-command-actions,
+#lm6000-view .panel-command-actions.allestec-command-actions {
   position: absolute;
   right: 112px;
   bottom: -49px;
@@ -4830,12 +4832,12 @@ h1 {
   margin: 0;
 }
 
-.lms100-stage .panel-command-actions.allestec-command-actions {
+#lms100-view .panel-command-actions.allestec-command-actions {
   right: 112px;
   bottom: 48px;
 }
 
-.lms100-stage .countdown-box.allestec-countdown-box {
+#lms100-view .countdown-box.allestec-countdown-box {
   position: absolute;
   right: 14px;
   bottom: 42px;
