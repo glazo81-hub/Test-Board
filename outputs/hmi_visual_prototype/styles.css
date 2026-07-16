@@ -2135,6 +2135,9 @@ h1 {
 
 .lms100-stage .allestec-board {
   grid-template-rows: 52px minmax(0, 1fr);
+  aspect-ratio: auto;
+  height: calc(100vh - 158px);
+  max-height: calc(100vh - 158px);
 }
 
 .lms100-stage .allestec-header {
