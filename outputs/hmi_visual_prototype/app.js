@@ -5586,7 +5586,7 @@ document.getElementById("lm6000-allestec-view")?.addEventListener("mousedown", (
   beginAllestecDeviceDrag(event, findAllestecDeviceBadge(event));
 });
 
-["package-view", "lm6000-view"].forEach((viewId) => {
+["package-view", "lm6000-view", "lms100-view"].forEach((viewId) => {
   document.getElementById(viewId)?.addEventListener("mousedown", (event) => {
     if (!allestecMoveMode) return;
     beginAllestecDeviceDrag(event, findAllestecDeviceBadge(event));
