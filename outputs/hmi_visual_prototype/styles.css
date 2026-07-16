@@ -2124,7 +2124,7 @@ h1 {
 
 .lms100-layout {
   grid-template-columns: minmax(0, 1fr);
-  padding: 0 8px 64px;
+  padding: 0 8px 38px;
   align-items: stretch;
 }
 
@@ -2157,11 +2157,11 @@ h1 {
   min-height: 460px;
   justify-self: center;
   align-self: center;
-  padding: 56px 12px 22px;
+  padding: 82px 12px 48px;
 }
 
 .lms100-package::before {
-  inset: 56px 12px 22px;
+  inset: 82px 12px 48px;
 }
 
 .lms100-package::after {
@@ -2178,9 +2178,9 @@ h1 {
 
 .lms100-turbine-img {
   left: 1%;
-  top: 15%;
+  top: 21%;
   width: 98%;
-  height: 78%;
+  height: 68%;
   object-fit: contain;
 }
 
