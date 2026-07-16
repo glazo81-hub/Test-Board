@@ -260,8 +260,41 @@ const allestecDescriptiveTrainingSequence = [
   { say: "LM6000 Allestec automatic functional test complete. The system has returned to Normal." }
 ];
 
+const lm6000EqpDescriptiveTrainingSequence = [
+  { say: "Welcome to the LM6000 EQP Automatic Fire and Gas and CO2 Suppression Functional Test." },
+  { say: "This test uses Det-Tronics EQP addressable devices, three EDIO modules, and CO2 suppression logic. It is separate from the LM6000 Allestec conventional panel." },
+  { say: "Testing turbine gas detector AE-6304A at low gas alarm.", device: "AE-6304A", action: "Low Gas", actionAfterSpeech: true },
+  { say: "Low gas alarm is active. Horns and strobes activate. CO2 release remains inactive because gas detection does not release agent." },
+  { say: "Testing turbine gas detector AE-6304A at high gas shutdown.", device: "AE-6304A", action: "High Gas", actionAfterSpeech: true },
+  { say: "High gas shutdown is active. CO2 release remains inactive." },
+  { say: "Resetting the EQP panel.", device: "EQP-FPP", action: "Reset", actionAfterSpeech: true },
+  { say: "Testing manual CO2 release station HS-6308.", device: "HS-6308", action: "Input Active", actionAfterSpeech: true },
+  { say: "Manual release starts the thirty second CO2 main discharge delay. Horns and strobes activate." },
+  { waitFor: "release", say: "LM6000 EQP CO2 release sequence complete." },
+  { say: "Resetting the EQP panel.", device: "EQP-FPP", action: "Reset", actionAfterSpeech: true },
+  { say: "LM6000 EQP automatic functional test complete." },
+];
+
+const lms100DescriptiveTrainingSequence = [
+  { say: "Welcome to the LMS100 PA Automatic Fire and Gas and CO2 Suppression Functional Test." },
+  { say: "This test is for the LMS100 PA turbine package only. It is separate from TM2500 and LM6000 projects." },
+  { say: "Testing gas detector AE-3004 at low gas alarm.", device: "LMS100-AE-3004", action: "Low Gas", actionAfterSpeech: true },
+  { say: "Low gas alarm is active. Horns and strobes activate. CO2 release remains inactive because gas detection does not release agent." },
+  { say: "Testing gas detector AE-3004 at high gas shutdown.", device: "LMS100-AE-3004", action: "High Gas", actionAfterSpeech: true },
+  { say: "High gas shutdown is active. CO2 release remains inactive." },
+  { say: "Resetting the LMS100 panel.", device: "LMS100-PANEL", action: "Reset", actionAfterSpeech: true },
+  { say: "Testing manual release station HS-3070.", device: "LMS100-HS-3070", action: "Input Active", actionAfterSpeech: true },
+  { say: "Manual release starts the LMS100 CO2 discharge delay. Horns and strobes activate." },
+  { waitFor: "release", say: "LMS100 CO2 release sequence complete." },
+  { say: "Resetting the LMS100 panel.", device: "LMS100-PANEL", action: "Reset", actionAfterSpeech: true },
+  { say: "LMS100 PA automatic functional test complete." },
+];
+
 function getActiveTrainingSequence() {
-  return isAllestecProjectName(selectedProject) ? allestecDescriptiveTrainingSequence : descriptiveTrainingSequence;
+  if (isAllestecProjectName(selectedProject)) return allestecDescriptiveTrainingSequence;
+  if (isLm6000EqpProject(selectedProject)) return lm6000EqpDescriptiveTrainingSequence;
+  if (isLms100Project(selectedProject)) return lms100DescriptiveTrainingSequence;
+  return descriptiveTrainingSequence;
 }
 
 const realTestProfiles = {
@@ -355,7 +388,7 @@ const projectNamespaces = {
   "TM2500 / LM2500 XPRESS": "TM2500_XPRESS",
   "LM6000 ALLESTEC": "LM6000_ALLESTEC",
   "LM6000 EQP": "LM6000_EQP",
-  "LMS100": "LMS100",
+  "LMS100 PA": "LMS100_PA",
 };
 
 const projectScopedTags = {
@@ -381,7 +414,7 @@ const projectScopedTags = {
     "GENERAL_ALARM", "FIRE_GAS_SHOUTDOWN", "ALARM_LEL_TURBINE", "SHOUTDOWN_LEL_TUR",
     "ALARM_LEL_GEN", "SHOUTDOWN_LEL_GEN", "AGENT_RELEASE", "CO2_AGENT_RELEASE",
   ]),
-  "LMS100": new Set([
+  "LMS100 PA": new Set([
     "LMS100-PANEL",
     "LMS100-AE-3004", "LMS100-AE-3007", "LMS100-AE-3015", "LMS100-AE-3029", "LMS100-AE-3030", "LMS100-AE-3031",
     "LMS100-BE-3000", "LMS100-BE-3016", "LMS100-BE-3017", "LMS100-BE-3080", "LMS100-BE-3081",
@@ -395,7 +428,7 @@ const projectScopedTags = {
 };
 
 const projectDeviceDefinitions = {
-  "LMS100": {
+  "LMS100 PA": {
     "LMS100-PANEL": { type: "LMS100 Fire & Gas Panel", status: "Normal", value: "Online", address: "LMS100 preliminary controller", area: "Turbine Package", mode: "Virtual" },
     "LMS100-AE-3004": { type: "Gas Detector", status: "Normal", value: "0% LEL", address: "Drawing tag AE-3004", area: "Turbine Enclosure", mode: "Virtual", highAlarm: "15% LEL", highHighAlarm: "25% LEL" },
     "LMS100-AE-3007": { type: "Gas Detector", status: "Normal", value: "0% LEL", address: "Drawing tag AE-3007", area: "Turbine Enclosure", mode: "Virtual", highAlarm: "15% LEL", highHighAlarm: "25% LEL" },
@@ -508,7 +541,7 @@ function getProjectNamespace(projectName = selectedProject || projectConfig.name
   const normalized = (projectName || "").toUpperCase();
   if (normalized.includes("LM6000") && normalized.includes("ALLESTEC")) return projectNamespaces["LM6000 ALLESTEC"];
   if (normalized.includes("LM6000") && normalized.includes("EQP")) return projectNamespaces["LM6000 EQP"];
-  if (normalized === "LMS100 PA" || normalized === "LMS100") return projectNamespaces.LMS100;
+  if (normalized === "LMS100 PA") return projectNamespaces["LMS100 PA"];
   return projectNamespaces["TM2500 XPRESS"];
 }
 
@@ -533,8 +566,8 @@ function shouldScopeDeviceForProject(rawTag, projectName = selectedProject) {
   if (normalized.includes("LM6000") && normalized.includes("EQP")) {
     return projectScopedTags["LM6000 EQP"].has(rawTag);
   }
-  if (normalized === "LMS100 PA" || normalized === "LMS100") {
-    return projectScopedTags["LMS100"].has(rawTag);
+  if (normalized === "LMS100 PA") {
+    return projectScopedTags["LMS100 PA"].has(rawTag);
   }
   return false;
 }
@@ -547,11 +580,38 @@ function getProjectRawTag(rawTag, projectName = selectedProject) {
   return rawTag;
 }
 
+function getProjectDefinitionName(projectName = selectedProject) {
+  const normalized = normalizeProjectName(projectName);
+  if (normalized === "LM6000 ALLESTEC") return "LM6000 ALLESTEC";
+  if (normalized === "LM6000 EQP") return "LM6000 EQP";
+  if (normalized === "LMS100 PA") return "LMS100 PA";
+  return "TM2500 XPRESS";
+}
+
+function createProjectDeviceFallback(rawTag, projectName = selectedProject) {
+  const definitionName = getProjectDefinitionName(projectName);
+  return {
+    type: "Project Device",
+    status: "Normal",
+    value: "Ready",
+    address: `${definitionName} / Unmapped`,
+    area: definitionName,
+    mode: "Virtual",
+  };
+}
+
 function ensureProjectDevice(rawTag, projectName = selectedProject) {
   rawTag = getProjectRawTag(rawTag, projectName);
   const scopedKey = getProjectScopedKey(rawTag, projectName);
   if (devices[scopedKey]) return scopedKey;
-  const source = projectDeviceDefinitions[projectName]?.[rawTag] || projectDeviceDefinitions[getLayoutProjectName(projectName)]?.[rawTag] || devices[rawTag] || fallbackDevices[rawTag];
+  const definitionName = getProjectDefinitionName(projectName);
+  let source = projectDeviceDefinitions[definitionName]?.[rawTag];
+  if (!source && definitionName === "TM2500 XPRESS") {
+    source = devices[rawTag] || fallbackDevices[rawTag];
+  }
+  if (!source && shouldScopeDeviceForProject(rawTag, definitionName)) {
+    source = createProjectDeviceFallback(rawTag, definitionName);
+  }
   if (!source) return rawTag;
   devices[scopedKey] = {
     ...cloneConfig(source),
@@ -2347,7 +2407,7 @@ function isDeviceInCurrentProject(tag, device = devices[tag]) {
   }
   if (getProjectFamily() === "lms100") {
     if (device?.projectNamespace) return device.projectNamespace === getProjectNamespace();
-    return projectScopedTags["LMS100"].has(getDeviceRawTag(tag));
+    return projectScopedTags["LMS100 PA"].has(getDeviceRawTag(tag));
   }
   if (device?.projectNamespace) return device.projectNamespace === getProjectNamespace();
   return !isAllestecDeviceId(tag);
@@ -2371,9 +2431,9 @@ function getCurrentProjectDeviceEntries() {
       .filter(([, device]) => Boolean(device));
   }
   if (getProjectFamily() === "lms100") {
-    return Array.from(projectScopedTags["LMS100"])
+    return Array.from(projectScopedTags["LMS100 PA"])
       .map((rawTag) => {
-        const scopedKey = ensureProjectDevice(rawTag, "LMS100");
+        const scopedKey = ensureProjectDevice(rawTag, "LMS100 PA");
         return [scopedKey, devices[scopedKey]];
       })
       .filter(([, device]) => Boolean(device));
@@ -3407,7 +3467,7 @@ function getDefaultDeviceForProject(projectName = selectedProject) {
   const name = normalizeProjectName(projectName);
   if (name === "LM6000 ALLESTEC") return "ALL-800";
   if (name === "LM6000 EQP") return ensureProjectDevice("EQP-FPP", "LM6000 EQP");
-  if (name === "LMS100 PA") return ensureProjectDevice("LMS100-PANEL", "LMS100");
+  if (name === "LMS100 PA") return ensureProjectDevice("LMS100-PANEL", "LMS100 PA");
   return "EQP-001";
 }
 
@@ -3928,7 +3988,15 @@ function waitForTrainingCondition(conditionName, runId) {
     const started = Date.now();
     const timer = window.setInterval(() => {
       const expired = Date.now() - started > 140000;
-      const releaseComplete = conditionName === "release" && (isAllestecProjectName(selectedProject) ? allestecCo2Stage === "complete" : aerosolReleased);
+      const releaseComplete = conditionName === "release" && (
+        isAllestecProjectName(selectedProject)
+          ? allestecCo2Stage === "complete"
+          : isLm6000EqpProject(selectedProject)
+            ? lm6000EqpCo2Stage === "complete"
+            : isLms100Project(selectedProject)
+              ? lms100Co2Stage === "complete"
+              : aerosolReleased
+      );
       if (!trainingAutoTestActive || trainingPaused || runId !== trainingRunId || releaseComplete || expired) {
         window.clearInterval(timer);
         if (expired && !releaseComplete) addEvent("TRAINING", `Training wait timed out: ${conditionName}. Continuing sequence.`);
@@ -4252,7 +4320,7 @@ function showView(viewName, trackHistory = true) {
     });
   }
   if (targetViewName === "lms100") {
-    window.requestAnimationFrame(() => applyProjectDeviceLayout("LMS100"));
+    window.requestAnimationFrame(() => applyProjectDeviceLayout("LMS100 PA"));
   }
   if (targetViewName === "project-placeholder") {
     renderProjectPlaceholder();

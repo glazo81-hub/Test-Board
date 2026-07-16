@@ -5498,12 +5498,6 @@ h1 {
     height: 52px;
   }
 
-  .countdown-box {
-    width: 180px;
-    transform: scale(0.86);
-    transform-origin: bottom right;
-  }
-
   .turbine-schematic {
     width: 99%;
     height: 87%;
