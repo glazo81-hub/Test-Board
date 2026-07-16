@@ -2151,11 +2151,15 @@ h1 {
   order: 1;
 }
 
+.lms100-title-tools {
+  display: none;
+}
+
 .lms100-turbine-img {
-  left: 4%;
-  top: 10%;
-  width: 92%;
-  height: 78%;
+  left: 3%;
+  top: 8%;
+  width: 94%;
+  height: 82%;
   object-fit: contain;
 }
 
