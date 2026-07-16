@@ -4755,6 +4755,38 @@ h1 {
   transform: translateY(1px);
 }
 
+.allestec-stage .countdown-box.allestec-countdown-box {
+  position: static;
+  right: auto;
+  bottom: auto;
+  z-index: 5;
+  width: 92px;
+  padding: 4px 3px;
+  pointer-events: auto;
+  justify-self: end;
+  align-self: center;
+  grid-column: 2;
+  grid-row: 3;
+  margin-right: 12px;
+}
+
+.allestec-stage .panel-command-actions.allestec-command-actions {
+  position: static;
+  right: auto;
+  bottom: auto;
+  z-index: 5;
+  display: grid;
+  grid-template-columns: repeat(3, 58px);
+  gap: 6px;
+  pointer-events: auto;
+  justify-self: end;
+  align-self: center;
+  grid-column: 1;
+  grid-row: 3;
+  margin-left: auto;
+  margin-right: 112px;
+}
+
 .drawing-pdf {
   width: 100%;
   height: calc(100% - 36px);
