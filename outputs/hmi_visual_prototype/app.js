@@ -637,6 +637,14 @@ const lm6000EqpGeneratorGasTags = ["AE-6313"];
 const lm6000EqpFireTags = ["BE-6300", "BE-6302", "BE-6311", "BE-6335", "BE-6336"];
 const lm6000EqpReleaseSourceTags = ["TS-6303", "TS-6314", "TS-6307", "TS-6310", "HS-6308", "HS-6309", "HS-6312", ...lm6000EqpFireTags];
 const lm6000EqpCo2OutputTags = ["SOV-6359", "SOV-6360", "SOV-6361", "SOV-6362", "AGENT_RELEASE", "CO2_AGENT_RELEASE"];
+const lms100HornTags = ["LMS100-YSA-3006", "LMS100-YSA-3046", "LMS100-YSA-3047"];
+const lms100StrobeTags = ["LMS100-YSL-3036", "LMS100-YSL-3041", "LMS100-YSL-3042", "LMS100-YSL-3043"];
+const lms100GasTags = ["LMS100-AE-3004", "LMS100-AE-3007", "LMS100-AE-3015", "LMS100-AE-3029", "LMS100-AE-3030", "LMS100-AE-3031"];
+const lms100FlameTags = ["LMS100-BE-3000", "LMS100-BE-3016", "LMS100-BE-3017", "LMS100-BE-3080", "LMS100-BE-3081"];
+const lms100ThermalTags = ["LMS100-TS-3003", "LMS100-TS-3014", "LMS100-TS-3053", "LMS100-TS-3054", "LMS100-TS-3055", "LMS100-TS-3056", "LMS100-TS-3066", "LMS100-TS-3067", "LMS100-TS-3068"];
+const lms100ManualReleaseTags = ["LMS100-HS-3070", "LMS100-HS-3071", "LMS100-HS-3072", "LMS100-HS-3073", "LMS100-HS-3074", "LMS100-HS-3075", "LMS100-HS-3076", "LMS100-HS-3077"];
+const lms100ReleaseSourceTags = [...lms100ManualReleaseTags, ...lms100ThermalTags, ...lms100FlameTags];
+const lms100Co2OutputTags = ["LMS100-SOV-3059", "LMS100-SOV-3060", "LMS100-SOV-3061", "LMS100-SOV-3062", "LMS100-PSH-3048", "LMS100-PSHH-3050"];
 const manualReleaseTags = ["HS-3092", "HS-3093"];
 const thermalReleaseTags = ["TS-3003", "TS-3014"];
 const enclosureGasTags = ["AE-3004A", "AE-3004B", "AE-3004C"];
@@ -723,6 +731,9 @@ let allestecCo2CountdownSeconds = null;
 let lm6000EqpCo2Stage = "idle";
 let lm6000EqpCo2TimerId = null;
 let lm6000EqpCo2CountdownSeconds = null;
+let lms100Co2Stage = "idle";
+let lms100Co2TimerId = null;
+let lms100Co2CountdownSeconds = null;
 let hornLatched = false;
 let strobeLatched = false;
 let hornAudio = null;
@@ -1340,7 +1351,9 @@ function updateHornSound() {
     ? allestecHornTags.map((tag) => resolveDeviceId(tag))
     : isLm6000EqpProject()
       ? lm6000EqpHornTags.map((tag) => resolveDeviceId(tag))
-      : hornOutputTags;
+      : isLms100Project()
+        ? lms100HornTags
+        : hornOutputTags;
   const hornActive = activeHornTags.some((tag) => devices[tag]?.status === "Output Active" && devices[tag]?.value !== "Silenced");
   if (hornActive) startHornSound();
   else stopHornSound();
@@ -1445,6 +1458,139 @@ function startLm6000EqpCo2(sourceTag = selectedDeviceId) {
   }, 1000);
 }
 
+function isLms100BlockValveClosed() {
+  return ["Inhibit", "Trouble", "Fault", "Offline"].includes(devices[resolveDeviceId("LMS100-ZS-3064")]?.status);
+}
+
+function setLms100NotificationOutputs(active, silenceHorns = false) {
+  lms100HornTags.forEach((tag) => setDeviceOutput(tag, active && !silenceHorns ? "Output Active" : "Normal", active && silenceHorns ? "Silenced" : active ? "Sounding" : "Ready"));
+  lms100StrobeTags.forEach((tag) => setDeviceOutput(tag, active ? "Output Active" : "Normal", active ? "Flashing" : "Ready"));
+  if (active && !silenceHorns) startHornSound();
+  else stopHornSound();
+}
+
+function setLms100Co2SolenoidState(bank, active) {
+  const tags = bank === "main" ? ["LMS100-SOV-3059", "LMS100-SOV-3060"] : ["LMS100-SOV-3061", "LMS100-SOV-3062"];
+  tags.forEach((tag) => setDeviceOutput(tag, active ? "Alarm Active" : "Normal", active ? `${bank.toUpperCase()} CO2 solenoid energized` : "Ready"));
+}
+
+function renderLms100Co2VisualState() {
+  const view = document.getElementById("lms100-view");
+  if (!view) return;
+  const blockClosed = isLms100BlockValveClosed();
+  view.classList.toggle("co2-flow-blocked", blockClosed);
+  view.classList.toggle("co2-pre-discharge", lms100Co2Stage === "main-delay");
+  view.classList.toggle("co2-main-discharging", lms100Co2Stage === "main");
+  view.classList.toggle("co2-main-empty", lms100Co2Stage === "reserve" || lms100Co2Stage === "complete");
+  view.classList.toggle("co2-reserve-discharging", lms100Co2Stage === "reserve");
+  view.classList.toggle("co2-reserve-empty", lms100Co2Stage === "complete");
+}
+
+function updateLms100Co2Display() {
+  const box = document.getElementById("lms100-co2-countdown-box");
+  const value = document.getElementById("lms100-co2-countdown");
+  const label = document.getElementById("lms100-co2-countdown-label");
+  if (!box || !value || !label) return;
+  box.classList.toggle("countdown-active", ["main-delay", "main", "reserve"].includes(lms100Co2Stage));
+  box.classList.toggle("countdown-released", lms100Co2Stage === "complete");
+  box.classList.toggle("countdown-blocked", isLms100BlockValveClosed());
+
+  if (isLms100BlockValveClosed()) {
+    value.textContent = "BLOCKED";
+    label.textContent = "Block valve closed";
+  } else if (lms100Co2Stage === "main-delay") {
+    value.textContent = `00:${String(lms100Co2CountdownSeconds || 0).padStart(2, "0")}`;
+    label.textContent = "MAIN pre-discharge";
+  } else if (lms100Co2Stage === "main") {
+    const minutes = Math.floor((lms100Co2CountdownSeconds || 0) / 60);
+    const seconds = (lms100Co2CountdownSeconds || 0) % 60;
+    value.textContent = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+    label.textContent = "MAIN discharging";
+  } else if (lms100Co2Stage === "reserve") {
+    const minutes = Math.floor((lms100Co2CountdownSeconds || 0) / 60);
+    const seconds = (lms100Co2CountdownSeconds || 0) % 60;
+    value.textContent = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+    label.textContent = "RESERVE discharging";
+  } else if (lms100Co2Stage === "complete") {
+    value.textContent = "DISCHARGED";
+    label.textContent = "CO2 complete";
+  } else {
+    value.textContent = "READY";
+    label.textContent = "MAIN / RESERVE";
+  }
+  renderLms100Co2VisualState();
+}
+
+function resetLms100Co2(sourceTag = "LMS100-PANEL") {
+  if (lms100Co2TimerId) clearInterval(lms100Co2TimerId);
+  lms100Co2TimerId = null;
+  lms100Co2Stage = "idle";
+  lms100Co2CountdownSeconds = null;
+  lms100Co2OutputTags.forEach((tag) => setDeviceOutput(tag, "Normal", tag.includes("PS") ? "Normal" : "Ready"));
+  addEvent(sourceTag, "LMS100 CO2 sequence reset.");
+  updateLms100Co2Display();
+}
+
+function startLms100Co2(sourceTag = selectedDeviceId) {
+  if (lms100Co2Stage !== "idle") return;
+  if (isLms100BlockValveClosed()) {
+    addEvent(sourceTag, "LMS100 CO2 discharge blocked by closed/block valve.");
+    updateLms100Co2Display();
+    renderAll();
+    return;
+  }
+  lms100Co2Stage = "main-delay";
+  lms100Co2CountdownSeconds = 30;
+  addEvent(sourceTag, "LMS100 CO2 MAIN 30 second pre-discharge delay started.");
+  updateLms100Co2Display();
+  if (lms100Co2TimerId) clearInterval(lms100Co2TimerId);
+  lms100Co2TimerId = window.setInterval(() => {
+    if (lms100Co2Stage === "main-delay") {
+      lms100Co2CountdownSeconds = Math.max(0, lms100Co2CountdownSeconds - 1);
+      if (lms100Co2CountdownSeconds <= 0) {
+        lms100Co2Stage = "main";
+        lms100Co2CountdownSeconds = 90;
+        setLms100Co2SolenoidState("main", true);
+        setDeviceOutput("LMS100-PSH-3048", "Alarm Active", "CO2 header pressure active");
+        setDeviceOutput("LMS100-PSHH-3050", "Alarm Active", "CO2 discharge pressure confirmed");
+        addEvent("LMS100-SOV-3059/SOV-3060", "LMS100 MAIN CO2 solenoids energized after 30 seconds.");
+      }
+    } else if (lms100Co2Stage === "main") {
+      lms100Co2CountdownSeconds = Math.max(0, lms100Co2CountdownSeconds - 1);
+      if (lms100Co2CountdownSeconds <= 0) {
+        lms100Co2Stage = "reserve";
+        lms100Co2CountdownSeconds = 90;
+        setLms100Co2SolenoidState("reserve", true);
+        addEvent("LMS100-SOV-3061/SOV-3062", "LMS100 RESERVE CO2 solenoids energized after 90 seconds.");
+      }
+    } else if (lms100Co2Stage === "reserve") {
+      lms100Co2CountdownSeconds = Math.max(0, lms100Co2CountdownSeconds - 1);
+      if (lms100Co2CountdownSeconds <= 0) {
+        lms100Co2Stage = "complete";
+        lms100Co2CountdownSeconds = null;
+        clearInterval(lms100Co2TimerId);
+        lms100Co2TimerId = null;
+        addEvent("LMS100-CO2", "LMS100 CO2 release sequence complete.");
+      }
+    }
+    updateLms100Co2Display();
+    renderAll();
+  }, 1000);
+  renderAll();
+}
+
+function applyLms100Logic(sourceTag = selectedDeviceId) {
+  const releaseActive = lms100ReleaseSourceTags.some((tag) => {
+    const status = devices[resolveDeviceId(tag)]?.status;
+    return ["Fire Alarm", "Alarm Active", "Input Active"].includes(status);
+  });
+  const gasActive = lms100GasTags.some((tag) => ["Low Gas", "High Gas"].includes(devices[resolveDeviceId(tag)]?.status));
+  const commonAlarm = releaseActive || gasActive;
+  setLms100NotificationOutputs(commonAlarm, hornsSilenced);
+  if (releaseActive) startLms100Co2(sourceTag);
+  updateLms100Co2Display();
+}
+
 function applyLm6000EqpLogic(sourceTag = selectedDeviceId) {
   getCurrentProjectDeviceEntries();
   const releaseActive = lm6000EqpReleaseSourceTags.some((tag) => {
@@ -1472,6 +1618,10 @@ function applyLm6000EqpLogic(sourceTag = selectedDeviceId) {
 }
 
 function applyS3Logic(sourceTag = selectedDeviceId) {
+  if (isLms100Project()) {
+    applyLms100Logic(sourceTag);
+    return;
+  }
   if (isLm6000EqpProject()) {
     applyLm6000EqpLogic(sourceTag);
     return;
@@ -1860,6 +2010,11 @@ function setDeviceState(deviceId, status, value) {
   device.status = status;
   device.value = value;
   addEvent(deviceId, `${getDeviceDisplayTag(deviceId)} changed to ${status}${value ? ` (${value})` : ""}.`);
+  if (isLms100Project() && ["Low Gas", "High Gas", "Fire", "Fire Alarm", "Alarm Active", "Output Active"].includes(status)) {
+    applyLms100Logic(deviceId);
+    renderAll();
+    return;
+  }
   if (isAllestecProject() && ["Low Gas", "High Gas", "Fire", "Fire Alarm", "Alarm Active", "Output Active"].includes(status)) {
     const rawTag = getDeviceRawTag(deviceId);
     const isGasOnly = (device.type || "").toLowerCase().includes("gas");
@@ -1908,6 +2063,11 @@ function resetDevice(deviceId) {
   const device = devices[deviceId];
   if (!device) return;
   const type = device.type.toLowerCase();
+  if (getDeviceRawTag(deviceId) === "LMS100-HS-3063") {
+    resetLms100Co2(deviceId);
+    setLms100NotificationOutputs(false);
+    return;
+  }
   if (getDeviceRawTag(deviceId) === "HS-6363") {
     if (isLm6000EqpProject()) resetLm6000EqpCo2(deviceId);
     else resetAllestecCo2Discharge(deviceId);
@@ -1931,7 +2091,7 @@ function getGraphicInputAction(deviceId) {
   if (type.includes("gas")) return "Low Gas";
   if (type.includes("thermal") || type.includes("heat") || type.includes("flame")) return "Fire";
   if (type.includes("horn") || type.includes("strobe") || type.includes("solenoid")) return "Output On";
-  if (type.includes("switch") || type.includes("station") || type.includes("inhibit")) return "Input Active";
+  if (type.includes("switch") || type.includes("station") || type.includes("button") || type.includes("inhibit")) return "Input Active";
   return null;
 }
 
@@ -2016,6 +2176,20 @@ function resetAllDevices() {
     renderAll();
     return;
   }
+  if (isLms100Project()) {
+    resetLms100Co2("LMS100-PANEL");
+    hornsSilenced = false;
+    stopHornSound();
+    getCurrentProjectDeviceEntries().forEach(([tag, device]) => {
+      const type = (device.type || "").toLowerCase();
+      device.status = "Normal";
+      device.value = type.includes("gas") ? "0% LEL" : type.includes("controller") || type.includes("panel") ? "Online" : type.includes("block valve") ? "Open" : type.includes("pressure") ? "Normal" : "Ready";
+    });
+    setLms100NotificationOutputs(false);
+    addEvent("LMS100-PANEL", "LMS100 panel reset complete. System returned to NORMAL.");
+    renderAll();
+    return;
+  }
   cancelAerosolCountdown(true);
   resetAllestecCo2Discharge("SYSTEM");
   releaseResetHold = false;
@@ -2093,6 +2267,10 @@ function isAllestecProject() {
 
 function isLm6000EqpProject(projectName = selectedProject) {
   return normalizeProjectName(projectName) === "LM6000 EQP";
+}
+
+function isLms100Project(projectName = selectedProject) {
+  return normalizeProjectName(projectName).startsWith("LMS100");
 }
 
 function isAllestecHardwareMode() {
@@ -2653,7 +2831,7 @@ function applyFunction(action) {
   const rawTag = getDeviceRawTag(selectedDeviceId);
   const irStack = rawTag === "AE-3029" || rawTag === "AE-3030" || rawTag === "LM6-AE-3029" || rawTag === "LM6-AE-3030";
 
-  if (rawTag === "EQP-001" || rawTag === "EQP-FPP" || rawTag === "FIRE-PANEL") {
+  if (rawTag === "EQP-001" || rawTag === "EQP-FPP" || rawTag === "FIRE-PANEL" || rawTag === "LMS100-PANEL") {
     if (action === "Acknowledge") {
       acknowledgeAllAlarms();
       return;
@@ -2700,6 +2878,12 @@ function applyFunction(action) {
     return;
   }
 
+  if (isLms100Project() && rawTag === "LMS100-ZS-3064" && (action === "Input Active" || action === "Inhibit")) {
+    const closed = ["Inhibit", "Trouble", "Fault", "Offline"].includes(device.status);
+    setDeviceState(selectedDeviceId, closed ? "Normal" : "Inhibit", closed ? "Open / Release Enabled" : "Closed / CO2 Release Blocked");
+    return;
+  }
+
   if (isAllestecProject() && rawTag === "HS-6363" && action === "Input Active") {
     resetAllestecCo2Discharge("SYSTEM");
     device.status = "Supervisory";
@@ -2714,6 +2898,16 @@ function applyFunction(action) {
     device.status = "Supervisory";
     device.value = "Purge Switch Active";
     addEvent(selectedDeviceId, "HS-6363 purge switch active. LM6000 EQP CO2 pressure/reset circuit cleared.");
+    renderAll();
+    return;
+  }
+
+  if (isLms100Project() && rawTag === "LMS100-HS-3063" && action === "Input Active") {
+    resetLms100Co2(selectedDeviceId);
+    setLms100NotificationOutputs(false);
+    device.status = "Supervisory";
+    device.value = "Purge Switch Active";
+    addEvent(selectedDeviceId, "LMS100 HS-3063 purge/reset switch active. CO2 pressure/reset circuit cleared.");
     renderAll();
     return;
   }
@@ -2733,6 +2927,10 @@ function applyFunction(action) {
   }
   if (isLm6000EqpProject() && ["SOV-6359", "SOV-6360", "SOV-6361", "SOV-6362", "HS-6363"].includes(rawTag) && (action === "Output Off" || action === "Reset" || action === "Normal")) {
     resetLm6000EqpCo2(selectedDeviceId);
+    return;
+  }
+  if (isLms100Project() && ["LMS100-SOV-3059", "LMS100-SOV-3060", "LMS100-SOV-3061", "LMS100-SOV-3062", "LMS100-HS-3063"].includes(rawTag) && (action === "Output Off" || action === "Reset" || action === "Normal")) {
+    resetLms100Co2(selectedDeviceId);
     return;
   }
   if (action === "Reset" || action === "Normal") {
@@ -3105,6 +3303,7 @@ function renderAll() {
   renderAllestecCo2VisualState();
   renderAllestecCo2CountdownDisplay();
   updateLm6000EqpCo2Display();
+  updateLms100Co2Display();
   updateHornSound();
   if (!allestecDragState && !allestecGraphicDragState) {
     applyAllProjectDeviceLayouts();

@@ -4832,7 +4832,16 @@ h1 {
 
 .lms100-stage .panel-command-actions.allestec-command-actions {
   right: 112px;
-  bottom: 14px;
+  bottom: 48px;
+}
+
+.lms100-stage .countdown-box.allestec-countdown-box {
+  position: absolute;
+  right: 14px;
+  bottom: 42px;
+  z-index: 40;
+  width: 96px;
+  margin: 0;
 }
 
 .drawing-pdf {
