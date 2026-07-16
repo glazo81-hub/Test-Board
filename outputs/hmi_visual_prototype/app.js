@@ -3168,7 +3168,7 @@ const projectViewRoutes = {
   },
   lms100: {
     package: "lms100",
-    topology: "project-placeholder",
+    topology: "lms100-topology",
     drawing: "lms100-drawing",
   },
   blank: {

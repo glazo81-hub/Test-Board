@@ -2124,8 +2124,29 @@ h1 {
 
 .lms100-layout {
   grid-template-columns: minmax(0, 1fr);
-  padding: 4px 8px 64px;
+  padding: 0 8px 64px;
   align-items: stretch;
+}
+
+.lms100-stage {
+  place-items: start center;
+  padding-top: 4px;
+}
+
+.lms100-stage .allestec-board {
+  grid-template-rows: 52px minmax(0, 1fr);
+}
+
+.lms100-stage .allestec-header {
+  padding: 2px 10px;
+}
+
+.lms100-stage .allestec-header b {
+  font-size: 20px;
+}
+
+.lms100-stage .allestec-header span {
+  font-size: 11px;
 }
 
 .lms100-package {
@@ -2161,6 +2182,21 @@ h1 {
   width: 98%;
   height: 88%;
   object-fit: contain;
+}
+
+.lms100-stage .allestec-device-layer .device-badge use {
+  scale: 1.65;
+  stroke-width: 2.8;
+}
+
+.lms100-stage .allestec-device-layer .device-badge text {
+  font-size: 15px;
+  stroke-width: 5px !important;
+}
+
+.lms100-stage .allestec-device-layer .device-badge .badge-value {
+  font-size: 11px;
+  stroke-width: 4px !important;
 }
 
 .allestec-enclosure {
