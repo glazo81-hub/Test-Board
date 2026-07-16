@@ -10,7 +10,6 @@ const fallbackDevices = {
   "TS-3014": { type: "Thermal Detector", status: "Normal", value: "Ready", address: "EDIO-1 / CH4 with TS-3003", area: "Turbine Enclosure", mode: "Virtual" },
   "HS-3081": { type: "LOTO / Suppression Inhibit", status: "Normal", value: "Ready", address: "Hardwired / Not on EDIO topology", area: "Front Door", mode: "Virtual" },
   "HS-3040": { type: "Horn Acknowledge Switch", status: "Normal", value: "Ready", address: "EDIO-1 / CH8", area: "Front Door", mode: "Virtual" },
-  "HS-3091": { type: "Spare / Drawing Reference", status: "Normal", value: "Ready", address: "Not used for TM2500 manual release", area: "Reference", mode: "Virtual" },
   "HS-3092": { type: "Manual Aerosol Release Station", status: "Normal", value: "Ready", address: "EDIO-1 / CH1 with HS-3093", area: "Lower Door", mode: "Virtual" },
   "HS-3093": { type: "Manual Aerosol Release Station", status: "Normal", value: "Ready", address: "EDIO-1 / CH1 with HS-3092", area: "Upper Door", mode: "Virtual" },
   "YSA-3006A": { type: "Fire & Gas Horn", status: "Normal", value: "Ready", address: "EDIO-1 / CH3", area: "Top Enclosure", mode: "Virtual" },
@@ -539,8 +538,8 @@ const projectDeviceAliases = {
 
 function getProjectNamespace(projectName = selectedProject || projectConfig.name) {
   const normalized = (projectName || "").toUpperCase();
-  if (normalized.includes("LM6000") && normalized.includes("ALLESTEC")) return projectNamespaces["LM6000 ALLESTEC"];
-  if (normalized.includes("LM6000") && normalized.includes("EQP")) return projectNamespaces["LM6000 EQP"];
+  if (normalized === "LM6000 ALLESTEC") return projectNamespaces["LM6000 ALLESTEC"];
+  if (normalized === "LM6000 EQP") return projectNamespaces["LM6000 EQP"];
   if (normalized === "LMS100 PA") return projectNamespaces["LMS100 PA"];
   return projectNamespaces["TM2500 XPRESS"];
 }
@@ -560,10 +559,10 @@ function getProjectScopedKey(rawTag, projectName = selectedProject) {
 
 function shouldScopeDeviceForProject(rawTag, projectName = selectedProject) {
   const normalized = (projectName || "").toUpperCase();
-  if (normalized.includes("LM6000") && normalized.includes("ALLESTEC")) {
+  if (normalized === "LM6000 ALLESTEC") {
     return projectScopedTags["LM6000 ALLESTEC"].has(rawTag);
   }
-  if (normalized.includes("LM6000") && normalized.includes("EQP")) {
+  if (normalized === "LM6000 EQP") {
     return projectScopedTags["LM6000 EQP"].has(rawTag);
   }
   if (normalized === "LMS100 PA") {
@@ -574,7 +573,7 @@ function shouldScopeDeviceForProject(rawTag, projectName = selectedProject) {
 
 function getProjectRawTag(rawTag, projectName = selectedProject) {
   const normalized = (projectName || "").toUpperCase();
-  if (normalized.includes("LM6000") && normalized.includes("ALLESTEC")) {
+  if (normalized === "LM6000 ALLESTEC") {
     return projectDeviceAliases["LM6000 ALLESTEC"][rawTag] || rawTag;
   }
   return rawTag;
@@ -4701,7 +4700,7 @@ const projectCommsProfiles = {
       ["MODBUS to Global Memory", "HMI -> EQP", "00101", "Silence", "Command bit", "Panel silence from HMI"],
       ["MODBUS to Global Memory", "HMI -> EQP", "00102", "Ack", "Command bit", "Panel acknowledge from HMI"],
       ["MODBUS to Global Memory", "HMI -> EQP", "00103", "Reset", "Command bit", "Panel reset from HMI"],
-      ["MODBUS to Global Memory", "HMI -> EQP", "00104 / 00105", "HS-3091 / HS-3093", "Manual release inputs", "Virtual pull stations reflected to EQP"],
+      ["MODBUS to Global Memory", "HMI -> EQP", "00104 / 00105", "HS-3092 / HS-3093", "Manual release inputs", "Virtual pull stations reflected to EQP"],
       ["MODBUS to Global Memory", "HMI -> EQP", "00106 / 00107", "TS-3003 / TS-3014", "Thermal inputs", "Virtual heat detectors reflected to EQP"],
       ["MODBUS to Global Memory", "HMI -> EQP", "00108-00112", "LOW gas bits", "AE-3004A/B/C, AE-3029, AE-3030", "Low gas alarms reflected to EQP"],
       ["MODBUS to Global Memory", "HMI -> EQP", "00115-00119", "HH gas bits", "AE-3004A/B/C, AE-3029, AE-3030", "High-high gas alarms reflected to EQP"],
@@ -4869,7 +4868,6 @@ const hmiBridgeManagerUrl = "http://127.0.0.1:8780";
 const eqpOnTestSerialSettings = { portLabel: "COM12", baudRate: 19200, dataBits: 8, stopBits: 1, parity: "none", slaveId: 1 };
 const eqpOnTestCommandCoils = { Silence: 101, Acknowledge: 102, Ack: 102, Reset: 103 };
 const eqpOnTestDeviceCoils = {
-  "HS-3091": 104,
   "HS-3092": 104,
   "HS-3093": 105,
   "TS-3003": 106,
@@ -5273,7 +5271,7 @@ function buildEqpOnTestCoilStates() {
   const active = (tag, statuses) => statuses.includes(devices[resolveDeviceId(tag)]?.status);
   const activeAny = (tags, statuses) => tags.some((tag) => active(tag, statuses));
   if (isLm6000EqpProject()) {
-    state["HS-3091"] = activeAny(["HS-6308", "HS-6309", "HS-6312"], ["Alarm Active", "Input Active", "Fire Alarm"]);
+    state["HS-3092"] = activeAny(["HS-6308", "HS-6309", "HS-6312"], ["Alarm Active", "Input Active", "Fire Alarm"]);
     state["HS-3093"] = false;
     state["TS-3003"] = activeAny(["TS-6303", "TS-6314"], ["Fire Alarm", "Alarm Active"]);
     state["TS-3014"] = activeAny(["TS-6307", "TS-6310"], ["Fire Alarm", "Alarm Active"]);
