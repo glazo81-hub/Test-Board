@@ -51,6 +51,8 @@ const fallbackDevices = {
   "AE-6304A": { type: "Gas Detector 4-20mA", status: "Normal", value: "0% LEL", address: "Analog Gas Channel", area: "Turbine Enclosure", mode: "Virtual" },
   "AE-6304B": { type: "Gas Detector 4-20mA", status: "Normal", value: "0% LEL", address: "Analog Gas Channel", area: "Turbine Enclosure", mode: "Virtual" },
   "AE-6304C": { type: "Gas Detector 4-20mA", status: "Normal", value: "0% LEL", address: "Analog Gas Channel", area: "Turbine Enclosure", mode: "Virtual" },
+  "AE-6304D": { type: "Gas Detector 4-20mA", status: "Normal", value: "0% LEL", address: "Analog Gas Channel", area: "Turbine Enclosure", mode: "Virtual" },
+  "AE-6304E": { type: "Gas Detector 4-20mA", status: "Normal", value: "0% LEL", address: "Analog Gas Channel", area: "Turbine Enclosure", mode: "Virtual" },
   "LM6-AE-3029": { type: "IR Gas Detector", status: "Normal", value: "0% LEL", address: "Analog IR Gas Channel", area: "LM6000 Exhaust / IR Gas", mode: "Virtual" },
   "LM6-AE-3030": { type: "IR Gas Detector", status: "Normal", value: "0% LEL", address: "Analog IR Gas Channel", area: "LM6000 Exhaust / IR Gas", mode: "Virtual" },
   "BE-6300": { type: "X3301 Flame Detector", status: "Normal", value: "Ready", address: "3.9K EOL Flame Zone", area: "Turbine Enclosure", mode: "Virtual" },
@@ -393,7 +395,7 @@ const projectNamespaces = {
 const projectScopedTags = {
   "LM6000 ALLESTEC": new Set([
     "ALL-800",
-    "AE-6304A", "AE-6304B", "AE-6304C", "LM6-AE-3029", "LM6-AE-3030",
+    "AE-6304A", "AE-6304B", "AE-6304C", "AE-6304D", "AE-6304E", "LM6-AE-3029", "LM6-AE-3030",
     "BE-6300", "BE-6302", "BE-6335", "TS-6303", "TS-6314", "YSL-6306", "YSL-6336", "YSA-6306", "YSA-6346",
     "AE-6313", "BE-6311", "TS-6307", "TS-6310", "HS-6308", "HS-6309", "HS-6312", "YSA-6347", "YSL-6344", "YSL-6345",
     "HS-6305", "HS-6363", "SOV-6359", "SOV-6360", "SOV-6361", "SOV-6362", "ZS-6364", "PSH-6348A", "PSHH-6348B", "CO2-BLOCK", "CO2-PSH",
@@ -402,7 +404,7 @@ const projectScopedTags = {
   "LM6000 EQP": new Set([
     "EQP-FPP", "FIRE-PANEL",
     "EDIO1-JB19", "EDIO2-JB18", "EDIO3-JB20",
-    "AE-6304A", "AE-6304B", "AE-6304C", "AE-6313", "AE-3029", "AE-3030",
+    "AE-6304A", "AE-6304B", "AE-6304C", "AE-6304D", "AE-6304E", "AE-6313", "AE-3029", "AE-3030",
     "BE-6300", "BE-6302", "BE-6311", "BE-6335", "BE-6336",
     "TS-6303", "TS-6314", "TS-6307", "TS-6310",
     "HS-6305", "HS-6308", "HS-6309", "HS-6312", "HS-6363",
@@ -482,6 +484,8 @@ const projectDeviceDefinitions = {
     "AE-6304A": { type: "UD10 / Combustible Gas Detector", status: "Normal", value: "0% LEL", address: "LON Address #9", area: "Turbine Enclosure", mode: "Virtual", highAlarm: "15% LEL", highHighAlarm: "25% LEL" },
     "AE-6304B": { type: "UD10 / Combustible Gas Detector", status: "Normal", value: "0% LEL", address: "LON Address #10", area: "Turbine Enclosure", mode: "Virtual", highAlarm: "15% LEL", highHighAlarm: "25% LEL" },
     "AE-6304C": { type: "UD10 / Combustible Gas Detector", status: "Normal", value: "0% LEL", address: "LON Address #11", area: "Turbine Enclosure", mode: "Virtual", highAlarm: "15% LEL", highHighAlarm: "25% LEL" },
+    "AE-6304D": { type: "UD10 / Combustible Gas Detector", status: "Normal", value: "0% LEL", address: "LON Address #12", area: "Turbine Enclosure", mode: "Virtual", highAlarm: "15% LEL", highHighAlarm: "25% LEL" },
+    "AE-6304E": { type: "UD10 / Combustible Gas Detector", status: "Normal", value: "0% LEL", address: "LON Address #13", area: "Turbine Enclosure", mode: "Virtual", highAlarm: "15% LEL", highHighAlarm: "25% LEL" },
     "AE-6313": { type: "UD10 / Combustible Gas Detector", status: "Normal", value: "0% LEL", address: "LON Address #14", area: "Generator Enclosure", mode: "Virtual", highAlarm: "15% LEL", highHighAlarm: "25% LEL" },
     "AE-3029": { type: "IR Gas Detector", status: "Normal", value: "0% LEL", address: "LON Address #15", area: "Turbine Exhaust", mode: "Virtual", highAlarm: "5% LEL", highHighAlarm: "10% LEL" },
     "AE-3030": { type: "IR Gas Detector", status: "Normal", value: "0% LEL", address: "LON Address #16", area: "Turbine Exhaust", mode: "Virtual", highAlarm: "5% LEL", highHighAlarm: "10% LEL" },
@@ -680,7 +684,7 @@ const hornOutputTags = ["YSA-3006A", "YSA-3006B"];
 const strobeOutputTags = ["YSL-3036", "YSL-3041", "YSL-3042"];
 const allestecHornTags = ["YSA-6347", "YSA-6306", "YSA-6346"];
 const allestecStrobeTags = ["YSL-6345", "YSL-6336", "YSL-6344", "YSL-6306"];
-const allestecTurbineGasTags = ["AE-6304A", "AE-6304B", "AE-6304C", "LM6-AE-3029", "LM6-AE-3030"];
+const allestecTurbineGasTags = ["AE-6304A", "AE-6304B", "AE-6304C", "AE-6304D", "AE-6304E", "LM6-AE-3029", "LM6-AE-3030"];
 const allestecGeneratorGasTags = ["AE-6313"];
 const allestecGasOutputAlarmTags = {
   turbineHigh: "OUT-HIGH-GAS-TURBINE",
@@ -691,7 +695,7 @@ const allestecGasOutputAlarmTags = {
 const allestecTurbineFlameTags = ["BE-6300", "BE-6302", "BE-6335"];
 const lm6000EqpHornTags = ["YSA-6306", "YSA-6346", "YSA-6347"];
 const lm6000EqpStrobeTags = ["YSL-6301", "YSL-6336", "YSL-6344", "YSL-6345"];
-const lm6000EqpTurbineGasTags = ["AE-6304A", "AE-6304B", "AE-6304C", "AE-3029", "AE-3030"];
+const lm6000EqpTurbineGasTags = ["AE-6304A", "AE-6304B", "AE-6304C", "AE-6304D", "AE-6304E", "AE-3029", "AE-3030"];
 const lm6000EqpGeneratorGasTags = ["AE-6313"];
 const lm6000EqpFireTags = ["BE-6300", "BE-6302", "BE-6311", "BE-6335", "BE-6336"];
 const lm6000EqpReleaseSourceTags = ["TS-6303", "TS-6314", "TS-6307", "TS-6310", "HS-6308", "HS-6309", "HS-6312", ...lm6000EqpFireTags];
@@ -4728,7 +4732,7 @@ const projectCommsProfiles = {
       ["Controller", "FIRE-PANEL / EQP-FPP", "Serial Port 1", "RS485 / Modbus", "Controller reports all addressable devices", "No Allestec relay/I/O/4-20mA conversion modules"],
       ["EQP RTU Settings", "HMI PC", "COM12", "19200 baud / 8N1", "Slave ID 1", "USB-RS485 adapter to EQP Serial Port 1"],
       ["MODBUS to Global Memory", "HMI -> EQP", "00101-00121", "Test-Board EQP_Modbus.csv", "Common EQP write map", "Used for EQP projects only"],
-      ["LON", "Turbine gas", "Address #9-#11", "AE-6304A / AE-6304B / AE-6304C", "UD10 combustible gas detectors", "15% LEL alarm / 25% LEL shutdown"],
+      ["LON", "Turbine gas", "Address #9-#13", "AE-6304A / AE-6304B / AE-6304C / AE-6304D / AE-6304E", "UD10 combustible gas detectors", "15% LEL alarm / 25% LEL shutdown"],
       ["LON", "Generator gas", "Address #14", "AE-6313", "UD10 combustible gas detector", "15% LEL alarm / 25% LEL shutdown"],
       ["LON", "Exhaust IR gas", "Address #15-#16", "AE-3029 / AE-3030", "IR gas detectors", "5% LEL alarm / 10% LEL shutdown"],
       ["LON", "Flame detection", "Address #17-#21", "BE-6300 / 6302 / 6311 / 6335 / 6336", "X3301 flame detectors", "Fire alarm logic from S3"],
@@ -4805,21 +4809,21 @@ const allestecCommsMapDefaults = {
     ["4-20mA Module-1", "Panel 1", "AO1", "AE-6304A", "Gas detector simulation", "15/25% LEL"],
     ["4-20mA Module-1", "Panel 1", "AO2", "AE-6304B", "Gas detector simulation", "15/25% LEL"],
     ["4-20mA Module-1", "Panel 1", "AO3", "AE-6304C", "Gas detector simulation", "15/25% LEL"],
-    ["4-20mA Module-1", "Panel 1", "AO4", "AE-6313", "Generator gas simulation", "15/25% LEL"],
-    ["4-20mA Module-1", "Panel 1", "AO5", "AE-3029", "Extractor fan IR gas simulation", "5/10% LEL"],
-    ["4-20mA Module-1", "Panel 1", "AO6", "AE-3030", "Extractor fan IR gas simulation", "5/10% LEL"],
-    ["4-20mA Module-1", "Panel 1", "AO7", "SPARE", "Available analog output", "Not assigned"],
-    ["4-20mA Module-1", "Panel 1", "AO8", "SPARE", "Available analog output", "Not assigned"],
+    ["4-20mA Module-1", "Panel 1", "AO4", "AE-6304D", "Gas detector simulation", "15/25% LEL"],
+    ["4-20mA Module-1", "Panel 1", "AO5", "AE-6304E", "Gas detector simulation", "15/25% LEL"],
+    ["4-20mA Module-1", "Panel 1", "AO6", "AE-6313", "Generator gas simulation", "15/25% LEL"],
+    ["4-20mA Module-1", "Panel 1", "AO7", "AE-3029", "Extractor fan IR gas simulation", "5/10% LEL"],
+    ["4-20mA Module-1", "Panel 1", "AO8", "AE-3030", "Extractor fan IR gas simulation", "5/10% LEL"],
   ],
   analog2: [
     ["4-20mA Module-2", "Panel 2", "AO1", "AE-6304A", "Gas detector simulation", "15/25% LEL"],
     ["4-20mA Module-2", "Panel 2", "AO2", "AE-6304B", "Gas detector simulation", "15/25% LEL"],
     ["4-20mA Module-2", "Panel 2", "AO3", "AE-6304C", "Gas detector simulation", "15/25% LEL"],
-    ["4-20mA Module-2", "Panel 2", "AO4", "AE-6313", "Generator gas simulation", "15/25% LEL"],
-    ["4-20mA Module-2", "Panel 2", "AO5", "AE-3029", "Extractor fan IR gas simulation", "5/10% LEL"],
-    ["4-20mA Module-2", "Panel 2", "AO6", "AE-3030", "Extractor fan IR gas simulation", "5/10% LEL"],
-    ["4-20mA Module-2", "Panel 2", "AO7", "SPARE", "Available analog output", "Not assigned"],
-    ["4-20mA Module-2", "Panel 2", "AO8", "SPARE", "Available analog output", "Not assigned"],
+    ["4-20mA Module-2", "Panel 2", "AO4", "AE-6304D", "Gas detector simulation", "15/25% LEL"],
+    ["4-20mA Module-2", "Panel 2", "AO5", "AE-6304E", "Gas detector simulation", "15/25% LEL"],
+    ["4-20mA Module-2", "Panel 2", "AO6", "AE-6313", "Generator gas simulation", "15/25% LEL"],
+    ["4-20mA Module-2", "Panel 2", "AO7", "AE-3029", "Extractor fan IR gas simulation", "5/10% LEL"],
+    ["4-20mA Module-2", "Panel 2", "AO8", "AE-3030", "Extractor fan IR gas simulation", "5/10% LEL"],
   ],
   network: [
     ["Relay Module-1", "Panel 1", "TCP 4196", "192.168.1.200", "Modbus TCP / relay bridge", "On board panel relay outputs"],
@@ -4854,11 +4858,13 @@ const analogOutputByGasTag = {
   "AE-6304A": 0,
   "AE-6304B": 1,
   "AE-6304C": 2,
-  "AE-6313": 3,
-  "AE-3029": 4,
-  "LM6-AE-3029": 4,
-  "AE-3030": 5,
-  "LM6-AE-3030": 5,
+  "AE-6304D": 3,
+  "AE-6304E": 4,
+  "AE-6313": 5,
+  "AE-3029": 6,
+  "LM6-AE-3029": 6,
+  "AE-3030": 7,
+  "LM6-AE-3030": 7,
 };
 let gasAnalogWriteTimer = null;
 let allestecIoPollTimer = null;
