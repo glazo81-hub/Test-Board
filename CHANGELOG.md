@@ -8,7 +8,8 @@ Todos los cambios relevantes del proyecto deben registrarse aquí.
 - Se reintegraron esos sensores a la lógica de gas de turbina, topology y validación de arquitectura.
 - Se corrigió el mapa Allestec de salidas analógicas AO1-AO8 para cubrir A/B/C/D/E, generador y sensores IR.
 - Se alinearon los botones `ACK`, `SILENCE`, `RESET` de LMS100 PA con el display del timer sin cambiar lógica ni eventos.
-- Se ejecutaron validaciones estáticas de JavaScript y arquitectura; no se ejecutaron pruebas con navegador ni hardware.
+- Se reemplazó la alineación anterior de controles LMS100 por una banda específica `ACK | RESET | SILENCE | TIMER`, con botones visibles, ancho mínimo y verificación visual en navegador.
+- Se ejecutaron validaciones estáticas de JavaScript/arquitectura y prueba visual LMS100 en navegador local; no se ejecutaron pruebas con hardware.
 
 ## 2026-07-16 — Baseline estable con Git
 

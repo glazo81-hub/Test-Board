@@ -11,6 +11,7 @@ Actualización 2026-07-17:
 - Se agregó validación estática para evitar que `AE-6304D` y `AE-6304E` desaparezcan de LM6000 Allestec o LM6000 EQP.
 - Validado con `node --check outputs\hmi_visual_prototype\app.js` y `node outputs\hmi_visual_prototype\tools\validate-architecture.js`.
 - No se verificó con navegador ni hardware físico en esta actualización.
+- Corrección visual adicional LMS100 PA: los controles `ACK`, `RESET`, `SILENCE` y el timer CO2 se agruparon en una banda específica de LMS100 para evitar recorte/compresión. Se verificó visualmente en navegador local servido por `http://127.0.0.1:8899/` a 1920×1080, 1679×1049 y 1100×720. Captura guardada en `outputs/hmi_visual_prototype/lms100-controls-final.png`.
 
 Clasificación basada en lectura completa de los archivos fuente ejecutables, validación estática de JavaScript/JSON y revisión de lanzadores. No se conectó hardware y no se modificó código funcional.
 
